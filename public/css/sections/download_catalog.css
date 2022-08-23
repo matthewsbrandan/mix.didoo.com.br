@@ -1,0 +1,54 @@
+#download_catalog {
+  display: grid;
+  grid-template-columns: auto 29rem;
+  min-height: 100vh;
+  position: relative;
+}
+#download_catalog > img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+#download_catalog .content {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+#download_catalog .content form {
+  max-width: 25rem;
+}
+#download_catalog .content form h2 {
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+#download_catalog .content form > p {
+  margin-top: 0.4rem;
+}
+#download_catalog .content form .form-control {
+  border: 1px solid var(--primary-500);
+  margin: 0.6rem 0.4rem;
+}
+#download_catalog .content form .form-control input {
+  padding: 1rem;
+  width: 100%;
+}
+#download_catalog .content form .btn {
+  min-width: 12rem;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+@media (max-width: 900px) {
+  #download_catalog {
+    grid-template-columns: 1fr;
+  }
+  #download_catalog .content {
+    justify-content: center;
+  }
+  #download_catalog .content form .btn {
+    margin: 1rem auto;
+  }
+}/*# sourceMappingURL=download_catalog.css.map */

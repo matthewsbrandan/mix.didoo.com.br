@@ -1,0 +1,130 @@
+#multi_photo{
+  background-size: cover;
+  background-position-x: center;
+  min-height: 30rem;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .content{
+    margin: auto;
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;  
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+
+    .wrapper{
+      max-width: 950px;
+      padding: 2rem 4rem;
+    }
+    
+    h2{
+      font-size: 2rem;
+      line-height: 2.6rem;
+      margin: 0;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .btn-search{
+      background: transparent;
+      color: currentColor;
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .subtitle{
+      text-align: center;
+      font-size: 1.2rem;
+      margin: .4rem;
+    }
+    
+    .overflow{
+      max-height: 100vh;
+      overflow-y: auto;
+      width: calc(100% - .2rem);
+      .container-multi_photos{
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 1rem 0 3rem;
+        margin: auto;
+  
+        .multi_photo{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 16rem;
+          margin-bottom: 1rem;
+  
+          .container-video{
+            background: #0021;
+            min-width: 14rem;
+            min-height: 14rem;
+            background-size: cover;
+    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: .6rem;
+            margin-bottom: 1.5rem;
+  
+            &:first-child{
+              margin-left: 0;
+            }
+    
+            .btn{
+              width: 3.5rem;
+              height: 3.5rem;
+              padding: 0 0 0 .1rem;
+            }
+    
+            iframe{
+              flex: 1;
+              width: 100%;
+              height: 100%;
+              background: #000000;
+              border-radius: .6rem;
+            }
+          }
+          img{
+            margin-bottom: 1.5rem;
+            width: 100%;
+            height: 14rem;
+            object-fit: cover;
+            border-radius: .6rem;
+            box-shadow: 0 0 20px #0022;
+          }
+          strong{
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin: 0 0 .4rem;
+            text-align: center;
+            display: block;
+          }
+      
+          p{
+            margin: .5rem 0;
+            text-align: center;
+          }
+  
+          .btn{
+            min-width: 12rem;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+  }
+}

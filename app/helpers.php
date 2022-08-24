@@ -30,37 +30,37 @@
     if(preg_match( "/\/[a-z]*>/i",$content) != 0) return $content;
     return nl2br($content);
   }
-  function innerStyleIssetAttr($prop, $obj, $attr, $default = null, $valeuFormatted = null){
+  function innerStyleIssetAttr($prop, $obj, $attr, $default = null, $valeuFormatted = null, $is_important = false){
     if(is_array($obj)){
       if(isset($obj[$attr]) && $obj[$attr]) return innerStyle(
-        $prop, $obj[$attr], $default, $valeuFormatted
+        $prop, $obj[$attr], $default, $valeuFormatted, $is_important
       );
     }else if(isset($obj->$attr) && $obj->$attr) return innerStyle(
-      $prop, $obj->$attr, $default, $valeuFormatted
+      $prop, $obj->$attr, $default, $valeuFormatted, $is_important
     );
 
     if($default) return innerStyle(
-      $prop, null, $default, $valeuFormatted
+      $prop, null, $default, $valeuFormatted, $is_important
     );
 
     return "";
   }
-  function innerStyle($prop, $value = null, $default = null, $valeuFormatted = null){
+  function innerStyle($prop, $value = null, $default = null, $valeuFormatted = null, $is_important = false){
     if(isset($value) && $value) return handleStyleValueFormatted(
-      $prop, $value, $valeuFormatted
+      $prop, $value, $valeuFormatted, $is_important
     );
-    else if($default) return "$prop: $default;";
+    else if($default) return "$prop: $default". ($is_important ? ' !important ':'') .";";
     return "";
   }
-  function handleStyleValueFormatted($prop, $value, $valeuFormatted){
-    if($valeuFormatted) return "$prop: $valeuFormatted;";
+  function handleStyleValueFormatted($prop, $value, $valeuFormatted, $is_important = false){
+    if($valeuFormatted) return "$prop: $valeuFormatted". ($is_important ? ' !important ':'') .";";
     if(in_array($prop,['background-image','font-size'])){
       switch($prop){
-        case 'background-image': return "$prop: url('$value');";
-        case 'font-size': return "$prop: {$value}px";
+        case 'background-image': return "$prop: url('$value')". ($is_important ? ' !important ':'') .";";
+        case 'font-size': return "$prop: {$value}px". ($is_important ? ' !important ':'') .";";
       }
     }
-    return "$prop: $value;";
+    return "$prop: $value". ($is_important ? ' !important ':'') .";";
   }
   function view($name, $params = []){
     global $blade;

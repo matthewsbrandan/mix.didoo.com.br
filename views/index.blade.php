@@ -1,10 +1,7 @@
 @extends('layout.app')
 @section('head')
-  <link href="{{ asset('css/cookies.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
   <style> #flex-order{ display: flex; flex-direction: column; } </style>
-  @isset($elements['popup'])
-    <link href="{{ asset('css/sections/popup.css') }}" rel="stylesheet"/>
-  @endisset
   @isset($elements['section_dynamic'])
     <style>
       <?php foreach($elements['section_dynamic']->section_dynamic as $section){ echo $section->css; } ?>
@@ -15,7 +12,17 @@
 
 @section('content')
   @if(isset($elements['code']) && $elements['code']->init_body) {!! $elements['code']->init_body !!} @endif
-  
+  @include('sections.menu',[
+    'menu' => $elements['menu']
+  ])
+  @include('utils.navbar',[
+    'navbar' => $elements['navbar']
+  ])
+  @isset($elements['carousel'])
+    @include('sections.carousel',[
+      'carousel' => $elements['carousel']
+    ])
+  @endisset
   <section id="flex-order">
     <?php $order = 0; ?>
   
@@ -38,6 +45,11 @@
 @endsection
 
 @section('scripts')
+  @isset($elements['carousel'])
+    <script>
+      const carousel = new bootstrap.Carousel('#carousel')
+    </script>
+  @endisset
   @isset($elements['multi_photos'])
     @include('utils.modalMultiPhotos')
     @include('utils.modalSearchBox')

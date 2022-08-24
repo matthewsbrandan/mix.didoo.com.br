@@ -34,5 +34,5 @@
 @endsection
 @section('content')
   <h1>500</h1>
-  <p>{{ $message ?? 'Erro de carregamento' }}</p>
+  <p>{!! $message ?? 'Erro de carregamento' !!}</p>
 @endsection

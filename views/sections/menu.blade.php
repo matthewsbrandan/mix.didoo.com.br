@@ -1,0 +1,47 @@
+<div id="menu" style="
+  {{ innerStyleIssetAttr('background', $menu, 'background', 'transparent', null, true) }}
+  {{ innerStyleIssetAttr('color', $menu, 'text_color', '#212529', null, true) }}
+">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between pt-4 pb-4">
+      <div class="logo-box">
+        <a href="{{ route('home') }}">
+          <img src="{{ $menu->logo }}" class="image-logo" alt="{{ $menu->alt_image ?? 'Logo do site' }}">
+        </a>
+      </div>
+      <div class="search-box">
+        <form onSubmit="handleSearch(event)" id="form-search">
+          <div class="input-group">
+            <input
+              type="text"
+              id="input-search"
+              class="form-control form-control-lg"
+              placeholder="Pesquise aqui..."
+              aria-label="Pesquise aqui..."
+            >
+            <div class="input-group-text">
+              <button class="btn mb-2 p-0 btn-search" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="margin-bottom: -3px;"
+                  fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="contact-box text-end d-lg-block d-none">
+        @isset($menu->phone) <strong>Celular</strong>: {{ $menu->phone }}<br> @endisset
+        @isset($menu->email) <strong>E-mail</strong>: {{ $menu->email }} @endisset
+      </div>
+    </div>
+  </div>
+  <script>
+    function handleSearch(event){
+      event.preventDefault();
+      let search = $('#input-search').val();
+    }
+  </script>
+</div>

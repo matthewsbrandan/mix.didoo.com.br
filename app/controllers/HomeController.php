@@ -24,11 +24,12 @@ class HomeController extends Controller{
       }
       $parsedElements[$element->class_name] = $data;
     }
+    $parsedElements = $this->fakeElements($parsedElements);
     // REQUIRED SECTIONS
-    // if(!$parsedElements['banner']) return view('error-500',[
-    //   'page_config' => $page_config,
-    //   'message' => 'Preencha as informações principais da página'
-    // ]);
+    if(!$parsedElements['menu'] || !$parsedElements['navbar']) return view('error-500',[
+      'page_config' => $page_config,
+      'message' => "Não foi possível localizar as informações do menu ou da barra de navegação!<br/><small>É obrigatório preencher as informações deste elementos.</small>"
+    ]);
 
     // EXCEPTIONS
     $parsedElements = $this->sectionExceptions($parsedElements);    
@@ -177,5 +178,17 @@ class HomeController extends Controller{
       if(isset($element->order) && $element->order) $existingOrders[] = $element->order;
     }
     return $existingOrders;
+  }
+  protected function fakeElements($elements){
+    $products = (object)[
+
+    ];
+    $footer = (object)[
+    ];
+
+    return $elements + [
+      'products' => $products,
+      'footer' => $footer
+    ];
   }
 }

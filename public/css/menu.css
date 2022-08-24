@@ -1,0 +1,10 @@
+#menu .search-box .input-group-text {
+  transition: 0.6s;
+}
+#menu .search-box .input-group-text:hover {
+  filter: brightness(0.7);
+}
+#menu .search-box .input-group-text .btn-search {
+  outline: none !important;
+  border: none !important;
+}/*# sourceMappingURL=menu.css.map */

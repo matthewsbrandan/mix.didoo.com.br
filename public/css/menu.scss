@@ -1,0 +1,17 @@
+#menu{
+  // .logo-box{ }
+  .search-box{
+    .input-group-text{
+      transition: .6s;
+      
+      &:hover{
+        filter: brightness(.7);
+      }
+      .btn-search {
+        outline: none !important;
+        border: none !important;
+      }
+    }
+  }
+  // .contact-box{ }
+}

@@ -9,7 +9,7 @@
       <button
         type="button"
         onclick="handleAcceptCookies()"
-        class="btn btn-primary"
+        class="btn btn-danger"
       >OK</button>
   </div>
 </div>

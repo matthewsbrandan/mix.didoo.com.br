@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('head')
+  <link href="{{ asset('css/cookies.css') }}" rel="stylesheet"/>
   <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
   @isset($elements['products'])
     <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>

@@ -3,7 +3,7 @@
   {{ innerStyleIssetAttr('order', $testimonial, 'order', $default_order) }}
 ">
   <div class="container">
-    <h3 class="text-center mb-4" style="
+    <h3 class="text-center mb-5" style="
       {{ innerStyleIssetAttr('color', $testimonial->title, 'color') }}
       {{ innerStyleIssetAttr('font-size', $testimonial->title, 'fontsize') }}
     ">

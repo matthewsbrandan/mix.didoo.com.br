@@ -1,3 +1,6 @@
+#testimonial {
+  padding: 2rem 0;
+}
 #testimonial .slick-depoiments:hover .slick-arrow,
 #testimonial .slick-depoiments:hover .slick-dots {
   opacity: 1;

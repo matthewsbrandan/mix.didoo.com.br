@@ -1,0 +1,67 @@
+#testimonial .slick-depoiments:hover .slick-arrow,
+#testimonial .slick-depoiments:hover .slick-dots {
+  opacity: 1;
+}
+#testimonial .slick-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  outline: 0;
+  font-size: 0;
+  color: transparent;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  width: 3rem;
+  opacity: 0;
+  transition: 0.4s;
+}
+#testimonial .slick-arrow::after {
+  content: "";
+  border-top: 3px solid black;
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+#testimonial .slick-arrow.slick-prev {
+  left: -1rem;
+}
+#testimonial .slick-arrow.slick-prev::after {
+  border-left: 3px solid black;
+  transform: rotate(-45deg);
+}
+#testimonial .slick-arrow.slick-next {
+  right: -1rem;
+}
+#testimonial .slick-arrow.slick-next::after {
+  border-right: 3px solid black;
+  transform: rotate(45deg);
+}
+#testimonial .slick-dots {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  transition: 0.4s;
+}
+#testimonial .slick-dots li {
+  padding: 0.5rem;
+}
+#testimonial .slick-dots li.slick-active {
+  opacity: 0.5;
+}
+#testimonial .slick-dots li button {
+  border: 0;
+  outline: 0;
+  background: rgba(34, 34, 68, 0.8666666667);
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 0.2rem;
+  font-size: 0;
+  color: transparent;
+}/*# sourceMappingURL=testimonial.css.map */

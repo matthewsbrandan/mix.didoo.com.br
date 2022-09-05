@@ -1,6 +1,14 @@
 @extends('layout.app')
 @section('head')
   <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
+  @isset($elements['products'])
+    <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['testimonial'])
+    <link rel="stylesheet" type="text/css" href="{{ asset('js/slick-1.8.1/slick/slick.css') }}"/>
+    <link href="{{ asset('css/sections/testimonial.css') }}" rel="stylesheet"/>
+  @endisset
+  <link href="{{ asset('css/sections/footer.css') }}" rel="stylesheet"/>
   <style> #flex-order{ display: flex; flex-direction: column; } </style>
   @isset($elements['section_dynamic'])
     <style>
@@ -25,7 +33,21 @@
   @endisset
   <section id="flex-order">
     <?php $order = 0; ?>
-  
+    @isset($elements['products'])
+      @include('sections.products',[
+        'products' => $elements['products'],
+        'default_order' => handleIncrementOrder($order, $existingOrders)
+      ])
+    @endisset
+
+    @isset($elements['testimonial'])
+      @include('sections.testimonial',[
+        'testimonial' => $elements['testimonial'],
+        'default_order' => handleIncrementOrder($order, $existingOrders)
+      ])
+    @endisset
+
+
     @isset($elements['multi_photos'])
       @include('sections.multi_photos',[
         'multi_photos' => $elements['multi_photos'],
@@ -41,13 +63,55 @@
       @endforeach
     @endisset
   </section>
-
+  @include('sections.footer',[
+    'footer' => $elements['footer']
+  ])
 @endsection
 
 @section('scripts')
   @isset($elements['carousel'])
     <script>
       const carousel = new bootstrap.Carousel('#carousel')
+    </script>
+  @endisset
+  @isset($elements['testimonial'])
+    <script type="text/javascript" src="{{ asset('js/slick-1.8.1/slick/slick.min.js') }}"></script>
+    <script>
+      $(document).ready(function(){
+        if($('.slick-depoiments').length > 0) {
+          $('.slick-depoiments').slick({
+            dots: true,
+            autoplay: false,
+            lazyLoad: "ondemand",
+            infinite: true,
+            slidesToShow: ($(window).width() > 768) ? 3 : 1,
+            slidesToScroll: ($(window).width() > 768) ? 3 : 1,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          });
+        }
+      });
     </script>
   @endisset
   @isset($elements['multi_photos'])

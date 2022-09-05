@@ -6,8 +6,7 @@
   <div class="content">
     <div>
       <img src="{{ $footer->logo }}" alt="logo" class="logo"/>
-      <hr/>
-      <p class="texto" style="
+      <p class="texto mt-3" style="
         {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
       ">{{ $footer->address }}</p>
     </div>

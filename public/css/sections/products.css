@@ -1,0 +1,15 @@
+#products .product-item-container {
+  border-width: 2px !important;
+  background: white;
+  transition: 0.3s;
+}
+#products .product-item-container:hover {
+  filter: brightness(0.9);
+  box-shadow: 0 0 60px rgba(0, 0, 34, 0.2);
+}
+#products .product-item-container .product-item-category {
+  font-size: 0.8rem;
+}
+#products .product-item-container .product-item-price-from {
+  font-size: 1.3rem;
+}/*# sourceMappingURL=products.css.map */

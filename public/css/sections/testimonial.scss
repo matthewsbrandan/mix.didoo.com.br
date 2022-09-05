@@ -1,0 +1,76 @@
+#testimonial{
+  
+  .slick-depoiments:hover .slick-arrow,
+  .slick-depoiments:hover .slick-dots{ opacity: 1; }
+
+  .slick-arrow{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border: 0;
+    outline: 0;
+    font-size: 0;
+    color: transparent;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+
+    width: 3rem;
+    opacity: 0;
+    transition: .4s;
+
+    &::after{
+      content: '';
+      border-top: 3px solid black;
+      width: 1rem;
+      height: 1rem;
+      display: block;
+
+    }
+    &.slick-prev{
+      left: -1rem;
+
+      &::after{
+        border-left: 3px solid black;
+        transform: rotate(-45deg);
+      }
+    }
+    &.slick-next{
+      right: -1rem;
+
+      &::after{
+        border-right: 3px solid black;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  .slick-dots{
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    opacity: 0;
+    transition: .4s;
+
+    li{
+      padding: .5rem;
+
+      &.slick-active{ opacity: .5; }
+      button{
+        border: 0;
+        outline: 0;
+        background: #224d;
+        border-radius: .5rem;
+        width: 2rem;
+        height: .2rem;
+        font-size: 0;
+        color: transparent;
+      }
+    }
+  }
+}

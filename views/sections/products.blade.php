@@ -19,7 +19,7 @@
       @endforeach
     </div>
   </div>
-  <div class="row pt-3 mb-5 mx-0">
+  <div class="row pt-3 mb-5 mx-0" id="produtos">
     @foreach($products->items as $prod_item)
       @php $product_url = route('product.show', ['slug' => $prod_item->slug]); @endphp
       <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item" data-category="{{ $prod_item->category }}">
@@ -45,7 +45,7 @@
               </div>
             </a>
           </div>
-          <div class="product-container">
+          <div class="product-container pt-3">
             <div class="product-item-name text-center mb-1">
               <strong class="text-uppercase h5" style="
                 {{ innerStyleIssetAttr('color', $prod_item->title, 'fontsize') }}

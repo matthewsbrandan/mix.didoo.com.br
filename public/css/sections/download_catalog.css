@@ -1,0 +1,25 @@
+#download_catalog .newsletter > .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+#download_catalog .newsletter > .container > img {
+  max-width: 100%;
+}
+#download_catalog .newsletter > .container .btn-submit {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 770px) {
+  #download_catalog .newsletter > .container {
+    grid-template-columns: 1fr;
+  }
+  #download_catalog .newsletter > .container > img {
+    margin-bottom: 1rem;
+  }
+  #download_catalog .newsletter > .container .btn-submit {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    gap: 0.4rem;
+  }
+}/*# sourceMappingURL=download_catalog.css.map */

@@ -4,3 +4,23 @@ html{
 }
 body{ margin:0; }
 .opacity-9{ opacity: .9; }
+
+::-webkit-scrollbar{
+  width: 4px;
+  height: 3px;
+}
+::-webkit-scrollbar-thumb{
+  background: var(--gray-200);
+}
+::-webkit-scrollbar-track{
+  background: var(--gray-100);
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+}

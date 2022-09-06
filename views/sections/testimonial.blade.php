@@ -1,8 +1,8 @@
-<section id="testimonial" class="mb-5" style="
+<section id="testimonial" class="py-5" style="
   {{ innerStyleIssetAttr('background', $testimonial, 'background', 'transparent') }}
   {{ innerStyleIssetAttr('order', $testimonial, 'order', $default_order) }}
 ">
-  <div class="container">
+  <div class="container" id="depoimentos">
     <h3 class="text-center mb-5" style="
       {{ innerStyleIssetAttr('color', $testimonial->title, 'color') }}
       {{ innerStyleIssetAttr('font-size', $testimonial->title, 'fontsize') }}

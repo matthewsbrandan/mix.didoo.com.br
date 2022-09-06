@@ -5,7 +5,9 @@
 ">
   <div class="content">
     <div>
-      <img src="{{ $footer->logo }}" alt="logo" class="logo"/>
+      <a href="{{ route('home') }}">
+        <img src="{{ $footer->logo }}" alt="logo" class="logo"/>
+      </a>
       <p class="texto mt-3" style="
         {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
       ">{{ $footer->address }}</p>

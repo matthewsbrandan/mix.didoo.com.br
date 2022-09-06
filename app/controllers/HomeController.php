@@ -34,7 +34,7 @@ class HomeController extends Controller{
     // EXCEPTIONS
     $parsedElements = $this->sectionExceptions($parsedElements);
     $existingOrders = $this->handleExistingOrders($parsedElements);
-    
+
     return view('index',[
       'page_config' => $page_config,
       'elements' => $parsedElements,
@@ -101,7 +101,7 @@ class HomeController extends Controller{
   }
   public function product($slug = null){
     if(!$slug) return view('error-404');
-    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&multi_photos,navbar");
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&products,navbar");
     if(!$data || !$data->result || $err) return view('error-404');
 
     $page_config = $data->response->datas[0];
@@ -123,7 +123,7 @@ class HomeController extends Controller{
     }
     $parsedElements = $this->sectionExceptions($parsedElements);
     try{
-      $products = $parsedElements['multi_photos']->services;
+      $products = $parsedElements['products']->items;
       $product = null;
       if($slug){
         foreach($products as $product_item){
@@ -192,8 +192,28 @@ class HomeController extends Controller{
     $products->categories = $categories;
   }
   protected function fakeElements($elements){
-    
+    $who_we_are = (object)[
+      'background' => null,
+      'wallpaper' => null,
+      'text_color' => null,
+      'title' => (object)[
+        'text' => 'Quem nós Somos',
+        'color' => null,
+        'fontsize' => null
+      ],
+      'body' => '
+        <div class="mb-5 quem-somos-conteudo">
+          <p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+          <p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+          <p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        </div>
+      '
+    ];
+
     return $elements + [
+      'who_we_are' => $who_we_are
     ];
   }
 }

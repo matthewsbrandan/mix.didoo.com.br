@@ -8,6 +8,7 @@
 >
   <style>
     #navbar .nav-link{ {!! innerStyleIssetAttr('color', $navbar, 'text_color', '#ffffff8c', null, true) !!} }
+    #navbar .nav-item.active{ font-weight: bold; }
   </style>
   <div class="container">
     <!-- Toggle Mobile -->
@@ -20,27 +21,53 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="d-flex justify-content-between w-100">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="https://pocket.devrocket.com.br/">Página Inicial</a>
+          <li class="nav-item @if(!isset($_GET['quem-somos'])) active @endif" id="btn-to-home-page">
+            <a
+              class="nav-link"
+              href="javascript:;"
+              onclick="handleToggleHomeAndWhoWeAre(true)"
+              ondblclick="window.location.href='{{ route('home') }}';"
+            >Página Inicial</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="https://pocket.devrocket.com.br/quem-somos">Quem Somos</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="https://pocket.devrocket.com.br/servicos">Depoimentos</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="https://pocket.devrocket.com.br/cardapio">Baixar Catálog</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="https://pocket.devrocket.com.br/noticias">Blog</a>
-          </li>
+          @isset($elements['who_we_are'])
+            <li class="nav-item @if(isset($_GET['quem-somos'])) active @endif" id="btn-to-who-we-are">
+              <a
+                class="nav-link"
+                href="javascript:;"
+                onclick="handleToggleHomeAndWhoWeAre(false)"
+                ondblclick="window.location.href='{{ route('home') }}?quem-somos';"
+              >Quem Somos</a>
+            </li>
+          @endisset
+          @isset($elements['testimonial'])
+            <li class="nav-item ">
+              <a
+                class="nav-link"
+                href="#depoimentos"
+                onclick="handleToggleHomeAndWhoWeAre(true)"
+              >Depoimentos</a>
+            </li>
+          @endisset
+          @isset($elements['download_catalog'])
+            <li class="nav-item ">
+              <a
+                class="nav-link"
+                href="#baixar-catalogo"
+                onclick="handleToggleHomeAndWhoWeAre(true)"
+              >Baixar Catálogo</a>
+            </li>
+          @endisset
+          @isset($elements['cms_blog'])
+            <li class="nav-item ">
+              <a class="nav-link" href="{{ route('blog.feed.index') }}">Blog</a>
+            </li>
+          @endisset
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item ">
             <a
               class="nav-link"
-              href="https://pocket.devrocket.com.br/contato"
+              href="#contato"
             >Contato</a>
           </li>
           @if(isset($navbar->facebook) && $navbar->facebook)

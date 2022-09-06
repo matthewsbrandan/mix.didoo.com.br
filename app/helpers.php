@@ -30,13 +30,48 @@
     if(preg_match( "/\/[a-z]*>/i",$content) != 0) return $content;
     return nl2br($content);
   }
-  function innerStyleIssetAttr($prop, $obj, $attr, $default = null, $valeuFormatted = null, $is_important = false){
+  function handleNullIfArrayOrObject($data, $verify = true){
+    // $verify = false anula a verifcação da função
+    if($verify && (is_array($data) || is_object($data))) return null;
+    return $data;
+  }
+  function handleVerifyAttrs($obj, $attrs, $nullIfArrayOrObject = true){
     if(is_array($obj)){
-      if(isset($obj[$attr]) && $obj[$attr]) return innerStyle(
-        $prop, $obj[$attr], $default, $valeuFormatted, $is_important
-      );
-    }else if(isset($obj->$attr) && $obj->$attr) return innerStyle(
-      $prop, $obj->$attr, $default, $valeuFormatted, $is_important
+      if(is_array($attrs)){
+        if(count($attrs) > 0){
+          if(
+            isset($obj[$attrs[0]]) &&
+            $obj[$attrs[0]]
+          ) return count($attrs) > 1 ? handleVerifyAttrs(
+            $obj[$attrs[0]],
+            array_splice($attrs, 1)
+          ) : handleNullIfArrayOrObject($obj[$attrs[0]], $nullIfArrayOrObject);
+        }
+        return null;
+      }
+      else if(isset($obj[$attrs]) && $obj[$attrs]) return handleNullIfArrayOrObject($obj[$attrs], $nullIfArrayOrObject);
+    }else{
+      if(is_array($attrs)){
+        if(count($attrs) > 0){
+          $key = $attrs[0];
+          if(isset($obj->$key) && $obj->$key){
+            return count($attrs) > 1 ? handleVerifyAttrs(
+              $obj->$key,
+              array_splice($attrs, 1)
+            ) : handleNullIfArrayOrObject($obj->$key, $nullIfArrayOrObject);
+          }
+        }
+        return null;
+      }
+      else if(isset($obj->$attrs) && $obj->$attrs) return handleNullIfArrayOrObject($obj->$attrs, $nullIfArrayOrObject);
+    }
+    return null;
+  }
+  function innerStyleIssetAttr($prop, $obj, $attr, $default = null, $valeuFormatted = null, $is_important = false){
+    $value = handleVerifyAttrs($obj, $attr);
+    
+    if($value) return innerStyle(
+      $prop, $value, $default, $valeuFormatted, $is_important
     );
 
     if($default) return innerStyle(

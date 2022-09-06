@@ -5,6 +5,15 @@
   @isset($elements['products'])
     <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
   @endisset
+  @if(
+    isset($elements['cms_blog']) && 
+    isset($elements['cms_blog']->take)
+  )
+    <link href="{{ asset('css/sections/cms_blog.css') }}" rel="stylesheet"/>
+  @endif
+  @isset($elements['download_catalog'])
+    <link href="{{ asset('css/sections/download_catalog.css') }}" rel="stylesheet"/>
+  @endisset
   @isset($elements['testimonial'])
     <link rel="stylesheet" type="text/css" href="{{ asset('js/slick-1.8.1/slick/slick.css') }}"/>
     <link href="{{ asset('css/sections/testimonial.css') }}" rel="stylesheet"/>
@@ -27,53 +36,85 @@
   @include('utils.navbar',[
     'navbar' => $elements['navbar']
   ])
-  @isset($elements['carousel'])
-    @include('sections.carousel',[
-      'carousel' => $elements['carousel']
+  <div id="home-page" style="
+    @if(isset($_GET['quem-somos']))
+      display: none;
+    @endif
+  ">
+    @isset($elements['carousel'])
+      @include('sections.carousel',[
+        'carousel' => $elements['carousel']
+      ])
+    @endisset
+    <section id="flex-order">
+      <?php $order = 0; ?>
+      @isset($elements['products'])
+        @include('sections.products',[
+          'products' => $elements['products'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+  
+      @if(
+        isset($elements['cms_blog']) && 
+        isset($elements['cms_blog']->take)
+      )
+        @include('sections.cms_blog',[
+          'cms_blog' => $elements['cms_blog'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endif
+  
+      @isset($elements['download_catalog'])
+        @include('sections.download_catalog',[
+          'download_catalog' => $elements['download_catalog'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+  
+      @isset($elements['testimonial'])
+        @include('sections.testimonial',[
+          'testimonial' => $elements['testimonial'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+  
+      @isset($elements['section_dynamic'])
+        @foreach($elements['section_dynamic']->section_dynamic as $i => $section)
+          <section id="section_dynamic_{{$i}}"
+            style="{{ innerStyleIssetAttr('order', $section, 'order', $order) }}"
+          >{!! $section->html !!}</section>
+        @endforeach
+      @endisset
+    </section>
+  </div>
+  @isset($elements['who_we_are'])
+    @include('sections.who_we_are',[
+      'who_we_are' => $elements['who_we_are']
     ])
   @endisset
-  <section id="flex-order">
-    <?php $order = 0; ?>
-    @isset($elements['products'])
-      @include('sections.products',[
-        'products' => $elements['products'],
-        'default_order' => handleIncrementOrder($order, $existingOrders)
-      ])
-    @endisset
-
-    @isset($elements['testimonial'])
-      @include('sections.testimonial',[
-        'testimonial' => $elements['testimonial'],
-        'default_order' => handleIncrementOrder($order, $existingOrders)
-      ])
-    @endisset
-
-
-    @isset($elements['multi_photos'])
-      @include('sections.multi_photos',[
-        'multi_photos' => $elements['multi_photos'],
-        'default_order' => handleIncrementOrder($order, $existingOrders)
-      ])
-    @endisset
-
-    @isset($elements['section_dynamic'])
-      @foreach($elements['section_dynamic']->section_dynamic as $i => $section)
-        <section id="section_dynamic_{{$i}}"
-          style="{{ innerStyleIssetAttr('order', $section, 'order', $order) }}"
-        >{!! $section->html !!}</section>
-      @endforeach
-    @endisset
-  </section>
   @include('sections.footer',[
     'footer' => $elements['footer']
   ])
 @endsection
 
 @section('scripts')
+  <script>
+    function handleToggleHomeAndWhoWeAre(to_home){
+      let show = to_home ? $('#home-page') : $('#who_we_are');
+      let hide = to_home ? $('#who_we_are') : $('#home-page');
+      let active = to_home ? $('#btn-to-home-page') : $('#btn-to-who-we-are');
+      let normal = to_home ? $('#btn-to-who-we-are') : $('#btn-to-home-page');
+
+      show.show();
+      hide.hide();
+
+      active.addClass('active');
+      normal.removeClass('active');
+    }
+  </script>
   @isset($elements['carousel'])
-    <script>
-      const carousel = new bootstrap.Carousel('#carousel')
-    </script>
+    <script> const carousel = new bootstrap.Carousel('#carousel'); </script>
   @endisset
   @isset($elements['testimonial'])
     <script type="text/javascript" src="{{ asset('js/slick-1.8.1/slick/slick.min.js') }}"></script>
@@ -115,6 +156,21 @@
       });
     </script>
   @endisset
+  @if(
+    isset($elements['cms_blog']) &&
+    isset($elements['cms_blog']->take)
+  )
+    <script>
+      // INITIALIZATION
+      const cms_blog = {
+        url: `{{ route('blog.feed.more') }}`,
+        take: `{{ $elements['cms_blog']->take }}`,
+        token: `{{ $cms_page_token }}`,
+        show: `{!! route('blog.feed.show',['slug' => '']) !!}`
+      };
+    </script>
+    <script src="{{ asset('js/cms_blog.js') }}"></script>
+  @endif
   @isset($elements['multi_photos'])
     @include('utils.modalMultiPhotos')
     @include('utils.modalSearchBox')
@@ -165,5 +221,7 @@
       return `R$ ${ arr_price.join(',') }`;
     }
   </script>  
-  @if(isset($elements['code']) && $elements['code']->final_body) {!! $elements['code']->final_body !!} @endif
+  @if(isset($elements['code']) && $elements['code']->final_body)
+    {!! $elements['code']->final_body !!}
+  @endif
 @endsection

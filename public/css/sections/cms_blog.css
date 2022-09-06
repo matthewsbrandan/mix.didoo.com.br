@@ -1,0 +1,117 @@
+#cms_blog {
+  position: relative;
+}
+#cms_blog a:not(.btn) {
+  color: inherit;
+  text-decoration: none;
+}
+#cms_blog .content {
+  padding: 2rem 2rem 4rem;
+}
+#cms_blog .content h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+#cms_blog .content .wrapper-blog {
+  position: relative;
+}
+#cms_blog .content .wrapper-blog:not(.blog-filled) > button {
+  display: none;
+}
+#cms_blog .content .wrapper-blog > button {
+  position: absolute;
+  margin: auto 1.2rem;
+  top: 0;
+  bottom: 0;
+  padding: 0.4rem 0;
+  width: 3rem;
+  height: 100%;
+  border: 0;
+  outline: 0;
+}
+#cms_blog .content .wrapper-blog > button img {
+  width: 3rem;
+  height: 3rem;
+  background: #fff;
+  border-radius: 50%;
+}
+#cms_blog .content .wrapper-blog > button.btn-left {
+  left: -2rem;
+}
+#cms_blog .content .wrapper-blog > button.btn-right {
+  right: -2rem;
+}
+#cms_blog .content .wrapper-blog #container-blog {
+  display: flex;
+  min-height: 15rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  margin: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+}
+#cms_blog .content .wrapper-blog #container-blog::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post {
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  width: 21.6rem;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post img {
+  width: 20rem;
+  min-width: 20rem;
+  height: 20rem;
+  min-height: 20rem;
+  box-shadow: 0 0 20px rgba(0, 0, 34, 0.0666666667);
+  border-radius: 0.4rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0.4rem;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post > div {
+  max-height: 10.5rem;
+  overflow-y: auto;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post > div > a time {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  font-weight: 300;
+  padding: 0.3rem 0;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post > div > a strong {
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+#cms_blog .content .wrapper-blog #container-blog .content-post > div > p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+#cms_blog .content .wrapper-blog .text-loading {
+  opacity: 0.7;
+  text-align: center;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1333333333);
+}
+#cms_blog .content .group-buttons .btn {
+  min-width: 12rem;
+  max-width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 1rem;
+  margin: 1rem auto;
+}/*# sourceMappingURL=cms_blog.css.map */

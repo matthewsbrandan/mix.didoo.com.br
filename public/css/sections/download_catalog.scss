@@ -1,0 +1,28 @@
+#download_catalog{
+  .newsletter > .container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    > img{
+      max-width: 100%;
+    }
+
+    .btn-submit{
+      display: flex;
+      align-items: center;
+    }
+
+    @media(max-width: 770px){
+      grid-template-columns: 1fr;
+
+      > img{ margin-bottom: 1rem; }
+
+      .btn-submit{
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        gap: .4rem;
+      }
+    }
+  }
+}

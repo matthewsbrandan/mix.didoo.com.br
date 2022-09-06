@@ -131,9 +131,7 @@
 <body class="antialiased">
   <main>
     @include('layout.header',[
-      'header' => isset($elements['navbar']) ? $elements['navbar'] : (object) [
-        'logo' => $page_config->icon
-      ],
+      'header' => isset($elements['navbar']) ? $elements['navbar'] : (object)[],
       'header_config' => (object)[
         'back_to_home' => true,
         'class_name' => 'showing'

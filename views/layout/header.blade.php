@@ -2,26 +2,34 @@
   id="main-header"
   class="{{ $header_config->class_name ?? '' }}"
   style="
-    {{ $header->background ? 'background: '.$header->background.';':'' }}
+    {{ innerStyleIssetAttr('background', $header, 'background', '#212529ff', null, true) }}
   "
 >
+  <style>
+    #main-header a{
+      text-decoration: none;
+      {!! innerStyleIssetAttr('color', $header, 'text_color', '#ffffff8c', null, true) !!}
+    }
+  </style>
   <nav class="nav">
-    <a href="{{ route('home') }}" class="logo">
-      <img src="{{ $header->logo }}"/>
-    </a>
+    <a href="{{ route('home') }}" class="logo" style="
+      height: 100%;
+      display: flex;
+      align-items: center;
+    "><img src="{{ $page_config->icon }}"/></a>
     <button
       type="button"
       class="toggle-menu"
       onclick="toggleMainMenu($(this), $(this).next())"
       style="
-        {{ $header->link_color ? 'color: '.$header->link_color.';': '' }}
+        {{ innerStyleIssetAttr('color', $header, 'text_color') }}
       "
     >@include('utils.icons.menu')</button>
     <ul
       class="horizontal-list"
       style="
-        {{ $header->background ? 'background: '.$header->background.' !important;':'' }}
-        {{ $header->link_color ? 'color: '.$header->link_color.';': '' }}
+        {{ innerStyleIssetAttr('background', $header, 'background') }}
+        {{ innerStyleIssetAttr('color', $header, 'text_color') }}
       "
     >
       @if(isset($header_config) && $header_config->back_to_home)

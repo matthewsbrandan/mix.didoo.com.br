@@ -25,7 +25,7 @@ class PostController extends Controller{
       }
       $parsedElements[$element->class_name] = $data;
     }
-
+    
     [$data, $err] = $this->cms->get("post/feed/more");
 
     if($data->result){

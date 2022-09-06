@@ -3,7 +3,7 @@
   <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
   <style>
     .container{
-      padding: 2rem;
+      padding: 5.5rem 2rem 2rem;
       max-width: 1100px;
       margin: auto;
     }
@@ -15,10 +15,14 @@
       'logo' => $page_config->icon
     ],
     'header_config' => (object)[
-      'back_to_home' => true
+      'back_to_home' => true,
+      'class_name' => 'showing'
     ]
   ])
   <div class="container">
     {!! $elements['privacity_policy']->content !!}
   </div>
+@endsection
+@section('scripts')
+  <!-- <script src="{{ asset('js/header.js') }}"></script> -->
 @endsection

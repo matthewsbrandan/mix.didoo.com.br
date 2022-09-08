@@ -128,19 +128,6 @@
     margin-bottom: 0;
   }
   #modalMultiPhotos .modal-body section.section-2 p{ margin-top: 12px; }
-  #modalMultiPhotos .modal-body section.section-2 .container-tags{
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-  }
-  #modalMultiPhotos .modal-body section.section-2 .container-tags .tags{
-    border: 1px solid rgba(0, 0, 0, 0.281);
-    border-radius: 4px;
-    padding: 2px 3px;
-    color: rgba(0, 0, 0, 0.281);
-  }
   #modalMultiPhotos .modal-body section.section-2 .ctn-buttons{
     margin-top: 20px;
     display: flex;
@@ -170,7 +157,7 @@
 <div id="modalMultiPhotos">
   <div class="overlay">
     <div class="container">
-      <header>
+      <header class="px-2 py-3">
         {{ $page_config->title ?? 'CMS' }}
         <button class="closeModal" type="button" onclick="$('#modalMultiPhotos').hide();">
           @include('utils.icons.close')
@@ -193,15 +180,19 @@
           </section>
           <section class="section-2">
             <div>
-              <h3><a href="javascript:;" target="_blank"></a></h3>
+              <h3>
+                <a href="javascript:;" target="_blank" style="
+                  color: inherit;
+                  text-decoration: none;
+                "></a>
+              </h3>
               <p></p>
-              <div class="container-tags"></div>
               <div class="container-price"></div>
             </div>
             <div class="ctn-buttons">
               <a 
                 href="javascript:;"
-                class="botao btn btn-primary btn-uppercase"
+                class="botao btn btn-danger"
                 target="_blank" 
               >Quero saber mais</a>
               <button
@@ -225,55 +216,19 @@
       }
     });
   });
-  const setMainPhotoMultiPhotos = (src, video = null, remove_iframe = false) => {
-    if(remove_iframe) $('#modalMultiPhotos .container-img iframe').remove();
-    if(video){
-      $('#modalMultiPhotos .container-img').css('background-image','none');
-      if(remove_iframe) $('#modalMultiPhotos .container-img').append(`
-        <iframe
-          src="${ video }"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen=""
-          style="
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            border-radius: .6rem;
-          "
-        ></iframe>
-      `);
-      else $('#modalMultiPhotos .container-img iframe').show();
-    }
-    else{
-      $('#modalMultiPhotos .container-img').css(
-        'background-image',
-        `url('${src}')`
-      );
-      if(!remove_iframe) $('#modalMultiPhotos .container-img iframe').hide();
-    }
+  const setMainPhotoMultiPhotos = (src) => {
+    $('#modalMultiPhotos .container-img').css(
+      'background-image',
+      `url('${src}')`
+    );
   }
   function handleShowMultiPhotos(data){
-    setMainPhotoMultiPhotos(data.images[0].src, data.video, true);
+    console.log(data);
+    setMainPhotoMultiPhotos(data.image.src);
 
     $("#container-multi-photos").html(
-      ( data.video ? `
-        <li 
-          class="has-video selected"
-          style="
-            background-image: none;
-            background: #ccd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "
-          data-image="none"
-          data-index="0"
-          onclick="handleChangeShowingPhoto($(this))"
-        >@include('utils.icons.play')</li>
-      `:'') + data.images.map((img, i) => {
+      data.outher_images ? data.outher_images.map((img, i) => {
         let index = i;
-        if(data.video) index++;
         return `<li 
           class="${ index === 0 ? 'selected' : '' }"
           style="background-image: url('${img.src}')"
@@ -281,34 +236,45 @@
           data-index="${index}"
           onclick="handleChangeShowingPhoto($(this))"
         ></li>`;
-      }).join('')
+      }).join('') : ''
     );
 
-    $('#modalMultiPhotos .container-tags').html(
-      data.items.map(obj => {
-        return obj.item ? `<div class="tags"> ${obj.item} </div>` : '';
-      }).join('')
-    );
-
-    $('#modalMultiPhotos .section-2 > div > h3 a').html(data.title).attr(
-      'href', data.slug ? `{{ route('product.show') }}${data.slug}` : '#'
+    let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
+    $('#modalMultiPhotos .section-2 > div > h3 a').html(data.title.text).attr(
+      'href', link
     );
     $('#modalMultiPhotos .section-2 > div > p').html(data.description);
 
     $('#modalMultiPhotos .container-price').html('');
-    if(data.price) $('#modalMultiPhotos .container-price').html((data.discount_price ? `
-      <strong>${formatMoney(data.discount_price)}</strong>
-    `:'') + `<strong>${formatMoney(data.price)}</strong>`);
+    if(data.price) $('#modalMultiPhotos .container-price').html(`
+      <div class="product-item-price-data pt-2 mb-3">
+        ${data.price.current && !!data.price.current ? `
+            <p class="product-item-price h5 mb-0" style="
+              ${ 
+                data.price.current_fontsize ?
+                `font-size: ${data.price.current_fontsize}px`:
+                'current_fontsize'
+              }
+            ">R$ ${ data.price.current }</p>
+        `: ( data.price.old && !!data.price.old ? `
+          <p class="mb-0 product-item-price-from">
+            <span class="old-price text-decoration-line-through text-muted" style="
+              ${
+                data.styles && data.styles.text_lowlighted ? 
+                ` color: ${ data.styles.text_lowlighted }; `:''
+              } ${ data.price.old_fontsize ? ` font-size: ${ data.price.old_fontsize}px; `:'' }
+            ">R$ ${ data.price.old }</span>
+          </p>
+        `:``
+        )}
+      </div>
+    `);
     
-    $('#modalMultiPhotos .section-2 > div > a').attr('href', data.button.link)
+    $('#modalMultiPhotos .section-2 > div > a').attr('href', link)
       .attr('style', `
         ${ data.button.background ? `background: ${data.button.background};` : '' }
         ${ data.button.color ? `color: ${ data.button.color};` : '' }
       `).html(data.button.text);
-    $('#modalMultiPhotos .section-2 > div > button').attr('style', `
-        ${ data.button_back.background ? `background: ${data.button_back.background};` : '' }
-        ${ data.button_back.color ? `color: ${ data.button_back.color};` : '' }
-      `).html(data.button_back.text);
 
     $('#modalMultiPhotos').show();
   }
@@ -317,13 +283,12 @@
     let image = null;
     if(elem){
       image = elem.attr('data-image');
-      has_video = elem.hasClass('has-video');
       if(!image) return;
 
       $('#container-multi-photos li').removeClass('selected');
       elem.addClass('selected');
 
-      setMainPhotoMultiPhotos(image, has_video);
+      setMainPhotoMultiPhotos(image);
     }else{
       let limit = $('#container-multi-photos li').length;
       let current = $('#container-multi-photos li.selected');

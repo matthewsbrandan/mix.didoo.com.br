@@ -2,6 +2,7 @@
 @section('head')
   <link href="{{ asset('css/cookies.css') }}" rel="stylesheet"/>
   <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/popup.css') }}" rel="stylesheet"/>
   @isset($elements['products'])
     <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
   @endisset
@@ -171,7 +172,7 @@
     </script>
     <script src="{{ asset('js/cms_blog.js') }}"></script>
   @endif
-  @isset($elements['multi_photos'])
+  @isset($elements['products'])
     @include('utils.modalMultiPhotos')
     @include('utils.modalSearchBox')
   @endisset

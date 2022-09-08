@@ -48,7 +48,7 @@
           <div class="product-container pt-3">
             <div class="product-item-name text-center mb-1">
               <strong class="text-uppercase h5" style="
-                {{ innerStyleIssetAttr('color', $prod_item->title, 'fontsize') }}
+                {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
               ">{{ $prod_item->title->text }}</strong><br/>
               @isset($prod_item->code)
                 <small class="text-danger product-sku" style="
@@ -65,7 +65,7 @@
               <div class="text-center product-item-price-data pt-2 mb-3">
                 @if(isset($prod_item->price->current) && !!$prod_item->price->current)
                   <p class="product-item-price display-6 mb-0" style="
-                    {{ innerStyleIssetAttr('color', $prod_item->price, 'current_fontsize') }}
+                    {{ innerStyleIssetAttr('font-size', $prod_item->price, 'current_fontsize') }}
                   ">R$ {{ $prod_item->price->current }}</p>
                 @endif
                 @if(isset($prod_item->price->old) && !!$prod_item->price->old)
@@ -74,7 +74,7 @@
                       @isset($prod_item->styles)
                         {{ innerStyleIssetAttr('color', $prod_item->styles, 'text_lowlighted') }}
                       @endisset
-                      {{ innerStyleIssetAttr('color', $prod_item->price, 'old_fontsize') }}
+                      {{ innerStyleIssetAttr('font-size', $prod_item->price, 'old_fontsize') }}
                     ">R$ {{ $prod_item->price->old }}</span>
                   </p>
                 @endif
@@ -92,16 +92,16 @@
               </div>
             @endisset
           </div>
-          <div class="product-link product-item-url text-center mt-auto">
-            <a
-              href="{{ $product_url }}"
-              target="_blank"
-              class="btn btn-danger btn-block d-block"
+          <div class="product-link product-item-url text-center mt-auto w-100">
+            <button
+              type="button"
+              class="btn btn-danger btn-block"
+              onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'
               style="
                 {{ innerStyleIssetAttr('background', $prod_item->button, 'background') }}
                 {{ innerStyleIssetAttr('color', $prod_item->button, 'color') }}
               "
-            > {{ isset($prod_item->button) && isset($prod_item->button->text) ?  $prod_item->button->text : 'Mais Informações' }} </a>
+            > {{ isset($prod_item->button) && isset($prod_item->button->text) ?  $prod_item->button->text : 'Mais Informações' }} </button>
           </div>
         </div>
       </div>

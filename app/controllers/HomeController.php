@@ -121,7 +121,7 @@ class HomeController extends Controller{
       }
       $parsedElements[$element->class_name] = $data;
     }
-    $parsedElements = $this->sectionExceptions($parsedElements);
+    $parsedElements = $this->sectionExceptions($parsedElements);    
     try{
       $products = $parsedElements['products']->items;
       $product = null;
@@ -133,10 +133,12 @@ class HomeController extends Controller{
           }
         }
       }
+
       if($product){
-        $page_config->title = $product->title . ' | '. $page_config->title;
-        $page_config->metadescription = $product->description;
+        $page_config->title = ($product->title->text ?? 'Produto') . ' | '. $page_config->title;
+        $page_config->metadescription = $product->description ?? null;
       }
+
       return view('product.show',[
         'page_config' => $page_config,
         'elements' => $parsedElements,

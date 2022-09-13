@@ -188,8 +188,14 @@ class HomeController extends Controller{
       return;
     }
     $categories = [];
-    foreach($products->items as $item){
+    foreach($products->items as &$item){
       if(!in_array($item->category, $categories)) $categories[] = $item->category;
+      if(isset($item->outher_images)){
+        $item->outher_images = array_filter($item->outher_images, function($outher){
+          if($outher && isset($outher->src) && $outher->src) return true;
+          return false;
+        });
+      }
     }
     $products->categories = $categories;
   }

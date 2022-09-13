@@ -157,13 +157,20 @@
           @isset($product->outher_images)
             <div class="container-itens">
               <ul id="container-multi-photos">
+                <li 
+                  class="selected"
+                  style="background-image: url('{{ $product->image->src }}')"
+                  alt="{{ $product->image->alt ?? '' }}"
+                  data-image="{{ $product->image->src }}"
+                  data-index="0"
+                  onclick="handleChangeShowingPhoto($(this))"
+                ></li>
                 @foreach($product->outher_images as $i => $image)
                   <li 
-                    class="{{ $i === 0 ? 'selected' : '' }}"
                     style="background-image: url('{{ $image->src }}')"
                     alt="{{ $image->alt ?? '' }}"
                     data-image="{{ $image->src }}"
-                    data-index="{{ $i }}"
+                    data-index="{{ $i + 1 }}"
                     onclick="handleChangeShowingPhoto($(this))"
                   ></li>
                 @endforeach

@@ -34,7 +34,7 @@ class HomeController extends Controller{
     // EXCEPTIONS
     $parsedElements = $this->sectionExceptions($parsedElements);
     $existingOrders = $this->handleExistingOrders($parsedElements);
-
+    
     return view('index',[
       'page_config' => $page_config,
       'elements' => $parsedElements,
@@ -152,7 +152,7 @@ class HomeController extends Controller{
     }
   }
   protected function sectionExceptions($elements){
-    if(isset($elements['multi_photos'])) recursiveArrayJsonParsed($elements['multi_photos']);
+    if(isset($elements['products'])) recursiveArrayJsonParsed($elements['products']);
     if(isset($elements['products'])) $this->handleProductCategories($elements['products']);
     
     return $elements;

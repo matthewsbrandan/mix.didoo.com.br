@@ -226,17 +226,25 @@
     console.log(data);
     setMainPhotoMultiPhotos(data.image.src);
 
-    $("#container-multi-photos").html(
-      data.outher_images ? data.outher_images.map((img, i) => {
-        let index = i;
-        return `<li 
-          class="${ index === 0 ? 'selected' : '' }"
-          style="background-image: url('${img.src}')"
-          data-image="${img.src}"
-          data-index="${index}"
+    $("#container-multi-photos").html('');
+    if(data.outher_images) $("#container-multi-photos").html(`
+        <li 
+          class="selected"
+          style="background-image: url('${data.image.src}')"
+          data-image="${data.image.src}"
+          data-index="0"
           onclick="handleChangeShowingPhoto($(this))"
-        ></li>`;
-      }).join('') : ''
+        ></li>
+      ` + (
+        data.outher_images.map((img, i) => `
+          <li 
+            style="background-image: url('${img.src}')"
+            data-image="${img.src}"
+            data-index="${i + 1}"
+            onclick="handleChangeShowingPhoto($(this))"
+          ></li>
+        `).join('')
+      )
     );
 
     let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';

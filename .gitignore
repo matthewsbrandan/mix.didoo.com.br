@@ -5,3 +5,4 @@ server.js
 .env
 yarn.lock
 package.json
+mix-workspace.code-workspace

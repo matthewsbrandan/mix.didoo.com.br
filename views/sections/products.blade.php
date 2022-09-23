@@ -66,7 +66,7 @@
                 @if(isset($prod_item->price->current) && !!$prod_item->price->current)
                   <p class="product-item-price display-6 mb-0" style="
                     {{ innerStyleIssetAttr('font-size', $prod_item->price, 'current_fontsize') }}
-                  ">R$ {{ $prod_item->price->current }}</p>
+                  ">R$ {{ number_format($prod_item->price->current, 2,',','.') }}</p>
                 @endif
                 @if(isset($prod_item->price->old) && !!$prod_item->price->old)
                   <p class="mb-0 product-item-price-from">
@@ -75,7 +75,7 @@
                         {{ innerStyleIssetAttr('color', $prod_item->styles, 'text_lowlighted') }}
                       @endisset
                       {{ innerStyleIssetAttr('font-size', $prod_item->price, 'old_fontsize') }}
-                    ">R$ {{ $prod_item->price->old }}</span>
+                    ">R$ {{ number_format($prod_item->price->old, 2,',','.') }}</span>
                   </p>
                 @endif
               </div>

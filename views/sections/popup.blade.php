@@ -44,21 +44,27 @@
       <button
         class="closeModal"
         type="button"
-        onclick="$('#popup').hide();"
+        onclick="hidePopup();"
         style="{{ innerStyle('color', $popup->color_button_close) }}"
       >@include('utils.icons.close')</button>
     </div>
   </div>
 </div>
 <script>
-  function showPopup(){
-    $('#popup').show();
+  function showPopup(force = false){
+    if(!force){
+      let was_closed = sessionStorage.getItem('cms@close-popup') ?? null;
+      if(was_closed) return;
+    }
+    $('#popup').show(); 
+  }
+  function hidePopup(){
+    $('#popup').hide();
+    sessionStorage.setItem('cms@close-popup', true);
   }
   $(function(){
     $('#popup').bind('click', (e) => {
-      if(e.target.classList.contains('main-overlay')){
-        $('#popup').hide();
-      }
+      if(e.target.classList.contains('main-overlay')) hidePopup();
     });
   });
 

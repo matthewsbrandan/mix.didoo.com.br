@@ -22,7 +22,16 @@
   <div class="row pt-3 mb-5 mx-0" id="produtos">
     @foreach($products->items as $prod_item)
       @php $product_url = route('product.show', ['slug' => $prod_item->slug]); @endphp
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item" data-category="{{ $prod_item->category }}">
+      <div
+        class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item {{
+          isset($products->columns) && $products->columns != 1 ? (
+            $products->columns == 2 ? 'col-6':(
+              $products->columns == 3 ? 'col-4':''
+            )
+          ):''
+        }}"
+        data-category="{{ $prod_item->category }}"
+      >
         <div class="product-item-container border h-100 p-3 rounded d-flex flex-column" style="
           @isset($prod_item->styles)
             {{ innerStyleIssetAttr('background', $prod_item->styles, 'background', '#ffffffff') }}

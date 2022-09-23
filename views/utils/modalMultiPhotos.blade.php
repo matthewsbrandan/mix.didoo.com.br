@@ -128,6 +128,19 @@
     margin-bottom: 0;
   }
   #modalMultiPhotos .modal-body section.section-2 p{ margin-top: 12px; }
+  #modalMultiPhotos .modal-body section.section-2 .container-tags{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
+  #modalMultiPhotos .modal-body section.section-2 .container-tags .tags{
+    border: 1px solid rgba(0, 0, 20, 0.481);
+    border-radius: 4px;
+    padding: 2px 3px;
+    color: rgba(0, 0, 20, 0.681);
+  }
   #modalMultiPhotos .modal-body section.section-2 .ctn-buttons{
     margin-top: 20px;
     display: flex;
@@ -187,6 +200,7 @@
                 "></a>
               </h3>
               <p></p>
+              <div class="container-tags"></div>
               <div class="container-price"></div>
             </div>
             <div class="ctn-buttons">
@@ -252,6 +266,12 @@
       'href', link
     );
     $('#modalMultiPhotos .section-2 > div > p').html(data.description);
+
+    $('#modalMultiPhotos .container-tags').html(
+      data.tags.map(obj => {
+        return obj.item ? `<div class="tags"> ${obj.item} </div>` : '';
+      }).join('')
+    );
 
     $('#modalMultiPhotos .container-price').html('');
     if(data.price) $('#modalMultiPhotos .container-price').html(`

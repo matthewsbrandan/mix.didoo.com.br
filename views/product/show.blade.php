@@ -99,10 +99,10 @@
       gap: 5px;
     }
     .container .product-body section.section-2 .container-tags .tags{
-      border: 1px solid rgba(0, 0, 0, 0.281);
+      border: 1px solid rgba(0, 0, 20, 0.481);
       border-radius: 4px;
       padding: 2px 3px;
-      color: rgba(0, 0, 0, 0.281);
+      color: rgba(0, 0, 20, 0.681);
     }
     @media (max-width: 700px){
       .container .product-body {
@@ -200,12 +200,19 @@
               @isset($product->description)
                 <p>{{ $product->description }}</p>
               @endisset
+              @isset($product->tags)
+                <div class="container-tags">
+                  @foreach($product->tags as $obj)
+                    <div class="tags"> {{ $obj->item }} </div>
+                  @endforeach
+                </div>
+              @endisset
               @isset($product->price)
                 <div class="product-item-price-data pt-2 mb-3">
                   @if(isset($product->price->current) && !!$product->price->current)
                     <p class="product-item-price display-6 mb-0" style="
                       {{ innerStyleIssetAttr('font-size', $product->price, 'current_fontsize') }}
-                    ">R$ {{ $product->price->current }}</p>
+                    ">R$ {{ number_format($product->price->current,2,',','.') }}</p>
                   @endif
                   @if(isset($product->price->old) && !!$product->price->old)
                     <p class="mb-0 product-item-price-from">
@@ -214,7 +221,7 @@
                           {{ innerStyleIssetAttr('color', $product->styles, 'text_lowlighted') }}
                         @endisset
                         {{ innerStyleIssetAttr('font-size', $product->price, 'old_fontsize') }}
-                      ">R$ {{ $product->price->old }}</span>
+                      ">R$ {{ number_format($product->price->old,2,',','.') }}</span>
                     </p>
                   @endif
                 </div>
@@ -261,7 +268,16 @@
                 if($prod_item->slug === $slug) continue;
                 $product_url = route('product.show', ['slug' => $prod_item->slug]);
               @endphp
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item" data-category="{{ $prod_item->category }}">
+              <div
+                class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item {{
+                  isset($elements['products']->columns) && $elements['products']->columns != 1 ? (
+                    $elements['products']->columns == 2 ? 'col-6':(
+                      $elements['products']->columns == 3 ? 'col-4':''
+                    )
+                  ):''
+                }}"
+                data-category="{{ $prod_item->category }}"
+              >
                 <div class="product-item-container border h-100 p-3 rounded d-flex flex-column" style="
                   @isset($prod_item->styles)
                     {{ innerStyleIssetAttr('background', $prod_item->styles, 'background', '#ffffffff') }}

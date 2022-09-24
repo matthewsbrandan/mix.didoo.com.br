@@ -230,35 +230,75 @@
       }
     });
   });
-  const setMainPhotoMultiPhotos = (src) => {
-    $('#modalMultiPhotos .container-img').css(
-      'background-image',
-      `url('${src}')`
-    );
+  const setMainPhotoMultiPhotos = (src, video = null, remove_iframe = false) => {
+    if(remove_iframe) $('#modalMultiPhotos .container-img iframe').remove();
+    if(video){
+      $('#modalMultiPhotos .container-img').css('background-image','none');
+      if(remove_iframe) $('#modalMultiPhotos .container-img').append(`
+        <iframe
+          src="${ video }"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen=""
+          style="
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            border-radius: .6rem;
+          "
+        ></iframe>
+      `);
+      else $('#modalMultiPhotos .container-img iframe').show();
+    }
+    else{
+      $('#modalMultiPhotos .container-img').css(
+        'background-image',
+        `url('${src}')`
+      );
+      if(!remove_iframe) $('#modalMultiPhotos .container-img iframe').hide();
+    }
   }
   function handleShowMultiPhotos(data){
-    console.log(data);
-    setMainPhotoMultiPhotos(data.image.src);
+    setMainPhotoMultiPhotos(data.image.src, data.video, true);
 
-    $("#container-multi-photos").html('');
-    if(data.outher_images) $("#container-multi-photos").html(`
+    $("#container-multi-photos").html("");
+    if(data.video || data.outher_images) $("#container-multi-photos").html(( data.video ? `
         <li 
-          class="selected"
-          style="background-image: url('${data.image.src}')"
-          data-image="${data.image.src}"
+          class="has-video selected"
+          style="
+            background-image: none;
+            background: #ccd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+          data-image="none"
           data-index="0"
           onclick="handleChangeShowingPhoto($(this))"
+        >@include('utils.icons.play')</li>
+      `:'' ) + `
+        <li 
+          class="${data.video ? '' : 'selected'}"
+          style="background-image: url('${data.image.src}')"
+          data-image="${data.image.src}"
+          data-index="${data.video ? '1':'0'}"
+          onclick="handleChangeShowingPhoto($(this))"
         ></li>
-      ` + (
-        data.outher_images.map((img, i) => `
-          <li 
-            style="background-image: url('${img.src}')"
-            data-image="${img.src}"
-            data-index="${i + 1}"
-            onclick="handleChangeShowingPhoto($(this))"
-          ></li>
-        `).join('')
-      )
+      ` + ( data.outher_images ? (
+        data.outher_images.map((img, i) => { 
+          let index = i + 1;
+          if(data.video) index++;
+
+          return `
+            <li 
+              style="background-image: url('${img.src}')"
+              data-image="${img.src}"
+              data-index="${index}"
+              onclick="handleChangeShowingPhoto($(this))"
+            ></li>
+          `;
+        }).join('')
+      ):'' )
     );
 
     let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
@@ -311,12 +351,13 @@
     let image = null;
     if(elem){
       image = elem.attr('data-image');
+      has_video = elem.hasClass('has-video');
       if(!image) return;
 
       $('#container-multi-photos li').removeClass('selected');
       elem.addClass('selected');
 
-      setMainPhotoMultiPhotos(image);
+      setMainPhotoMultiPhotos(image, has_video);
     }else{
       let limit = $('#container-multi-photos li').length;
       let current = $('#container-multi-photos li.selected');

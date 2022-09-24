@@ -5,7 +5,7 @@
   <style>
     .logo{ margin-top: -1rem; }
     .container{
-      margin: 6.2rem 1.6rem;
+      margin: 3.2rem 1.6rem;
     }
     .container ul li {
       list-style: none;
@@ -153,16 +153,45 @@
             <span class="to-next" onclick="handleChangeShowingPhoto()">
               @include('utils.icons.chevron_right')
             </span>
+            @isset($product->video)
+              <iframe
+                src="{{ $product->video }}"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen=""
+                style="
+                  width: 100%;
+                  height: 100%;
+                  background: #000000;
+                  border-radius: .6rem;
+                "
+              ></iframe>
+            @endisset
           </div>
-          @isset($product->outher_images)
+          @if(isset($product->video) || isset($product->outher_images))
             <div class="container-itens">
               <ul id="container-multi-photos">
+                @isset($product->video)
+                  <li 
+                    class="has-video selected"
+                    style="
+                      background-image: none;
+                      background: #ccd;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    data-image="none"
+                    data-index="0"
+                    onclick="handleChangeShowingPhoto($(this))"
+                  >@include('utils.icons.play')</li>
+                @endisset
                 <li 
-                  class="selected"
+                  class="{{ !isset($product->video) ? 'selected' : '' }}"
                   style="background-image: url('{{ $product->image->src }}')"
                   alt="{{ $product->image->alt ?? '' }}"
                   data-image="{{ $product->image->src }}"
-                  data-index="0"
+                  data-index="{{ !isset($product->video) ? '0' : '1' }}"
                   onclick="handleChangeShowingPhoto($(this))"
                 ></li>
                 @foreach($product->outher_images as $i => $image)
@@ -170,7 +199,7 @@
                     style="background-image: url('{{ $image->src }}')"
                     alt="{{ $image->alt ?? '' }}"
                     data-image="{{ $image->src }}"
-                    data-index="{{ $i + 1 }}"
+                    data-index="{{ $i + 1 + (!isset($product->video) ? 0 : 1) }}"
                     onclick="handleChangeShowingPhoto($(this))"
                   ></li>
                 @endforeach
@@ -198,7 +227,7 @@
                 <strong>Categoria</strong>: {{ $product->category }}
               </div>
               @isset($product->description)
-                <p>{{ $product->description }}</p>
+                <p style="font-size: .9rem;">{{ $product->description }}</p>
               @endisset
               @isset($product->tags)
                 <div class="container-tags">

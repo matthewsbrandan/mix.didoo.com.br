@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog | {{ $page_config->title ?? 'CMS' }}</title>
-  <!-- Fonts -->
-  <link rel="shortcut icon" href="{{ $page_config->icon ?? '' }}" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="{{ asset('assets/css/global.css', true) }}" rel="stylesheet"/>
-  <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+@extends('layout.app')
+@section('head')
+  <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
   <style>
-    main{
+    :root {
+      --gray-50: #f0f6ff;
+      --gray-100: #e2e8f0;
+      --gray-200: #d1d7df;
+      --gray-500: #99a;
+      --gray-700: #747480;
+      --dark-300: #33393f;
+      --dark-500: #212529;
+      --green-100: #03a06230;
+      --green-500: #03a062;
+      --green-800: #025e39;
+      --red-500: #dc3545;
+      --red-800: #842029;
+      --orange-500: #fb6340;
+      --primary-500: #5E72E4;
+    }
+    .wrapper-page{
       max-width: 1200px;
       margin: 0 auto 3rem;
     }
     h1{
       font-size: 3.2rem;
       margin-bottom: 1rem;
-      margin-top: 6rem;
+      margin-top: 4rem;
     }
+    a,a:hover{ color: currentColor; }
+    a:not(:hover){ text-decoration: none; }
     .empty{
       color: var(--gray-500);
     }
@@ -92,10 +101,10 @@
       color: var(--dark-500);
     }
     @media (max-width: 1440px) {
-      main{ padding: 0 2rem; }
+      .wrapper-page{ padding: 0 2rem; }
     }
     @media (max-width: 1300px) {
-      main{ padding: 0 3rem; }
+      .wrapper-page{ padding: 0 3rem; }
     }
     @media (max-width: 1100px) {
       .container-posts{ grid-template-columns: repeat(2, 1fr); }
@@ -127,16 +136,18 @@
       h1{ font-size: 10vw; }
     }
   </style>
-</head>
-<body class="antialiased">
-  <main>
-    @include('layout.header',[
-      'header' => isset($elements['navbar']) ? $elements['navbar'] : (object)[],
-      'header_config' => (object)[
-        'back_to_home' => true,
-        'class_name' => 'showing'
-      ]
-    ])
+@endsection
+@section('content')
+  @include('sections.menu',[
+    'menu' => $elements['menu'],
+    'menu_options' => (object)[
+      'hide' => ['search_box']
+    ]
+  ])
+  @include('utils.navbar',[
+    'navbar' => $elements['navbar']
+  ])
+  <div class="wrapper-page">
     <h1>BLOG FEED</h1>
     @if(count($posts) > 0)
     <div class="content-post post-main">
@@ -174,8 +185,13 @@
     @if(count($posts) > 0)
     <a href="javascript: morePosts();" id="more-posts">carregar mais...</a>
     @endif
-  </main>
+  </div>
+@endsection
+@section('scripts')
   <script>
+    function handleToggleHomeAndWhoWeAre(){
+      window.location.href = "{{ route('home') }}";
+    }
     // BEGIN:: API URLS
     let tempPostsApiUrl = "{!! route('blog.feed.more',['skip' => 0]) !!}";
     const postsApiUrl = tempPostsApiUrl.substr(0, tempPostsApiUrl.length - 1);
@@ -217,5 +233,4 @@
       $('.container-posts').append(html);
     }
   </script>
-</body>
-</html>
+@endsection

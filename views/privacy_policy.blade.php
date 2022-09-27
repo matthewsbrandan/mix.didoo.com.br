@@ -1,28 +1,32 @@
 @extends('layout.app')
 @section('head')
-  <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
   <style>
-    .container{
-      padding: 5.5rem 2rem 2rem;
+    #privacy-policy{
+      padding: 3.5rem 2rem 2rem;
       max-width: 1100px;
       margin: auto;
     }
   </style>
 @endsection
 @section('content')
-  @include('layout.header',[
-    'header' => isset($elements['navbar']) ? $elements['navbar'] : (object) [
-      'logo' => $page_config->icon
-    ],
-    'header_config' => (object)[
-      'back_to_home' => true,
-      'class_name' => 'showing'
+  @include('sections.menu',[
+    'menu' => $elements['menu'],
+    'menu_options' => (object)[
+      'hide' => ['search_box']
     ]
   ])
-  <div class="container">
+  @include('utils.navbar',[
+    'navbar' => $elements['navbar']
+  ])
+  <div class="container" id="privacy-policy">
     {!! $elements['privacity_policy']->content !!}
   </div>
 @endsection
 @section('scripts')
-  <!-- <script src="{{ asset('js/header.js') }}"></script> -->
+  <script>
+    function handleToggleHomeAndWhoWeAre(){
+      window.location.href = "{{ route('home') }}";
+    }
+  </script>
 @endsection

@@ -43,7 +43,7 @@ class HomeController extends Controller{
     ]);
   }
   public function policy(){
-    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&privacity_policy");
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&privacity_policy,navbar,menu");
 
     if(!$data || !$data->result || $err) return view('error-404');
 

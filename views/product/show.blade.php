@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('head')
-  <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
   <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
   <style>
     .logo{ margin-top: -1rem; }

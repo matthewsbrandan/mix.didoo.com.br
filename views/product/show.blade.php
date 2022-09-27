@@ -4,17 +4,17 @@
   <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
   <style>
     .logo{ margin-top: -1rem; }
-    .container{
+    #products{
       margin: 3.2rem 1.6rem;
     }
-    .container ul li {
+    #products ul li {
       list-style: none;
     }
-    .container .product-body {
+    #products .product-body {
       display: grid;
       grid-template-columns: 50% 50%;
     }
-    .container .product-body section.section-1{
+    #products .product-body section.section-1{
       padding: 10px 15px;
       display: flex;
       flex-direction: column;
@@ -22,7 +22,7 @@
       align-items: center;
       justify-content: center;
     }
-    .container .container-img{
+    #products .container-img{
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
@@ -37,7 +37,7 @@
       transition: .6s;
       position: relative;
     }
-    .container .container-img span{
+    #products .container-img span{
       padding: .6rem;
       height: 100%;
       display: flex;
@@ -48,25 +48,25 @@
       top: 0;
       bottom: 0;
     }
-    .container .container-img span.to-back{ left: 0; }
-    .container .container-img span.to-next{ right: 0; }
-    .container .container-img span:hover{
+    #products .container-img span.to-back{ left: 0; }
+    #products .container-img span.to-next{ right: 0; }
+    #products .container-img span:hover{
       background: #fff3;
     }
-    .container .container-img span svg{
+    #products .container-img span svg{
       font-size: 1.8em;
       color: #fff;
     }
-    .container .container-itens{
+    #products .container-itens{
       overflow-x: auto;
     }
-    .container .container-itens ul {
+    #products .container-itens ul {
       display: flex;
       gap: 1rem;
       padding-left: .2rem;
       margin-top: 0;
     }
-    .container .container-itens ul li{
+    #products .container-itens ul li{
       width: 50px;
       min-width: 50px;
       height: 50px;
@@ -76,45 +76,45 @@
       cursor: pointer;
       transition: .6s;
     }
-    .container .container-itens ul li.selected{
+    #products .container-itens ul li.selected{
       opacity: .7;
     }
-    .container .product-body section.section-2{
+    #products .product-body section.section-2{
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding: 0 1.5rem;
       align-items: center;
     }
-    .container .product-body section.section-2 h3{
+    #products .product-body section.section-2 h3{
       margin-top: 14px;
       margin-bottom: 0;
     }
-    .container .product-body section.section-2 p{ margin-top: 12px; }
-    .container .product-body section.section-2 .container-tags{
+    #products .product-body section.section-2 p{ margin-top: 12px; }
+    #products .product-body section.section-2 .container-tags{
       margin-top: 20px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       gap: 5px;
     }
-    .container .product-body section.section-2 .container-tags .tags{
+    #products .product-body section.section-2 .container-tags .tags{
       border: 1px solid rgba(0, 0, 20, 0.481);
       border-radius: 4px;
       padding: 2px 3px;
       color: rgba(0, 0, 20, 0.681);
     }
     @media (max-width: 700px){
-      .container .product-body {
+      #products .product-body {
         grid-template-columns: 1fr;
       } 
     }
-    .container .container-price{
+    #products .container-price{
       margin: 1.4rem 0;
       font-size: 1.3rem;
     }
-    .container .container-price strong{ display: block; }
-    .container .container-price strong + strong{
+    #products .container-price strong{ display: block; }
+    #products .container-price strong + strong{
       font-size: 1rem;
       text-decoration: line-through;
       color: #667;
@@ -124,14 +124,14 @@
   </style>
 @endsection
 @section('content')
-  @include('layout.header',[
-    'header' => isset($elements['navbar']) ? $elements['navbar'] : (object) [
-      'logo' => $page_config->icon
-    ],
-    'header_config' => (object)[
-      'back_to_home' => true,
-      'class_name' => 'showing'
+  @include('sections.menu',[
+    'menu' => $elements['menu'],
+    'menu_options' => (object)[
+      'hide' => ['search_box']
     ]
+  ])
+  @include('utils.navbar',[
+    'navbar' => $elements['navbar']
   ])
   <div class="container mx-auto" id="products">
     @if($product)
@@ -445,6 +445,9 @@
         }
         $(`#container-multi-photos [data-index=${target_index}]`).click();
       }
+    }
+    function handleToggleHomeAndWhoWeAre(){
+      window.location.href = "{{ route('home') }}";
     }
   </script>
 @endsection

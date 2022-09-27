@@ -158,7 +158,7 @@
     </script>
   @endisset
   @if(
-    isset($elements['cms_blog']) &&
+    isset($elements['cms_blog']) && 
     isset($elements['cms_blog']->take)
   )
     <script>

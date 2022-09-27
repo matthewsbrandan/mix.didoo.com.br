@@ -13,7 +13,11 @@
         @if(isset($elements) &&
           isset($elements['products']) &&
           isset($elements['products']->items) && 
-          count($elements['products']->items) > 0
+          count($elements['products']->items) > 0 && !(
+            isset($menu_options) && isset($menu_options->hide) && (
+              in_array('search_box', $menu_options->hide)
+            )
+          )
         )
           <form onSubmit="handleSearch(event)" id="form-search">
             <div class="input-group" style="max-width: 18rem;"s>

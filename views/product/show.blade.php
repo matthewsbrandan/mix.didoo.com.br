@@ -229,13 +229,13 @@
               @isset($product->description)
                 <p style="font-size: .9rem;">{{ $product->description }}</p>
               @endisset
-              @isset($product->tags)
+              @if(isset($product->tags) && count($product->tags) > 0)
                 <div class="container-tags">
                   @foreach($product->tags as $obj)
-                    <div class="tags"> {{ $obj->item }} </div>
+                    @if($obj->item) <div class="tags"> {{ $obj->item }} </div> @endif
                   @endforeach
                 </div>
-              @endisset
+              @endif
               @isset($product->price)
                 <div class="product-item-price-data pt-2 mb-3">
                   @if(isset($product->price->current) && !!$product->price->current)

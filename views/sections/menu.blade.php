@@ -10,27 +10,42 @@
         </a>
       </div>
       <div class="search-box">
-        <form onSubmit="handleSearch(event)" id="form-search">
-          <div class="input-group">
-            <input
-              type="text"
-              id="input-search"
-              class="form-control form-control-lg"
-              placeholder="Pesquise aqui..."
-              aria-label="Pesquise aqui..."
-            >
-            <div class="input-group-text">
-              <button class="btn mb-2 p-0 btn-search" type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="margin-bottom: -3px;"
-                  fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                  <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
-                  </path>
-                </svg>
-              </button>
+        @if(isset($elements) &&
+          isset($elements['products']) &&
+          isset($elements['products']->items) && 
+          count($elements['products']->items) > 0
+        )
+          <form onSubmit="handleSearch(event)" id="form-search">
+            <div class="input-group" style="max-width: 18rem;"s>
+              <input
+                type="text"
+                id="input-search"
+                class="form-control form-control-lg"
+                placeholder="Pesquise aqui..."
+                aria-label="Pesquise aqui..."
+                onkeyup="handleFilterProducts($(this))"
+              >
+              <div class="input-group-text" style="
+                border-top-right-radius: .5rem;
+                border-bottom-right-radius: .5rem;
+              ">
+                <button
+                  class="btn mb-2 p-0 btn-search"
+                  type="button"
+                  onclick="$(this).parent().prev().focus()"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style="margin-bottom: -3px;"
+                    fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                      d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+              <div class="invalid-feedback">Nenhum produto encontrado</div>
             </div>
-          </div>
-        </form>
+          </form>
+        @endif
       </div>
       <div class="contact-box text-end d-lg-block d-none">
         @isset($menu->phone) <strong>Celular</strong>: {{ $menu->phone }}<br> @endisset

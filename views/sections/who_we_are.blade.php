@@ -1,4 +1,4 @@
-<div id="who_we_are" style="
+<section id="who_we_are" style="
   {{ innerStyleIssetAttr('background', $who_we_are, 'background') }}
   {{ innerStyleIssetAttr('background-image', $who_we_are, 'wallpaper') }}
   {{ innerStyleIssetAttr('color', $who_we_are, 'text_color') }}
@@ -15,4 +15,4 @@
     </h2>
     {!! $who_we_are->body !!}
   </div>
-</div>
+</section>

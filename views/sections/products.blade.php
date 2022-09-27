@@ -13,7 +13,8 @@
       @foreach($products->categories as $category)
         <button
           type="button"
-          class="btn btn-danger"
+          class="btn btn-danger btn-sm text-uppercase"
+          style="font-weight: 500;"
           onclick="handleFilterProductCategory($(this))"
         >{{ $category }}</button>
       @endforeach
@@ -30,7 +31,10 @@
             )
           ):''
         }}"
-        data-category="{{ $prod_item->category }}"
+        data-category="{{ $prod_item->category ?? null }}"
+        data-name="{{ $prod_item->title->text ?? null }}"
+        data-code="{{ $prod_item->code ?? null }}"
+        data-slug="{{ $prod_item->slug ?? null }}"
       >
         <div class="product-item-container border h-100 p-3 rounded d-flex flex-column" style="
           @isset($prod_item->styles)

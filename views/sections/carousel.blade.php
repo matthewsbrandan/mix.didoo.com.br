@@ -1,4 +1,4 @@
-<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+<section id="carousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     @foreach($carousel->items as $i => $item)
       <div class="carousel-item carousel-item-banners banner-link {{ $i == 0 ? 'active' : '' }}">
@@ -20,4 +20,4 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Próximo</span>
   </button>
-</div>
+</section>

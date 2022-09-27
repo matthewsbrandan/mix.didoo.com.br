@@ -175,6 +175,38 @@
   @isset($elements['products'])
     @include('utils.modalMultiPhotos')
     @include('utils.modalSearchBox')
+    <script>
+      function handleFilterProducts(el){
+        let value = el.val().toLowerCase();
+        if(value.length > 0){
+          $('#flex-order > section:not(#products), #carousel').hide('slow');
+
+          $('.product-item').each(function(){
+            let name = $(this).attr('data-name').toLowerCase();
+            let code = $(this).attr('data-code').toLowerCase();
+            let slug = $(this).attr('data-slug').toLowerCase();
+            let category = $(this).attr('data-category').toLowerCase();
+            
+            let hide = true
+            if(name && name.includes(value)) hide = false;
+            else if(code && code.includes(value)) hide = false;
+            else if(slug && slug.includes(value)) hide = false;
+            else if(category && category.includes(value)) hide = false;
+
+            if(hide) $(this).hide().addClass('hide');
+            else $(this).show().removeClass('hide');
+          });
+
+          if($('.product-item:not(.hide)').length === 0) el.addClass('is-invalid');
+          else el.removeClass('is-invalid');
+        }
+        else{
+          $('#flex-order > section:not(#products), #carousel, .product-item').show('slow');
+          $('.product-item').removeClass('hide');
+          el.removeClass('is-invalid');
+        }
+      }
+    </script>
   @endisset
   @isset($elements['popup'])
     @include('sections.popup',[

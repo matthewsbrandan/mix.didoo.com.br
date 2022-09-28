@@ -208,6 +208,22 @@
       }
     </script>
   @endisset
+  @if(
+    isset($elements['download_catalog']) &&
+    isset($elements['download_catalog']->pdf_url)
+  )
+    <script>
+      // INITIALIZATION
+      const download_catalog = {
+        page_id: `{{ $page_config->page_id }}`,
+        page_owner_id: `{{ $page_config->user_id }}`,
+        url: `{{ route('api.contact.send') }}`,
+        token: `{{ $cms_page_token }}`,
+        pdf_catalog_url: `{{ $elements['download_catalog']->pdf_url }}`
+      };
+    </script>
+    <script src="{{ asset('js/download_catalog.js') }}"></script>
+  @endif
   @isset($elements['popup'])
     @include('sections.popup',[
       'popup' => $elements['popup']

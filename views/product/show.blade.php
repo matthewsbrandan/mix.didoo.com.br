@@ -2,10 +2,11 @@
 @section('head')
   <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
   <link href="{{ asset('css/sections/products.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('css/sections/footer.css') }}" rel="stylesheet"/>
   <style>
     .logo{ margin-top: -1rem; }
     #products{
-      margin: 3.2rem 1.6rem;
+      margin: 3.2rem 1.6rem 1rem;
     }
     #products ul li {
       list-style: none;
@@ -256,12 +257,32 @@
                 </div>
               @endisset
             </div>
+            <button
+              type="button"
+              class="botao btn mb-2 w-100"
+              onclick='handleSendProductToWhatsapp({!!
+                json_encode($product)
+              !!})'
+              style="
+                background: #34af23;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+              "
+            >
+              Pedir pelo @include('utils.icons.whatsapp',['icons' => (object)[
+                'color' => 'currentColor'
+              ]])
+            </button>
             <a
               href="{{ route('home') }}"
-              class="botao btn btn-sm btn-dark mb-3 w-100"
+              class="botao btn btn-dark mb-3 w-100"
               style="
                 {{ innerStyleIssetAttr('background', $product->button, 'background') }}
                 {{ innerStyleIssetAttr('color', $product->button, 'color') }}
+                font-weight: 500;
               "
             >Voltar para o site</a>
           </div>
@@ -386,6 +407,9 @@
       </section>
     @endif
   </div>
+  @include('sections.footer',[
+    'footer' => $elements['footer']
+  ])
 @endsection
 @section('scripts')
   <script>
@@ -445,6 +469,19 @@
         }
         $(`#container-multi-photos [data-index=${target_index}]`).click();
       }
+    }
+    function handleSendProductToWhatsapp(product){
+      let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
+      let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
+      if(product.category) message+= `(${product.category})\n`;
+      if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
+      message+= `\n{{ route('product.show', ['slug' => ''])}}${product.slug}`;
+
+      let whatsapp = `{{ $elements['footer']->whatsapp ?? null }}`;
+      let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
+        whatsapp ? `&phone=${whatsapp}`:''
+      }`;
+      window.location.href = url;
     }
     function handleToggleHomeAndWhoWeAre(){
       window.location.href = "{{ route('home') }}";

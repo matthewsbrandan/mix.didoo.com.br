@@ -2,12 +2,18 @@ $('#form-download-catalog').on('submit', handleSendRequestCatalog);
 async function handleSendRequestCatalog(event){
   event.preventDefault();
 
-  let name = $('#download_catalog-name').val();
   let email = $('#download_catalog-email').val();
-  let whatsapp = $('#download_catalog-whatsapp').val();
+  if(!email){
+    showMessage('É obrigatório inserir o email!','Baixar Catálogo');
+    return;
+  }
+  let name = (email.split('@'))[0] ?? '-- não identificado --';
+  let whatsapp = null;
+  // let name = $('#download_catalog-name').val();
+  // let whatsapp = $('#download_catalog-whatsapp').val();
 
   let message = `Solicitação de download do catálogo pelo usuário ${name}<br/><br/>`;
-  if(whatsapp) message+= `Whatsapp: ${whatsapp}<br/>`;
+  // if(whatsapp) message+= `Whatsapp: ${whatsapp}<br/>`;
   if(email) message+= `Email: ${email}`;
 
   let data = {
@@ -18,8 +24,8 @@ async function handleSendRequestCatalog(event){
 
   showMessage('Solicitando catálogo...', 'Baixar Catálogo');
   $.ajax({
-    url: schedule.url, data,
-    headers: {"access-token": schedule.token},
+    url: download_catalog.url, data,
+    headers: {"access-token": download_catalog.token},
     method: "POST"
   }).then(data => {
     $('#modalMessage').hide();

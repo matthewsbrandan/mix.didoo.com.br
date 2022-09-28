@@ -9,8 +9,8 @@
       <div class="d-flex flex-column justify-content-center text-start">
         <div class="mb-4 row d-flex justify-content-center">
           <div class="col-md-10">
-            <h3 class="font-weight-bold">Baixar Catálogo</h3>
-            Cadastre seu e-mail e receba nossas novidades
+            <h3 class="font-weight-bold">{{ $download_catalog->title ?? 'Baixar Catálogo' }}</h3>
+            {{ $download_catalog->subtitle ?? 'Cadastre seu e-mail e receba nossas novidades' }}
           </div>
         </div>
         <form id="form-download-catalog">
@@ -18,6 +18,7 @@
             <div class="col-lg-7 col-md-10 form-group mb-2">
               <input
                 type="email"
+                id="download_catalog-email"
                 class="form-control email-newsletter"
                 placeholder="Digite o email..."
                 required
@@ -37,7 +38,7 @@
                 </style>
               @endif
               <button
-                type="button"
+                type="submit"
                 class="btn btn-dark btn-block btn-newsletter btn-submit"
                 style="
                   {{

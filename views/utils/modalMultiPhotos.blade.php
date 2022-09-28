@@ -204,6 +204,22 @@
               <div class="container-price"></div>
             </div>
             <div class="ctn-buttons">
+              <button
+                type="button"
+                class="botao btn mb-2 w-100 btn-whatsapp"
+                style="
+                  background: #34af23;
+                  color: white;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-weight: 500;
+                "
+              >
+                Pedir pelo @include('utils.icons.whatsapp',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </button>
               <a 
                 href="javascript:;"
                 class="botao btn btn-danger"
@@ -338,6 +354,10 @@
       </div>
     `);
     
+    $('#modalMultiPhotos .btn-whatsapp').attr(
+      'onclick',
+      `handleSendProductToWhatsapp(${JSON.stringify(data)})`
+    );
     $('#modalMultiPhotos .section-2 > div > a').attr('href', link)
       .attr('style', `
         ${ data.button.background ? `background: ${data.button.background};` : '' }
@@ -375,5 +395,18 @@
       }
       $(`#container-multi-photos [data-index=${target_index}]`).click();
     }
+  }
+  function handleSendProductToWhatsapp(product){
+    let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
+    let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
+    if(product.category) message+= `(${product.category})\n`;
+    if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
+    message+= `\n{{ route('product.show', ['slug' => ''])}}${product.slug}`;
+
+    let whatsapp = `{{ $elements['footer']->whatsapp ?? null }}`;
+    let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
+      whatsapp ? `&phone=${whatsapp}`:''
+    }`;
+    window.location.href = url;
   }
 </script>

@@ -10,6 +10,12 @@
   filter: brightness(0.9);
   box-shadow: 0 0 60px rgba(0, 0, 34, 0.2);
 }
+#products .product-item-container .product-item-image-link {
+  color: currentColor;
+}
+#products .product-item-container .product-item-image-link:not(:hover) {
+  text-decoration: none;
+}
 #products .product-item-container .product-item-category {
   font-size: 0.8rem;
 }

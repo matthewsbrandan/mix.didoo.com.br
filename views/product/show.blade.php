@@ -213,19 +213,30 @@
             background: #eee;
           ">
             <div class="text-start">
-              <h3 style="
-                text-decoration: none;
-                {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
-              ">{{ $product->title->text }}</h3>
-              @isset($product->code)
-                <small class="text-danger product-sku" style="
-                  @isset($product->styles)
-                    {{ innerStyleIssetAttr('color', $product->styles, 'text_highlighted') }}
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <h3 style="
+                    text-decoration: none;
+                    {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
+                  ">{{ $product->title->text }}</h3>
+                  @isset($product->code)
+                    <small class="text-danger product-sku" style="
+                      @isset($product->styles)
+                        {{ innerStyleIssetAttr('color', $product->styles, 'text_highlighted') }}
+                      @endisset
+                    ">SKU / Código: {{ $product->code }}</small>
                   @endisset
-                ">SKU / Código: {{ $product->code }}</small>
-              @endisset
-              <div class="product-item-category mb-2 text-uppercase opacity-9">
-                <strong>Categoria</strong>: {{ $product->category }}
+                  <div class="product-item-category text-uppercase opacity-9">
+                    <strong>Categoria</strong>: {{ $product->category }}
+                  </div>
+                </div>
+                <button
+                  class="btn btn-link mb-0 p-0 text-dark ms-2"
+                  type="button"
+                  onclick='handleShareProduct({!! json_encode($product) !!})'
+                >
+                  @include('utils.icons.share')
+                </button>
               </div>
               @isset($product->description)
                 <p style="font-size: .9rem;">{{ $product->description }}</p>
@@ -272,8 +283,9 @@
                 font-weight: 500;
               "
             >
-              Pedir pelo @include('utils.icons.whatsapp',['icons' => (object)[
-                'color' => 'currentColor'
+              {{ $elements['products']->button_wpp_text ?? 'Pedir pelo' }} @include('utils.icons.whatsapp',['icons' => (object)[
+                'color' => 'currentColor',
+                'style' =>'margin-left: .3rem;'
               ]])
             </button>
             <a
@@ -475,7 +487,7 @@
       let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
       if(product.category) message+= `(${product.category})\n`;
       if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
-      message+= `\n{{ route('product.show', ['slug' => ''])}}${product.slug}`;
+      message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
 
       let whatsapp = `{{ $elements['footer']->whatsapp ?? null }}`;
       let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
@@ -485,6 +497,18 @@
     }
     function handleToggleHomeAndWhoWeAre(){
       window.location.href = "{{ route('home') }}";
+    }
+    function handleShareProduct(product){
+      let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
+      let url = `{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+
+      let text = `*${title + (product.code ? ` - ${product.code}` : '')}* \n`;
+      if(product.category) text+= `(${product.category}) \n`;
+      if(product.price && product.price.current) text+= `R$ ${product.price.current} \n`;
+
+      navigator.share({
+        title, text, url
+      });
     }
   </script>
 @endsection

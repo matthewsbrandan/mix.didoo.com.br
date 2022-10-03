@@ -124,7 +124,6 @@
     padding: 0 1.5rem;
   }
   #modalMultiPhotos .modal-body section.section-2 h3{
-    margin-top: 14px;
     margin-bottom: 0;
   }
   #modalMultiPhotos .modal-body section.section-2 p{ margin-top: 12px; }
@@ -193,16 +192,25 @@
           </section>
           <section class="section-2">
             <div>
-              <h3>
-                <a href="javascript:;" target="_blank" style="
-                  color: inherit;
-                  text-decoration: none;
-                "></a>
-              </h3>
+              <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
+                <h3 class="title">
+                  <a href="javascript:;" target="_blank" style="
+                    color: inherit;
+                    text-decoration: none;
+                  "></a>
+                </h3>
+                <button
+                  class="btn btn-link mb-0 p-0 text-dark ms-2"
+                  type="button"
+                  onclick='handleShareProduct({!! json_encode($product) !!})'
+                >@include('utils.icons.share')
+                </button>
+              </div>
               <p></p>
               <div class="container-tags"></div>
               <div class="container-price"></div>
             </div>
+              
             <div class="ctn-buttons">
               <button
                 type="button"
@@ -216,8 +224,11 @@
                   font-weight: 500;
                 "
               >
-                Pedir pelo @include('utils.icons.whatsapp',['icons' => (object)[
-                  'color' => 'currentColor'
+                {{ 
+                  handleVerifyAttrs($elements['products'], 'button_wpp_text') ?? 'Pedir pelo'
+                }} @include('utils.icons.whatsapp',['icons' => (object)[
+                  'color' => 'currentColor',
+                  'style' =>'margin-left: .3rem;'
                 ]])
               </button>
               <a 
@@ -227,7 +238,7 @@
               >Quero saber mais</a>
               <button
                 type="button"
-                class="botao btn btn-gray btn-uppercase"
+                class="botao btn btn-secondary mt-2 btn-uppercase"
                 onclick="$('#modalMultiPhotos').hide();"
               >Fechar e voltar</button>
             </div>
@@ -318,7 +329,7 @@
     );
 
     let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
-    $('#modalMultiPhotos .section-2 > div > h3 a').html(data.title.text).attr(
+    $('#modalMultiPhotos .section-2 h3.title a').html(data.title.text).attr(
       'href', link
     );
     $('#modalMultiPhotos .section-2 > div > p').html(data.description);
@@ -401,12 +412,24 @@
     let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
     if(product.category) message+= `(${product.category})\n`;
     if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
-    message+= `\n{{ route('product.show', ['slug' => ''])}}${product.slug}`;
+    message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
 
     let whatsapp = `{{ $elements['footer']->whatsapp ?? null }}`;
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
       whatsapp ? `&phone=${whatsapp}`:''
     }`;
     window.location.href = url;
+  }
+  function handleShareProduct(product){
+    let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
+    let url = `{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+
+    let text = `*${title + (product.code ? ` - ${product.code}` : '')}* \n`;
+    if(product.category) text+= `(${product.category}) \n`;
+    if(product.price && product.price.current) text+= `R$ ${product.price.current} \n`;
+
+    navigator.share({
+      title, text, url
+    });
   }
 </script>

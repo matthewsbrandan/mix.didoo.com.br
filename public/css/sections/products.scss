@@ -10,6 +10,10 @@
       filter: brightness(.9);
       box-shadow: 0 0 60px #0023;
     }
+    .product-item-image-link{
+      color: currentColor;
+    }
+    .product-item-image-link:not(:hover){ text-decoration: none; }
     .product-item-category{ font-size: .8rem; }
     .product-item-price-from{ font-size: 1.3rem; }
   }

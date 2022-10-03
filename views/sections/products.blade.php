@@ -44,25 +44,25 @@
           @endisset
         ">
           <div class="product-item-data position-relative">
-            <a
-              class="product-item-image-link"
-              href="{{ $product_url }}"
-              target="_blank"
-            >
-              <div class="product-item-image">
-                <img
-                  src="{{ $prod_item->image->src }}"
-                  class="rounded w-100"
-                  alt="{{ $prod_item->image->alt ?? $prod_item->title->text ?? 'Imagem do produto' }}"
-                />
-              </div>
-            </a>
+            <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'>
+              <img
+                src="{{ $prod_item->image->src }}"
+                class="rounded w-100"
+                alt="{{ $prod_item->image->alt ?? $prod_item->title->text ?? 'Imagem do produto' }}"
+              />
+            </div>
           </div>
           <div class="product-container pt-3">
             <div class="product-item-name text-center mb-1">
-              <strong class="text-uppercase h5" style="
-                {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
-              ">{{ $prod_item->title->text }}</strong><br/>
+              <a
+                class="product-item-image-link"
+                href="{{ $product_url }}"
+                target="_blank"
+              >
+                <strong class="text-uppercase h5" style="
+                  {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
+                ">{{ $prod_item->title->text }}</strong>
+              </a><br/>
               @isset($prod_item->code)
                 <small class="text-danger product-sku" style="
                   @isset($prod_item->styles)

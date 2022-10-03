@@ -76,7 +76,11 @@
                 class="nav-link"
                 href="https://www.facebook.com/{{ $navbar->facebook }}"
                 target="_blank"
-              ><i class="fab fa-facebook"></i> <span class="mobile">Facebook</span></a>
+              >
+                @include('utils.icons.facebook',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
             </li>
           @endif
           @if(isset($navbar->instagram) && $navbar->instagram)
@@ -85,7 +89,11 @@
                 class="nav-link"
                 href="https://www.instagram.com/{{ $navbar->instagram}}"
                 target="_blank"
-              ><i class="fab fa-instagram"></i> <span class="mobile">Instagram</span></a>
+              >
+                @include('utils.icons.instagram',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
             </li>
           @endif
           @if(isset($navbar->twitter) && $navbar->twitter)
@@ -94,7 +102,11 @@
                 class="nav-link"
                 href="https://twitter.com/{{ $navbar->twitter }}"
                 target="_blank"
-              ><i class="fab fa-twitter"></i> <span class="mobile">Twitter</span></a>
+              >
+                @include('utils.icons.twitter',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
             </li>
           @endif
         </ul>

@@ -2,14 +2,22 @@
   {{ innerStyleIssetAttr('background', $menu, 'background', 'transparent', null, true) }}
   {{ innerStyleIssetAttr('color', $menu, 'text_color', '#212529', null, true) }}
 ">
+  <style>
+    @media (max-width: 767px) {
+      #menu .search-box, #menu .search-box .input-group{
+        width: 100%;
+        max-width: 100% !important;
+      }
+    }
+  </style>
   <div class="container">
-    <div class="d-flex align-items-center justify-content-between pt-4 pb-4">
+    <div class="d-flex align-items-center justify-content-between flex-column flex-md-row pt-4 pb-4">
       <div class="logo-box">
         <a href="{{ route('home') }}">
           <img src="{{ $menu->logo }}" class="image-logo" alt="{{ $menu->alt_image ?? 'Logo do site' }}">
         </a>
       </div>
-      <div class="search-box">
+      <div class="search-box mt-4 mt-md-0">
         @if(isset($elements) &&
           isset($elements['products']) &&
           isset($elements['products']->items) && 

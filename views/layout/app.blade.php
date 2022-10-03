@@ -31,6 +31,18 @@
   <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
   <script>
+    $('[data-target="#navbarCollapse"]').on('click', function(){
+      is_expanded = $(this).attr('aria-expanded') === 'true';
+      if(is_expanded){
+        $(this).addClass('collapsed');
+        $('#navbarCollapse').removeClass('show');
+      }else{
+        $(this).removeClass('collapsed');
+        $('#navbarCollapse').addClass('show');
+      }
+      $(this).attr('aria-expanded', is_expanded ? 'false':'true');
+    });
+    
     function getById(id){ return document.getElementById(id); }
     const IMAGE_DEFAULT = `{{ asset('images/no-image.jpg') }}`;
     async function is_valid_image(src) {

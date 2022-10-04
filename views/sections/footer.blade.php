@@ -35,7 +35,7 @@
       isset($footer->youtube) || 
       isset($footer->twitter)
     )
-      <div id="contato">
+      <div id="fale-conosco">
         <strong style="
           {{ innerStyleIssetAttr('font-size', $footer, 'title_length') }}
         ">FALE CONOSCO</strong>

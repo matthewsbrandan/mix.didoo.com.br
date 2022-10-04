@@ -67,7 +67,7 @@
           <li class="nav-item ">
             <a
               class="nav-link"
-              href="{{ route('home') }}#contato"
+              href="{{ route('home') }}?contato"
             >Contato</a>
           </li>
           @if(isset($navbar->facebook) && $navbar->facebook)

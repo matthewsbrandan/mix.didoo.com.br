@@ -1,0 +1,13 @@
+#contact{
+  a{
+    color: inherit;
+
+    &:not(:hover){ text-decoration: none; }
+  }
+  .form-group{
+    margin-bottom: .8rem;
+
+    label{ padding-bottom: .4rem; }
+    input{ height: 3rem; }
+  }
+}

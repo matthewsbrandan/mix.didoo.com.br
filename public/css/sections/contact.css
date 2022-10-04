@@ -1,0 +1,15 @@
+#contact a {
+  color: inherit;
+}
+#contact a:not(:hover) {
+  text-decoration: none;
+}
+#contact .form-group {
+  margin-bottom: 0.8rem;
+}
+#contact .form-group label {
+  padding-bottom: 0.4rem;
+}
+#contact .form-group input {
+  height: 3rem;
+}/*# sourceMappingURL=contact.css.map */

@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('js/slick-1.8.1/slick/slick.css') }}"/>
     <link href="{{ asset('css/sections/testimonial.css') }}" rel="stylesheet"/>
   @endisset
+  <link href="{{ asset('css/sections/contact.css') }}" rel="stylesheet"/>
   <link href="{{ asset('css/sections/footer.css') }}" rel="stylesheet"/>
   <style> #flex-order{ display: flex; flex-direction: column; } </style>
   @isset($elements['section_dynamic'])
@@ -39,7 +40,7 @@
     'navbar' => $elements['navbar']
   ])
   <div id="home-page" style="
-    @if(isset($_GET['quem-somos']))
+    @if(isset($_GET['quem-somos']) || isset($_GET['contato']))
       display: none;
     @endif
   ">
@@ -95,6 +96,10 @@
       'who_we_are' => $elements['who_we_are']
     ])
   @endisset
+  @include('sections.contact',[
+    'footer' => $elements['footer'],
+    'contact' => $elements['contact'] ?? null
+  ])
   @include('sections.footer',[
     'footer' => $elements['footer']
   ])

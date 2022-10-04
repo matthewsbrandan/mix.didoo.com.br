@@ -26,6 +26,7 @@
       <?php foreach($elements['section_dynamic']->section_dynamic as $section){ echo $section->css; } ?>
     </style>
   @endisset
+  <script src="https://kit.fontawesome.com/e2f5b82175.js" crossorigin="anonymous"></script>
   @if(isset($elements['code']) && $elements['code']->head) {!! $elements['code']->head !!} @endif
 @endsection
 

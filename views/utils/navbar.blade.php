@@ -64,12 +64,14 @@
           @endisset
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item ">
-            <a
-              class="nav-link"
-              href="{{ route('home') }}?contato"
-            >Contato</a>
-          </li>
+          @isset($elements['contact'])
+            <li class="nav-item ">
+              <a
+                class="nav-link"
+                href="{{ route('home') }}?contato"
+              >Contato</a>
+            </li>
+          @endisset
           @if(isset($navbar->facebook) && $navbar->facebook)
             <li class="nav-item">
               <a

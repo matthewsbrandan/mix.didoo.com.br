@@ -1,9 +1,7 @@
 <section id="contact" style="
-  @isset($contact)
-    {{ innerStyleIssetAttr('background', $contact, 'background') }}
-    {{ innerStyleIssetAttr('background-image', $contact, 'wallpaper') }}
-    {{ innerStyleIssetAttr('color', $contact, 'text_color') }}
-  @endisset
+  {{ innerStyleIssetAttr('background', $contact, 'background') }}
+  {{ innerStyleIssetAttr('background-image', $contact, 'wallpaper') }}
+  {{ innerStyleIssetAttr('color', $contact, 'color') }}
   @if(!isset($_GET['contato']))
     display: none;
   @endif
@@ -15,7 +13,12 @@
       <div class="col-lg-6">
         <form method="post" id="form-contact">
           <div class="row">
-            <div class="col-lg-12 form-group text-danger text-end mb-0" style="font-size: .9rem;">
+            <div class="col-lg-12 form-group text-danger text-end mb-0" style="
+              font-size: .9rem;
+              @isset($contact->button)
+                {{ innerStyleIssetAttr('color',$contact->button,'background', null, null, true) }}
+              @endisset
+            ">
               * Campos Obrigatórios
             </div>
             <div class="col-lg-12 form-group">
@@ -73,15 +76,14 @@
                 type="submit"
                 class="btn btn-danger btn-block btn-lg border-0 w-100 mt-4"
                 style="
-                  @if(isset($contact) && isset($contact->button))
+                  @isset($contact->button)
                     {{ innerStyleIssetAttr('color',$contact->button,'color') }}
                     {{ innerStyleIssetAttr('background',$contact->button,'background') }}
-                  @endif
+                  @endisset
                 "
               >
-                {{
-                  isset($contact) && isset($contact->button) && isset($contact->text) ? 
-                  $contact->text :
+                {{ isset($contact->button) && isset($contact->button->text) ? 
+                  $contact->button->text :
                   'Enviar Mensagem!'
                 }}
               </button>

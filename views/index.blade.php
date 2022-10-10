@@ -96,10 +96,12 @@
       'who_we_are' => $elements['who_we_are']
     ])
   @endisset
-  @include('sections.contact',[
-    'footer' => $elements['footer'],
-    'contact' => $elements['contact'] ?? null
-  ])
+  @isset($elements['contact'])
+    @include('sections.contact',[
+      'footer' => $elements['footer'],
+      'contact' => $elements['contact']
+    ])
+  @endisset
   @include('sections.footer',[
     'footer' => $elements['footer']
   ])

@@ -19,24 +19,54 @@
               * Campos Obrigatórios
             </div>
             <div class="col-lg-12 form-group">
-              <label for="nome">* Nome</label>
-              <input type="text" name="nome" id="nome" class="form-control" required="">
+              <label for="name">* Nome</label>
+              <input
+                type="text"
+                name="name"
+                id="contact-name"
+                class="form-control"
+                required
+              />
             </div>
             <div class="col-lg-7 form-group">
               <label for="email">* E-mail</label>
-              <input type="email" name="email" id="email" class="form-control" required="">
+              <input
+                type="email"
+                name="email"
+                id="contact-email"
+                class="form-control"
+                required
+              />
             </div>
             <div class="col-lg-5 form-group">
-              <label for="telefone">* Telefone / Celular</label>
-              <input type="text" name="telefone" id="telefone" class="form-control telefone" required="">
+              <label for="phone">* Telefone / Celular</label>
+              <input
+                type="text"
+                name="phone"
+                id="contact-phone"
+                class="form-control telefone"
+                required
+              />
             </div>
             <div class="col-lg-12 form-group">
-              <label for="assunto">* Assunto</label>
-              <input type="text" name="assunto" id="assunto" class="form-control" required="">
+              <label for="subject">* Assunto</label>
+              <input
+                type="text"
+                name="subject"
+                id="contact-subject"
+                class="form-control"
+                required
+              />
             </div>
             <div class="col-lg-12 form-group">
-              <label for="mensagem">* Mensagem</label>
-              <textarea name="mensagem" id="mensagem" cols="4" class="form-control" required=""></textarea>
+              <label for="message">* Mensagem</label>
+              <textarea
+                name="message"
+                id="contact-message"
+                cols="4"
+                class="form-control"
+                required
+              ></textarea>
             </div>
             <div class="col-lg-12 form-group">
               <button

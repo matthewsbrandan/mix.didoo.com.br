@@ -189,6 +189,14 @@ class HomeController extends Controller{
     }
     $categories = [];
     foreach($products->items as &$item){
+      #region HANDLE TEXT SLASHES
+      if(isset($item->category)) $item->category = str_replace("'","", $item->category);
+      if(isset($item->title) &&
+        isset($item->title->text)
+      ) $item->title->text = str_replace("'","", $item->title->text);
+      if(isset($item->description)) $item->description = str_replace("'","", $item->description);
+      #endregion HANDLE TEXT SLASHES
+
       if(!in_array($item->category, $categories)) $categories[] = $item->category;
       if(isset($item->outher_images)){
         $item->outher_images = array_filter($item->outher_images, function($outher){

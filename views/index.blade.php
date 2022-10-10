@@ -235,6 +235,80 @@
       'popup' => $elements['popup']
     ])
   @endisset
+  <script>
+    $('#form-contact').on('submit', handleShedule);
+    async function handleShedule(event){
+      event.preventDefault();
+      let page_phone = `{{ 
+        isset($elements['footer']) &&
+        $elements['footer']->whatsapp ? 
+        numberWhatsappFormat($elements['footer']->whatsapp):'' 
+      }}`;
+      if(page_phone.length == 0) page_phone = null;
+
+      let name = $('#contact-name').val();
+      let email = $('#contact-email').val();
+      let phone = $('#contact-phone').val();
+      let subject = $('#contact-subject').val();
+      let message = $('#contact-message').val();
+
+      let page_id = `{{ $page_config->page_id }}`;
+      let page_owner_id = `{{ $page_config->user_id }}`;
+
+      let dataSendMessage = {
+        name, email, message, phone,
+        outhers: {subject},
+        page_id, page_owner_id
+      };
+
+      
+      let userMessage = ` *NOME:* ${name} \n\n*E-MAIL:* ${email}\n\n*TELEFONE:* ${phone ?? '-'}\n\n*ASSUNTO:* ${subject ?? '-'}\n\n*MENSAGEM:* \n\n ${message}`;
+      userMessage = window.encodeURIComponent(userMessage);
+
+      try{
+        const data = await $.ajax({
+          url: `{{ route('api.contact.send') }}`,
+          data: dataSendMessage,
+          headers: {"access-token": `{{ $cms_page_token }}`},
+          method: "POST"
+        });
+
+        if(data.result){
+          if(page_phone) handleSendToWhatsapp(page_phone,userMessage);
+          showMessage('Enviado com sucesso','Contato');
+          handleClearFormContact();
+        }else
+        if(page_phone) handleSendToWhatsapp(page_phone,userMessage, true);
+      }catch(err){
+        console.log(err);
+        if(page_phone) handleSendToWhatsapp(page_phone,userMessage, true);
+      }
+    }
+    function handleSendToWhatsapp(phone, text, confirm = false){
+      if(confirm) showMessage(`
+        <p>Não foi possível armazenar sua mensagem. Deseja enviar mesmo assim?</p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <a
+            href="https://api.whatsapp.com/send?phone=${phone}&text=${text}"
+            class="btn btn-primary"
+          >Sim</a>
+          <button
+            type="button"
+            class="btn btn-gray"
+            onclick="$('#modalMessage').hide();"
+          >Não</button>
+        </div>
+      `,'Agendamento');
+      else window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${text}`);  
+    }
+    function handleClearFormContact(){
+      $('#contact-name').val('');
+      $('#contact-email').val('');
+      $('#contact-phone').val('');
+      $('#contact-subject').val('');
+      $('#contact-message').val('');
+    }
+  </script>
   @include('layout.cookies')
   @if(isset($elements['jivochat']) && $elements['jivochat']->widget)
     <script src="//code-sa1.jivosite.com/widget/{{ $elements['jivochat']->widget }}" async></script>

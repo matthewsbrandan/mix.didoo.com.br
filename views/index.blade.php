@@ -256,7 +256,8 @@
       let page_owner_id = `{{ $page_config->user_id }}`;
 
       let dataSendMessage = {
-        name, email, message, phone,
+        name, email, phone,
+        message: subject ? `<b>${subject}</b><br/>${message}` : message,
         outhers: {subject},
         page_id, page_owner_id
       };

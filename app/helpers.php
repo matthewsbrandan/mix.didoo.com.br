@@ -146,13 +146,33 @@
   function numberWhatsappFormat($phone){
     $phone = numberPhoneRemoveSpacialsChars($phone);
 
-    if(strlen($phone) <= 11) $phone = "55" . $phone;
+    if(strlen($phone) <= 11 && strlen($phone) > 9) $phone = "55" . $phone;
     return $phone;
   }
   function numberPhoneFormat($phone){
+    if(!$phone) return;
+
     $phone = numberPhoneRemoveSpacialsChars($phone);
-    $phone_formatted = substr($phone,0, -4) - substr($phone,-4);
-    $phone_formatted = "(".substr($phone_formatted,0, 2).") ".substr($phone_formatted, 2);
+    
+    $country  = null;
+    $ddd = null;
+    $number = [];
+
+    if(strlen($phone) > 13) $phone = substr($phone, -13);
+    if(strlen($phone) >= 12){ // 12 or 13
+      $country = substr($phone,0,2);
+      $phone = substr($phone, 2);
+    }
+    if(strlen($phone) >= 10){ // 10 or 11
+      $ddd = substr($phone,0,2);
+      $phone = substr($phone, 2);
+    }
+    $number = [substr($phone,0, -4), substr($phone,-4)];
+
+    $phone_formatted = "";
+    if($country) $phone_formatted.= "+$country ";
+    if($ddd) $phone_formatted.= "($ddd) ";
+    $phone_formatted.= implode('-',$number);
 
     return $phone_formatted;
   }

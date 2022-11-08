@@ -4,10 +4,10 @@
 ">
   <div class="content" id="blog">
     <h2 class="titulo" style="
-      {{ innerStyleIssetAttr('color', $cms_blog, 'text_color') }}
-    ">{{ $cms_blog->title }}</h2>
+      {{ innerStyleIssetAttr('color', $cms_blog, ['title','color']) }}
+    ">{{ $cms_blog->title->text ?? 'Blog' }}</h2>
     <div class="wrapper-blog">
-      <div id="container-blog" style="{{ innerStyleIssetAttr('color', $cms_blog, 'text_color') }}">
+      <div id="container-blog" style="{{ innerStyleIssetAttr('color', $cms_blog, ['title','color']) }}">
         <p class="text-loading texto">Carregando Posts...</p>
       </div>
       <button

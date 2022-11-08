@@ -414,7 +414,10 @@
     if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
     message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
 
-    let whatsapp = `{{ $elements['footer']->whatsapp ?? null }}`;
+    let whatsapp = `{{
+      isset($elements['footer']) && isset($elements['footer']->whatsapp) ? 
+        numberWhatsappFormat($elements['footer']->whatsapp) :  null
+    }}`;
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
       whatsapp ? `&phone=${whatsapp}`:''
     }`;

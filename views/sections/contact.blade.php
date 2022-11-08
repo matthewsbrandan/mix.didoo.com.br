@@ -99,19 +99,19 @@
           <div class="mb-4">
             <strong class="text-uppercase">Contato</strong> <br>
             @isset($footer->whatsapp)
-              <a href="tel: {{ $footer->whatsapp }}" target="_blank" style="
+              <a href="tel: {{ numberWhatsappFormat($footer->whatsapp) }}" target="_blank" style="
                 {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Whatsapp:</b> {{ $footer->whatsapp }}</a><br/>
+              "><b>Whatsapp:</b> {{ numberPhoneFormat($footer->whatsapp) }}</a><br/>
             @endisset
             @isset($footer->phone_fix)
-              <a href="tel: {{ $footer->phone_fix }}" target="_blank" style="
+              <a href="tel: {{ numberWhatsappFormat($footer->phone_fix) }}" target="_blank" style="
                 {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Telefone:</b> {{ $footer->phone_fix }}</a><br/>
+              "><b>Telefone:</b> {{ numberPhoneFormat($footer->phone_fix) }}</a><br/>
             @endisset
             @isset($footer->phone_cel)
-              <a href="tel: {{ $footer->phone_cel }}" target="_blank" style="
+              <a href="tel: {{ numberWhatsappFormat($footer->phone_cel) }}" target="_blank" style="
                 {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Celular:</b> {{ $footer->phone_cel }}</a><br/>
+              "><b>Celular:</b> {{ numberPhoneFormat($footer->phone_cel) }}</a><br/>
             @endisset
             @isset($footer->email)
               <a href="mailto:{{ $footer->email }}" target="_blank" style="

@@ -114,12 +114,16 @@
       let hide = to_home ? $('#who_we_are') : $('#home-page');
       let active = to_home ? $('#btn-to-home-page') : $('#btn-to-who-we-are');
       let normal = to_home ? $('#btn-to-who-we-are') : $('#btn-to-home-page');
-
+      
       show.show();
       hide.hide();
 
       active.addClass('active');
       normal.removeClass('active');
+
+      if(to_home && typeof initSlickDepoiments === 'function'){
+        initSlickDepoiments();
+      }
     }
   </script>
   @isset($elements['carousel'])
@@ -128,8 +132,13 @@
   @isset($elements['testimonial'])
     <script type="text/javascript" src="{{ asset('js/slick-1.8.1/slick/slick.min.js') }}"></script>
     <script>
-      $(document).ready(function(){
-        if($('.slick-depoiments').length > 0) {
+      let slickDepoimentsIsInitilized = false;
+      const initSlickDepoiments = () => {
+        if($('.slick-depoiments').length > 0 && $('.slick-depoiments').is(':visible')) {
+          if(slickDepoimentsIsInitilized) return;
+          slickDepoimentsIsInitilized = true;
+          
+          console.log('[slick-initialized]');
           $('.slick-depoiments').slick({
             dots: true,
             autoplay: false,
@@ -162,7 +171,9 @@
             ]
           });
         }
-      });
+      }
+
+      $(document).ready(function(){ initSlickDepoiments() });
     </script>
   @endisset
   @if(

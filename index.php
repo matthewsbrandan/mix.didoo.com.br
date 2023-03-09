@@ -59,6 +59,10 @@
       return $controller->index();
     }
     else{
+      if($frac_url[0] == 'deploy'){
+        include_once __DIR__."/app/controllers/DeployController.php";
+        return DeployController::execute();
+      }
       if($frac_url[0] == 'blog'){
         include_once __DIR__."/app/controllers/PostController.php";
         $controller = new PostController($cms, $cms_theme_slug);

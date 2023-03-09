@@ -6,7 +6,11 @@ class DeployController{
     $githubHash = $_SERVER['HTTP_X_HUB_SIGNATURE'];
     $localToken = getenv('DEPLOY_SECRET');
     $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
-    if(hash_equals($githubHash, $localHash)){ return shell_exec("/bin/importa.sh"); }
+    if(hash_equals($githubHash, $localHash)){
+      $path = __DIR__."/../../deploy.sh";
+      $output = shell_exec($path);
+      return is_string($output) ? $output : json_encode($output);
+    }
     else return http_response_code(403);
   }
 }

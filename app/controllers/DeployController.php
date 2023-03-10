@@ -63,10 +63,12 @@ class DeployController{
     $payload = json_decode($json);
     switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
       case 'ping':
-        echo 'pong';
+        return 'pong';
         break;
-    //    case 'push':
-    //        break;
+      case 'push':
+        $output = shell_exec("git pull");
+        return is_string($output) ? $output : json_encode($output);
+        break;
       default:
         header('HTTP/1.0 404 Not Found');
         echo "Event:$_SERVER[HTTP_X_GITHUB_EVENT] Payload:\n";

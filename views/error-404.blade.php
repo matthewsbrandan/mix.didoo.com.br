@@ -16,7 +16,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: black;
     }
     h1{
       font-size: 3.2rem;

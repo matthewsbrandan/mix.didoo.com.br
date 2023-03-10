@@ -7,8 +7,7 @@ class DeployController{
     $localToken = getenv('DEPLOY_SECRET');
     $localHash = 'sha1=' . hash_hmac('sha1', $githubPayload, $localToken, false);
     if(hash_equals($githubHash, $localHash)){
-      $path = __DIR__."/../../deploy.sh";
-      $output = shell_exec($path);
+      $output = shell_exec("git pull");
       return is_string($output) ? $output : json_encode($output);
     }
     else return http_response_code(403);

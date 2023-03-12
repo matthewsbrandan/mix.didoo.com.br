@@ -10,10 +10,18 @@
   ">{{ $products->title->text ?? 'Produtos Personalizados' }}</h1>
   <div class="container-categories d-flex">
     <div class="d-flex flex-wrap mx-auto" style="gap: .5rem;">
+      @if(count($products->categories) > 0)
+        <button
+          type="button"
+          class="btn btn-danger btn-sm text-uppercase btn-filter-category"
+          style="font-weight: 500;"
+          onclick="handleFilterAllCategories()"
+        >Todos</button>
+      @endif
       @foreach($products->categories as $category)
         <button
           type="button"
-          class="btn btn-danger btn-sm text-uppercase"
+          class="btn btn-danger btn-sm text-uppercase btn-filter-category"
           style="font-weight: 500;"
           onclick="handleFilterProductCategory($(this))"
         >{{ $category }}</button>
@@ -121,19 +129,24 @@
     @endforeach
   </div>
   <script>
+    const filterBtnThemeColors = () => ['btn-danger','btn-dark'];
+    function handleFilterAllCategories(){
+      let [class_active, class_disabled] = filterBtnThemeColors();
+      $(`.btn-filter-category`).addClass(class_active).removeClass(class_disabled);
+      $('.product-item').show('slow');
+    }
     function handleFilterProductCategory(el){
-      let class_active = 'btn-danger';
-      let class_disabled = 'btn-dark';
+      let [class_active, class_disabled] = filterBtnThemeColors();
       let category = el.html();
 
+      $(`.btn-filter-category`).removeClass(class_active).addClass(class_disabled);
+
       $('.product-item').each(function(){
-        if($(this).attr('data-category') === category){
-          if(el.hasClass(class_active)) $(this).hide('slow');
-          else $(this).show('slow');
-        }
+        if($(this).attr('data-category') === category) $(this).show('slow');
+        else $(this).hide('slow');
       });
 
-      el.toggleClass(`${class_active} ${class_disabled}`);
+      el.addClass(class_active).removeClass(class_disabled);
     }
   </script>
 </div>

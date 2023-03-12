@@ -69,7 +69,11 @@
               <a
                 class="nav-link"
                 href="{{ route('home') }}?contato"
-              >Contato</a>
+              >
+                @include('utils.icons.contact',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
             </li>
           @endisset
           @if(isset($navbar->facebook) && $navbar->facebook)

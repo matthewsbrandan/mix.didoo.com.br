@@ -11,10 +11,13 @@
 
       background: var(--primary-500);
     }
+    .btn-gray{
+      background-color: var(--gray-200) !important;
+    }
     img{
-      width: 8rem;
+      width: 14rem;
       height: 8rem;
-      object-fit: cover;
+      object-fit: contain;
     }
     p{
       text-align: center;

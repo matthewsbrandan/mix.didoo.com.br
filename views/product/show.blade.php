@@ -154,7 +154,12 @@
             <span class="to-next" onclick="handleChangeShowingPhoto()">
               @include('utils.icons.chevron_right')
             </span>
-            @isset($product->video)
+            @php
+              $video_position = isset($product->video) ? (
+                isset($product->video_position) ? $product->video_position : 'start'
+              ) : null;
+            @endphp
+            @if(isset($product->video) && $video_position === 'start')
               <iframe
                 src="{{ $product->video }}"
                 frameborder="0"
@@ -167,12 +172,12 @@
                   border-radius: .6rem;
                 "
               ></iframe>
-            @endisset
+            @endif
           </div>
           @if(isset($product->video) || isset($product->outher_images))
             <div class="container-itens">
               <ul id="container-multi-photos">
-                @isset($product->video)
+                @if(isset($product->video) && $video_position === 'start')
                   <li 
                     class="has-video selected"
                     style="
@@ -186,9 +191,9 @@
                     data-index="0"
                     onclick="handleChangeShowingPhoto($(this))"
                   >@include('utils.icons.play')</li>
-                @endisset
+                @endif
                 <li 
-                  class="{{ !isset($product->video) ? 'selected' : '' }}"
+                  class="{{ !isset($product->video) || $video_position === 'final' ? 'selected' : '' }}"
                   style="background-image: url('{{ $product->image->src }}')"
                   alt="{{ $product->image->alt ?? '' }}"
                   data-image="{{ $product->image->src }}"
@@ -204,6 +209,21 @@
                     onclick="handleChangeShowingPhoto($(this))"
                   ></li>
                 @endforeach
+                @if(isset($product->video) && $video_position === 'final')
+                  <li 
+                    class="has-video"
+                    style="
+                      background-image: none;
+                      background: #ccd;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    data-image="none"
+                    data-index="0"
+                    onclick="handleChangeShowingPhoto($(this))"
+                  >@include('utils.icons.play')</li>
+                @endif
               </ul>
             </div>
           @endisset
@@ -217,7 +237,7 @@
                 <div>
                   <h3 style="
                     text-decoration: none;
-                    {{ innerStyleIssetAttr('font-size', $prod_item->title, 'fontsize') }}
+                    {{ innerStyleIssetAttr('font-size', $product->title, 'fontsize') }}
                   ">{{ $product->title->text }}</h3>
                   @isset($product->code)
                     <small class="text-danger product-sku" style="
@@ -429,7 +449,7 @@
       if(remove_iframe) $('.container .container-img iframe').remove();
       if(video){
         $('.container .container-img').css('background-image','none');
-        if(remove_iframe) $('.container .container-img').append(`
+        if(remove_iframe || $('.container .container-img iframe').length === 0) $('.container .container-img').append(`
           <iframe
             src="${ video }"
             frameborder="0"
@@ -457,7 +477,7 @@
       let image = null;
       if(elem){
         image = elem.attr('data-image');
-        has_video = elem.hasClass('has-video');
+        has_video = elem.hasClass('has-video') ? '{{ isset($product->video) ? $product->video : '' }}' : null;
         if(!image) return;
 
         $('#container-multi-photos li').removeClass('selected');

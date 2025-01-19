@@ -81,7 +81,7 @@
               </a>
             </li>
           @endisset
-          @if(isset($elements['code']->facebook) && $elements['code']->facebook)
+          @if(isset($elements['code']->facebook) && $elements['code']->facebook && isset($navbar->social_network) && is_array($navbar->social_network) && in_array('facebook', $navbar->social_network))
             <li class="nav-item">
               <a
                 class="nav-link"
@@ -94,7 +94,7 @@
               </a>
             </li>
           @endif
-          @if(isset($elements['code']->instagram) && $elements['code']->instagram)
+          @if(isset($elements['code']->instagram) && $elements['code']->instagram && isset($navbar->social_network) && is_array($navbar->social_network) && in_array('instagram', $navbar->social_network))
             <li class="nav-item">
               <a
                 class="nav-link"
@@ -107,7 +107,7 @@
               </a>
             </li>
           @endif
-          @if(isset($elements['code']->twitter) && $elements['code']->twitter)
+          @if(isset($elements['code']->twitter) && $elements['code']->twitter && isset($navbar->social_network) && is_array($navbar->social_network) && in_array('twitter', $navbar->social_network))
             <li class="nav-item">
               <a 
                 class="nav-link"
@@ -120,7 +120,7 @@
               </a>
             </li>
           @endif
-          @if(isset($elements['code']->youtube) && $elements['code']->youtube)
+          @if(isset($elements['code']->youtube) && $elements['code']->youtube && isset($navbar->social_network) && is_array($navbar->social_network) && in_array('youtube', $navbar->social_network))
             <li class="nav-item">
               <a 
                 class="nav-link"
@@ -133,7 +133,7 @@
               </a>
             </li>
           @endif
-          @if(isset($elements['code']->tiktok) && $elements['code']->tiktok)
+          @if(isset($elements['code']->tiktok) && $elements['code']->tiktok && isset($navbar->social_network) && is_array($navbar->social_network) && in_array('tiktok', $navbar->social_network))
             <li class="nav-item">
               <a 
                 class="nav-link"

@@ -256,9 +256,9 @@
     async function handleShedule(event){
       event.preventDefault();
       let page_phone = `{{ 
-        isset($elements['footer']) &&
-        $elements['footer']->whatsapp ? 
-        numberWhatsappFormat($elements['footer']->whatsapp):'' 
+        isset($elements['code']) &&
+        $elements['code']->whatsapp ? 
+        numberWhatsappFormat($elements['code']->whatsapp):'' 
       }}`;
       if(page_phone.length == 0) page_phone = null;
 

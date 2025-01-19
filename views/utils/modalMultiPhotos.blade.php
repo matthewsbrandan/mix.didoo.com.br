@@ -261,7 +261,7 @@
     if(remove_iframe) $('#modalMultiPhotos .container-img iframe').remove();
     if(video){
       $('#modalMultiPhotos .container-img').css('background-image','none');
-      if(remove_iframe) $('#modalMultiPhotos .container-img').append(`
+      if(remove_iframe || $('#modalMultiPhotos .container-img iframe').length === 0) $('#modalMultiPhotos .container-img').append(`
         <iframe
           src="${ video }"
           frameborder="0"
@@ -286,32 +286,40 @@
     }
   }
   function handleShowMultiPhotos(data){
-    setMainPhotoMultiPhotos(data.image.src, data.video, true);
+    setMainPhotoMultiPhotos(data.image.src, (
+      data.video_position === 'final' ? undefined : data.video
+    ), true);
 
     $("#container-multi-photos").html("");
-    if(data.video || data.outher_images) $("#container-multi-photos").html(( data.video ? `
+
+    const liVideo = (selected) => `
+      <li 
+        class="has-video ${selected ? 'selected':''}"
+        style="
+          background-image: none;
+          background: #ccd;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+        data-image="none"
+        data-video="${data.video}"
+        data-index="0"
+        onclick="handleChangeShowingPhoto($(this))"
+      >@include('utils.icons.play')</li>
+    `;
+
+    const isStartVideo = data.video && data.video_position !== 'final';
+    if(data.video || data.outher_images) $("#container-multi-photos").html(
+      ((isStartVideo) ? liVideo(true) : '' ) + `
         <li 
-          class="has-video selected"
-          style="
-            background-image: none;
-            background: #ccd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "
-          data-image="none"
-          data-index="0"
-          onclick="handleChangeShowingPhoto($(this))"
-        >@include('utils.icons.play')</li>
-      `:'' ) + `
-        <li 
-          class="${data.video ? '' : 'selected'}"
+          class="${isStartVideo ? '' : 'selected'}"
           style="background-image: url('${data.image.src}')"
           data-image="${data.image.src}"
-          data-index="${data.video ? '1':'0'}"
+          data-index="${isStartVideo ? '1':'0'}"
           onclick="handleChangeShowingPhoto($(this))"
         ></li>
-      ` + ( data.outher_images ? (
+      ` + (data.outher_images ? (
         data.outher_images.map((img, i) => { 
           let index = i + 1;
           if(data.video) index++;
@@ -325,7 +333,9 @@
             ></li>
           `;
         }).join('')
-      ):'' )
+      ):'') + (
+        data.video && data.video_position === 'final' ? liVideo(false) : ''
+      )
     );
 
     let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
@@ -383,12 +393,13 @@
     if(elem){
       image = elem.attr('data-image');
       has_video = elem.hasClass('has-video');
+      video = has_video ? elem.attr('data-video') : null;
       if(!image) return;
 
       $('#container-multi-photos li').removeClass('selected');
       elem.addClass('selected');
 
-      setMainPhotoMultiPhotos(image, has_video);
+      setMainPhotoMultiPhotos(image, video);
     }else{
       let limit = $('#container-multi-photos li').length;
       let current = $('#container-multi-photos li.selected');

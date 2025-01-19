@@ -62,6 +62,11 @@
               <a class="nav-link" href="{{ route('blog.feed.index') }}">Blog</a>
             </li>
           @endisset
+          @isset($elements['contact'])
+            <li class="nav-item ">
+              <a class="nav-link" href="{{ route('home') }}?contato">Contato</a>
+            </li>
+          @endisset
         </ul>
         <ul class="navbar-nav">
           @isset($elements['contact'])
@@ -76,11 +81,11 @@
               </a>
             </li>
           @endisset
-          @if(isset($navbar->facebook) && $navbar->facebook)
+          @if(isset($elements['code']->facebook) && $elements['code']->facebook)
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www.facebook.com/{{ $navbar->facebook }}"
+                href="{{ $elements['code']->facebook }}"
                 target="_blank"
               >
                 @include('utils.icons.facebook',['icons' => (object)[
@@ -89,11 +94,11 @@
               </a>
             </li>
           @endif
-          @if(isset($navbar->instagram) && $navbar->instagram)
+          @if(isset($elements['code']->instagram) && $elements['code']->instagram)
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www.instagram.com/{{ $navbar->instagram}}"
+                href="{{ $elements['code']->instagram}}"
                 target="_blank"
               >
                 @include('utils.icons.instagram',['icons' => (object)[
@@ -102,14 +107,40 @@
               </a>
             </li>
           @endif
-          @if(isset($navbar->twitter) && $navbar->twitter)
+          @if(isset($elements['code']->twitter) && $elements['code']->twitter)
             <li class="nav-item">
               <a 
                 class="nav-link"
-                href="https://twitter.com/{{ $navbar->twitter }}"
+                href="{{ $elements['code']->twitter }}"
                 target="_blank"
               >
                 @include('utils.icons.twitter',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
+            </li>
+          @endif
+          @if(isset($elements['code']->youtube) && $elements['code']->youtube)
+            <li class="nav-item">
+              <a 
+                class="nav-link"
+                href="{{ $elements['code']->youtube }}"
+                target="_blank"
+              >
+                @include('utils.icons.youtube',['icons' => (object)[
+                  'color' => 'currentColor'
+                ]])
+              </a>
+            </li>
+          @endif
+          @if(isset($elements['code']->tiktok) && $elements['code']->tiktok)
+            <li class="nav-item">
+              <a 
+                class="nav-link"
+                href="{{ $elements['code']->tiktok }}"
+                target="_blank"
+              >
+                @include('utils.icons.tiktok',['icons' => (object)[
                   'color' => 'currentColor'
                 ]])
               </a>

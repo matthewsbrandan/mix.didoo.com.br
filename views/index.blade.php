@@ -34,6 +34,7 @@
 @section('content')
   @if(isset($elements['code']) && $elements['code']->init_body) {!! $elements['code']->init_body !!} @endif
   @include('sections.menu',[
+    'code' => $elements['code'],
     'menu' => $elements['menu']
   ])
   @include('utils.navbar',[
@@ -97,12 +98,14 @@
     ])
   @endisset
   @isset($elements['contact'])
-    @include('sections.contact',[
-      'footer' => $elements['footer'],
+    @include('sections.contact',[      
+      'code' => $elements['code'],
       'contact' => $elements['contact']
     ])
   @endisset
   @include('sections.footer',[
+    'menu' => $elements['menu'],
+    'code' => $elements['code'],
     'footer' => $elements['footer']
   ])
 @endsection

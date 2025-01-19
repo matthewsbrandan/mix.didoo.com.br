@@ -60,8 +60,8 @@
         @endif
       </div>
       <div class="contact-box text-end d-lg-block d-none">
-        @isset($menu->phone) <strong>Celular</strong>: {{ $menu->phone }}<br> @endisset
-        @isset($menu->email) <strong>E-mail</strong>: {{ $menu->email }} @endisset
+        @isset($code->whatsapp) <strong>Celular</strong>: {{ $code->whatsapp }}<br> @endisset
+        @isset($code->email) <strong>E-mail</strong>: {{ $code->email }} @endisset
       </div>
     </div>
   </div>

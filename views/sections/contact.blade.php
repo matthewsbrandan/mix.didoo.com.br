@@ -98,58 +98,70 @@
         <div>
           <div class="mb-4">
             <strong class="text-uppercase">Contato</strong> <br>
-            @isset($footer->whatsapp)
-              <a href="tel: {{ numberWhatsappFormat($footer->whatsapp) }}" target="_blank" style="
-                {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Whatsapp:</b> {{ numberPhoneFormat($footer->whatsapp) }}</a><br/>
+            @isset($code->whatsapp)
+              <a href="tel: {{ numberWhatsappFormat($code->whatsapp) }}" target="_blank" style="
+                {{ innerStyleIssetAttr('font-size', $code, 'description_length') }}
+              "><b>Whatsapp:</b> {{ numberPhoneFormat($code->whatsapp) }}</a><br/>
             @endisset
-            @isset($footer->phone_fix)
-              <a href="tel: {{ numberWhatsappFormat($footer->phone_fix) }}" target="_blank" style="
-                {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Telefone:</b> {{ numberPhoneFormat($footer->phone_fix) }}</a><br/>
+            @isset($code->phone_fix)
+              <a href="tel: {{ numberWhatsappFormat($code->phone_fix) }}" target="_blank" style="
+                {{ innerStyleIssetAttr('font-size', $code, 'description_length') }}
+              "><b>Telefone:</b> {{ numberPhoneFormat($code->phone_fix) }}</a><br/>
             @endisset
-            @isset($footer->phone_cel)
-              <a href="tel: {{ numberWhatsappFormat($footer->phone_cel) }}" target="_blank" style="
-                {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Celular:</b> {{ numberPhoneFormat($footer->phone_cel) }}</a><br/>
+            @isset($code->phone_cel)
+              <a href="tel: {{ numberWhatsappFormat($code->phone_cel) }}" target="_blank" style="
+                {{ innerStyleIssetAttr('font-size', $code, 'description_length') }}
+              "><b>Celular:</b> {{ numberPhoneFormat($code->phone_cel) }}</a><br/>
             @endisset
-            @isset($footer->email)
-              <a href="mailto:{{ $footer->email }}" target="_blank" style="
-                {{ innerStyleIssetAttr('font-size', $footer, 'description_length') }}
-              "><b>Email:</b> {{ $footer->email }}</a>
+            @isset($code->email)
+              <a href="mailto:{{ $code->email }}" target="_blank" style="
+                {{ innerStyleIssetAttr('font-size', $code, 'description_length') }}
+              "><b>Email:</b> {{ $code->email }}</a>
             @endisset
 
           </div>
           @if(
-            isset($footer->facebook) ||
-            isset($footer->instagram) ||
-            isset($footer->twitter)
+            isset($code->facebook) ||
+            isset($code->instagram) ||
+            isset($code->twitter)
           )
             <div class="mb-4">
               <strong class="text-uppercase">Redes Sociais</strong>
               <div class="mt-1 icones-contato">
-                @isset($footer->facebook)
-                  <a href="{{ $footer->facebook }}" target="_blank">
+                @isset($code->facebook)
+                  <a href="{{ $code->facebook }}" target="_blank">
                     <i class="fab fa-facebook fa-2x"></i>
                   </a>&nbsp; &nbsp; 
                 @endisset
-                @isset($footer->instagram)
-                  <a href="{{ $footer->instagram }}" target="_blank">
+                @isset($code->instagram)
+                  <a href="{{ $code->instagram }}" target="_blank">
                     <i class="fab fa-instagram fa-2x"></i>
                   </a> &nbsp; &nbsp; 
                 @endisset
-                @isset($footer->twitter)
-                  <a href="{{ $footer->twitter }}" target="_blank">
+                @isset($code->twitter)
+                  <a href="{{ $code->twitter }}" target="_blank">
                     <i class="fab fa-twitter fa-2x"></i>
+                  </a> &nbsp; &nbsp;
+                @endisset
+                @isset($code->youtube)
+                  <a href="{{ $code->youtube }}" target="_blank">
+                    <i class="fab fa-youtube fa-2x"></i>
+                  </a> &nbsp; &nbsp;
+                @endisset
+                @isset($code->tiktok)
+                  <a href="{{ $code->tiktok }}" target="_blank">
+                    <i class="fab fa-tiktok fa-2x"></i>
                   </a> &nbsp; &nbsp;
                 @endisset
               </div>
             </div>
           @endif
-          <div class="mb-4">
-            <strong class="text-uppercase">Onde Estamos</strong> <br>
-            <p style="max-width: 18rem;">{{ $footer->address }}</p>
-          </div>
+          @isset($code->address)          
+            <div class="mb-4">
+              <strong class="text-uppercase">Onde Estamos</strong> <br>
+              <p style="max-width: 18rem;">{{ $code->address }}</p>
+            </div>
+          @endisset
           @if(isset($contact) &&
             isset($contact->opening_hours)
           )

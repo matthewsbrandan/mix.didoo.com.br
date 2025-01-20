@@ -112,7 +112,7 @@
                 <div class="timer-products-1">131 dias 40m 7s</div>
               </div>
             @endisset
-          </div>
+          </div>          
           <div class="product-link product-item-url text-center mt-auto w-100">
             <button
               type="button"

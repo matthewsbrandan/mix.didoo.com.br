@@ -140,6 +140,7 @@
 @section('content')
   @include('sections.menu',[
     'menu' => $elements['menu'],
+    'code' => $elements['code'],
     'menu_options' => (object)[
       'hide' => ['search_box']
     ]

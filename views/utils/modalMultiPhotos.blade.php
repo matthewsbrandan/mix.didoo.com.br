@@ -212,25 +212,27 @@
             </div>
               
             <div class="ctn-buttons">
-              <button
-                type="button"
-                class="botao btn mb-2 w-100 btn-whatsapp"
-                style="
-                  background: #34af23;
-                  color: white;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-weight: 500;
-                "
-              >
-                {{ 
-                  handleVerifyAttrs($elements['products'], 'button_wpp_text') ?? 'Pedir pelo'
-                }} @include('utils.icons.whatsapp',['icons' => (object)[
-                  'color' => 'currentColor',
-                  'style' =>'margin-left: .3rem;'
-                ]])
-              </button>
+              @isset($elements['code']->whatsapp)
+                <button
+                  type="button"
+                  class="botao btn mb-2 w-100 btn-whatsapp"
+                  style="
+                    background: #34af23;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 500;
+                  "
+                >
+                  {{ 
+                    handleVerifyAttrs($elements['products'], 'button_wpp_text') ?? 'Pedir pelo'
+                  }} @include('utils.icons.whatsapp',['icons' => (object)[
+                    'color' => 'currentColor',
+                    'style' =>'margin-left: .3rem;'
+                  ]])
+                </button>
+              @endisset
               <a 
                 href="javascript:;"
                 class="botao btn btn-danger"
@@ -375,10 +377,14 @@
       </div>
     `);
     
-    $('#modalMultiPhotos .btn-whatsapp').attr(
-      'onclick',
-      `handleSendProductToWhatsapp(${JSON.stringify(data)})`
-    );
+    @isset($elements['code'])
+        
+      $('#modalMultiPhotos .btn-whatsapp').attr(
+        'onclick',
+        `handleSendProductToWhatsapp(${JSON.stringify(data)})`
+      );
+    @endisset
+
     $('#modalMultiPhotos .section-2 > div > a').attr('href', link)
       .attr('style', `
         ${ data.button.background ? `background: ${data.button.background};` : '' }
@@ -426,13 +432,13 @@
     message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
 
     let whatsapp = `{{
-      isset($elements['footer']) && isset($elements['footer']->whatsapp) ? 
-        numberWhatsappFormat($elements['footer']->whatsapp) :  null
+      isset($elements['code']) && isset($elements['code']->whatsapp) ? 
+        numberWhatsappFormat($elements['code']->whatsapp) :  null
     }}`;
     let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
       whatsapp ? `&phone=${whatsapp}`:''
     }`;
-    window.location.href = url;
+    window.open(url, '_blank');
   }
   function handleShareProduct(product){
     let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';

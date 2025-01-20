@@ -43,7 +43,7 @@ class HomeController extends Controller{
     ]);
   }
   public function policy(){
-    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&privacity_policy,navbar,menu");
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&privacity_policy,navbar,menu,code");
 
     if(!$data || !$data->result || $err) return view('error-404');
 
@@ -101,7 +101,7 @@ class HomeController extends Controller{
   }
   public function product($slug = null){
     if(!$slug) return view('error-404');
-    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&products,navbar,menu,footer");
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&code,products,navbar,menu,footer");
     if(!$data || !$data->result || $err) return view('error-404');
 
     $page_config = $data->response->datas[0];

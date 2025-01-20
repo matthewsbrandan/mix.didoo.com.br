@@ -4,7 +4,7 @@ include_once __DIR__."/Controller.php";
 
 class PostController extends Controller{
   public function index(){
-    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&navbar,menu");
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&navbar,menu,code");
 
     if(!$data || !$data->result || $err) return view('error-404');
 

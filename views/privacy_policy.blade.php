@@ -11,6 +11,7 @@
 @endsection
 @section('content')
   @include('sections.menu',[
+    'code' => $elements['code'],
     'menu' => $elements['menu'],
     'menu_options' => (object)[
       'hide' => ['search_box']

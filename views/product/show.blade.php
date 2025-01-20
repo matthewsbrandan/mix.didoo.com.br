@@ -127,6 +127,7 @@
 @section('content')
   @include('sections.menu',[
     'menu' => $elements['menu'],
+    'code' => $elements['code'],
     'menu_options' => (object)[
       'hide' => ['search_box']
     ]
@@ -288,26 +289,28 @@
                 </div>
               @endisset
             </div>
-            <button
-              type="button"
-              class="botao btn mb-2 w-100"
-              onclick='handleSendProductToWhatsapp({!!
-                json_encode($product)
-              !!})'
-              style="
-                background: #34af23;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 500;
-              "
-            >
-              {{ $elements['products']->button_wpp_text ?? 'Pedir pelo' }} @include('utils.icons.whatsapp',['icons' => (object)[
-                'color' => 'currentColor',
-                'style' =>'margin-left: .3rem;'
-              ]])
-            </button>
+            @isset($elements['code'])
+              <button
+                type="button"
+                class="botao btn mb-2 w-100"
+                onclick='handleSendProductToWhatsapp({!!
+                  json_encode($product)
+                !!})'
+                style="
+                  background: #34af23;
+                  color: white;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-weight: 500;
+                "
+              >
+                {{ $elements['products']->button_wpp_text ?? 'Pedir pelo' }} @include('utils.icons.whatsapp',['icons' => (object)[
+                  'color' => 'currentColor',
+                  'style' =>'margin-left: .3rem;'
+                ]])
+              </button>
+            @endisset
             <a
               href="{{ route('home') }}"
               class="botao btn btn-dark mb-3 w-100"
@@ -440,7 +443,9 @@
     @endif
   </div>
   @include('sections.footer',[
-    'footer' => $elements['footer']
+    'menu' => $elements['menu'],
+    'footer' => $elements['footer'],
+    'code' => $elements['code'],
   ])
 @endsection
 @section('scripts')
@@ -510,13 +515,13 @@
       message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
 
       let whatsapp = `{{
-        isset($elements['footer']) && isset($elements['footer']->whatsapp) ? 
-          numberWhatsappFormat($elements['footer']->whatsapp) :  null
+        isset($elements['code']) && isset($elements['code']->whatsapp) ? 
+          numberWhatsappFormat($elements['code']->whatsapp) :  null
       }}`;
       let url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}${
         whatsapp ? `&phone=${whatsapp}`:''
       }`;
-      window.location.href = url;
+      window.open(url, '_blank');
     }
     function handleToggleHomeAndWhoWeAre(){
       window.location.href = "{{ route('home') }}";

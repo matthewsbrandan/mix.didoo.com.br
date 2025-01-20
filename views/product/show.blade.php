@@ -289,7 +289,12 @@
                 </div>
               @endisset
             </div>
-            @isset($elements['code'])
+            @if(
+              isset($elements['code']) &&
+              isset($elements['code']->whatsapp) &&
+              isset($elements['products']->select_buttons) && 
+              in_array('Pedir pelo whatsapp', $elements['products']->select_buttons)
+            )
               <button
                 type="button"
                 class="botao btn mb-2 w-100"
@@ -310,7 +315,24 @@
                   'style' =>'margin-left: .3rem;'
                 ]])
               </button>
-            @endisset
+            @endif
+            @if(
+              isset($elements['products']->select_buttons) && 
+              in_array('Comprar agora', $elements['products']->select_buttons) &&
+              isset($product->link_button_buy_now) &&
+              !!$product->link_button_buy_now
+            )
+              <a
+                href="{{ $product->link_button_buy_now }}"
+                target="_blank"
+                class="botao btn mb-2 w-100"
+                style="
+                  {{ innerStyleIssetAttr('background', $elements['products']->button_buy_now, 'background') }}
+                  {{ innerStyleIssetAttr('color', $elements['products']->button_buy_now, 'color') }}
+                  font-weight: 500;
+                "
+              >{{ $elements['products']->text ?? 'Comprar agora' }}</a>
+            @endif
             <a
               href="{{ route('home') }}"
               class="botao btn btn-dark mb-3 w-100"

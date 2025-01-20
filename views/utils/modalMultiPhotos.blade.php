@@ -212,7 +212,12 @@
             </div>
               
             <div class="ctn-buttons">
-              @isset($elements['code']->whatsapp)
+              @if(
+                isset($elements['code']) &&
+                isset($elements['code']->whatsapp) &&
+                isset($elements['products']->select_buttons) && 
+                in_array('Pedir pelo whatsapp', $elements['products']->select_buttons)
+              )
                 <button
                   type="button"
                   class="botao btn mb-2 w-100 btn-whatsapp"
@@ -232,10 +237,25 @@
                     'style' =>'margin-left: .3rem;'
                   ]])
                 </button>
-              @endisset
+              @endif
+              @if(
+                isset($elements['products']->select_buttons) && 
+                in_array('Comprar agora', $elements['products']->select_buttons)
+              )
+                <a
+                  href="#"
+                  target="_blank"
+                  class="botao btn mb-2 w-100 btn-external"
+                  style="
+                    {{ innerStyleIssetAttr('background', $elements['products']->button_buy_now, 'background') }}
+                    {{ innerStyleIssetAttr('color', $elements['products']->button_buy_now, 'color') }}
+                    font-weight: 500;
+                  "
+                >{{ $elements['products']->button_buy_now->text ?? 'Comprar agora' }}</a>
+              @endif
               <a 
                 href="javascript:;"
-                class="botao btn btn-danger"
+                class="botao btn btn-danger more-info"
                 target="_blank" 
               >Quero saber mais</a>
               <button
@@ -377,15 +397,27 @@
       </div>
     `);
     
-    @isset($elements['code'])
-        
+    @if(
+      isset($elements['code']) &&
+      isset($elements['code']->whatsapp) &&
+      isset($elements['products']->select_buttons) && 
+      in_array('Pedir pelo whatsapp', $elements['products']->select_buttons)
+    )        
       $('#modalMultiPhotos .btn-whatsapp').attr(
         'onclick',
         `handleSendProductToWhatsapp(${JSON.stringify(data)})`
       );
-    @endisset
+    @endif
+    @if(
+      isset($elements['products']->select_buttons) && 
+      in_array('Comprar agora', $elements['products']->select_buttons)
+    )
+      if(data.link_button_buy_now){
+        $('#modalMultiPhotos .btn-external').attr('href', data.link_button_buy_now).show();
+      }else $('#modalMultiPhotos .btn-external').hide();
+    @endif
 
-    $('#modalMultiPhotos .section-2 > div > a').attr('href', link)
+    $('#modalMultiPhotos .more-info').attr('href', link)
       .attr('style', `
         ${ data.button.background ? `background: ${data.button.background};` : '' }
         ${ data.button.color ? `color: ${ data.button.color};` : '' }

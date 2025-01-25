@@ -234,7 +234,6 @@
     isset($elements['download_catalog']) &&
     isset($elements['download_catalog']->pdf_url)
   )
-    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script>
       $(document).ready(function() {
         $('#download_catalog-whatsapp').mask('(00) 00000-0000');
@@ -256,6 +255,9 @@
     ])
   @endisset
   <script>
+    $(document).ready(function() {
+      $('#contact-phone').mask('(00) 00000-0000');
+    });
     $('#form-contact').on('submit', handleShedule);
     async function handleShedule(event){
       event.preventDefault();

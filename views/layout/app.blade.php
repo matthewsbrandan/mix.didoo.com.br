@@ -30,6 +30,7 @@
   </main>
   <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
   <script>
     $('[data-target="#navbarCollapse"]').on('click', function(){
       is_expanded = $(this).attr('aria-expanded') === 'true';

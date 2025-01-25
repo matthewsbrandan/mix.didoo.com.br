@@ -234,7 +234,11 @@
     isset($elements['download_catalog']) &&
     isset($elements['download_catalog']->pdf_url)
   )
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script>
+      $(document).ready(function() {
+        $('#download_catalog-whatsapp').mask('(00) 00000-0000');
+      });
       // INITIALIZATION
       const download_catalog = {
         page_id: `{{ $page_config->page_id }}`,

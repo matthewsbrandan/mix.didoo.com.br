@@ -2,18 +2,23 @@ $('#form-download-catalog').on('submit', handleSendRequestCatalog);
 async function handleSendRequestCatalog(event){
   event.preventDefault();
 
+  let name = $('#download_catalog-name').val();
+  let whatsapp = $('#download_catalog-whatsapp').val();
   let email = $('#download_catalog-email').val();
-  if(!email){
-    showMessage('É obrigatório inserir o email!','Baixar Catálogo');
+
+  const error = [
+    [!name, 'É obrigatório inserir o nome!'],
+    [!whatsapp, 'É obrigatório inserir o whatsapp!'],
+    [!email, 'É obrigatório inserir o email!'],
+  ].find(([hasError]) => hasError)?.[1];
+
+  if(error){
+    showMessage(error,'Baixar Catálogo');
     return;
   }
-  let name = (email.split('@'))[0] ?? '-- não identificado --';
-  let whatsapp = null;
-  // let name = $('#download_catalog-name').val();
-  // let whatsapp = $('#download_catalog-whatsapp').val();
 
   let message = `Solicitação de download do catálogo pelo usuário ${name}<br/><br/>`;
-  // if(whatsapp) message+= `Whatsapp: ${whatsapp}<br/>`;
+  if(whatsapp) message+= `Whatsapp: ${whatsapp}<br/>`;
   if(email) message+= `Email: ${email}`;
 
   let data = {
@@ -29,7 +34,12 @@ async function handleSendRequestCatalog(event){
     method: "POST"
   }).then(data => {
     $('#modalMessage').hide();
-    if(data.result) window.open(download_catalog.pdf_catalog_url);
+    if(data.result){
+      window.open(download_catalog.pdf_catalog_url);
+      $('#download_catalog-name').val('');
+      $('#download_catalog-whatsapp').val('');
+      $('#download_catalog-email').val('');
+    }
     else showMessage(data.response, 'Baixar Catálogo')
   }).fail(err => {
     showMessage('Houve um erro ao solicitar o download do catálogo', 'Baixar Catálogo');

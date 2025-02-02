@@ -292,8 +292,8 @@
             @if(
               isset($elements['code']) &&
               isset($elements['code']->whatsapp) &&
-              isset($elements['products']->select_buttons) && 
-              in_array('Pedir pelo whatsapp', $elements['products']->select_buttons)
+              isset($product->select_buttons) && 
+              in_array('Pedir pelo whatsapp', $product->select_buttons)
             )
               <button
                 type="button"
@@ -317,8 +317,8 @@
               </button>
             @endif
             @if(
-              isset($elements['products']->select_buttons) && 
-              in_array('Comprar agora', $elements['products']->select_buttons) &&
+              isset($product->select_buttons) && 
+              in_array('Comprar agora', $product->select_buttons) &&
               isset($product->link_button_buy_now) &&
               !!$product->link_button_buy_now
             )

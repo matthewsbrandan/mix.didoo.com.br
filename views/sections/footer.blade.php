@@ -152,6 +152,7 @@
   <a class="developed-by" href="https://didoo.com.br" target="_blank">
     <img src="{{ asset('images/done-with.png') }}" alt="Feito com Didoo"/>
   </a>
+  
   @if(isset($menu) && isset($menu->mode_link_phone) && $menu->mode_link_phone === 'Exibir botão flutuante no site' && isset($code->whatsapp))
     <!-- LINK PARA CONVERSA NO WHATSAPP -->
     <a href="https://wa.me/{{ numberWhatsappFormat($code->whatsapp) }}" target="_blank" class="button-whatsapp">
@@ -163,4 +164,17 @@
   @if(isset($footer->overlay) && $footer->overlay)
     <div class="overlay" style="background: {{ $footer->overlay }}"></div>
   @endif
+  <span style="
+    font-size: .7rem;
+    text-align: left;
+    display: block;
+    margin-left: auto;
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+    background: black;
+    padding: .2rem;
+    border-radius: .5rem;
+    line-height: 1;
+  ">v1.0.0</span>
 </section>

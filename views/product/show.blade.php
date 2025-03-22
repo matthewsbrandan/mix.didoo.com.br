@@ -1,3 +1,14 @@
+@php
+  if (!function_exists('formatWhatsappText')) {  
+    function formatWhatsappText($text) {
+      $text = preg_replace('/\*(.*?)\*/', '<b>$1</b>', $text);  // Negrito
+      $text = preg_replace('/_(.*?)_/', '<i>$1</i>', $text);   // Itálico
+      $text = preg_replace('/~(.*?)~/', '<s>$1</s>', $text);   // Tachado
+      $text = preg_replace('/```(.*?)```/', '<code>$1</code>', $text); // Monoespaçado
+      return $text;
+    }
+  }
+@endphp
 @extends('layout.app')
 @section('head')
   <link href="{{ asset('css/menu.css') }}" rel="stylesheet"/>
@@ -260,7 +271,7 @@
                 </button>
               </div>
               @isset($product->description)
-                <p style="font-size: .9rem;">{{ $product->description }}</p>
+                <p style="font-size: .9rem;">{!! nl2br(formatWhatsappText(e($product->description))) !!}</p>
               @endisset
               @if(isset($product->tags) && count($product->tags) > 0)
                 <div class="container-tags">

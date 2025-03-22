@@ -301,6 +301,25 @@
         if(!remove_iframe) $('#modalMultiPhotos .container-img iframe').hide();
       }
     }
+
+    if (typeof formatWhatsappText === "undefined") {
+      function formatWhatsappText(text) {
+        if (!text) return ""; // Evita erro se o texto for nulo ou indefinido
+
+        // Substituir formatações do WhatsApp por tags HTML
+        text = text.replace(/\*(.*?)\*/g, "<b>$1</b>");   // *negrito*
+        text = text.replace(/_(.*?)_/g, "<i>$1</i>");     // _itálico_
+        text = text.replace(/~(.*?)~/g, "<s>$1</s>");     // ~tachado~
+        text = text.replace(/```(.*?)```/g, "<code>$1</code>"); // ```monoespaçado```
+
+        // Substituir quebras de linha por <br>
+        text = text.replace(/\n/g, "<br>");
+
+        return text;
+      }
+    }
+
+
     function handleShowMultiPhotos(data){
       setMainPhotoMultiPhotos(data.image.src, (
         data.video_position === 'final' ? undefined : data.video
@@ -358,7 +377,11 @@
       $('#modalMultiPhotos .section-2 h3.title a').html(data.title.text).attr(
         'href', link
       );
-      $('#modalMultiPhotos .section-2 > div > p').html(data.description);
+      $('#modalMultiPhotos .section-2 > div > p').html(
+        formatWhatsappText(
+          data.description
+        )
+      );
 
       $('#modalMultiPhotos .container-tags').html(
         data.tags.map(obj => {

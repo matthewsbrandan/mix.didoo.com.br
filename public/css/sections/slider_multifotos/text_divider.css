@@ -1,0 +1,40 @@
+#text_divider {
+  background-size: cover;
+  background-position-x: center;
+  min-height: 30rem;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#text_divider .content {
+  margin: auto;
+  width: 100%;
+  max-width: 950px;
+  flex: 1;
+  padding: 4rem 2rem;
+  border-radius: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+#text_divider .content h2 {
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin-top: 0;
+  text-align: center;
+}
+#text_divider .content p {
+  margin: 0 0 2rem;
+  text-align: center;
+}
+#text_divider .content .btn {
+  min-width: 12rem;
+  max-width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 1rem;
+}/*# sourceMappingURL=text_divider.css.map */

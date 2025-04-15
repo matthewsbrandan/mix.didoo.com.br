@@ -1,0 +1,55 @@
+#schedule{
+  background-size: cover;
+  background-position-x: center;
+  position: relative;
+
+  .content{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin: auto;
+    padding: 2rem;
+    max-width: 800px;
+
+    h2{
+      text-transform: uppercase;
+      margin-bottom: 0;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+  
+    > p { margin-top: 0.4rem; }
+  
+    form{
+      .form-grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+
+        @media (max-width: 600px){ grid-template-columns: 1fr; }
+      }
+  
+      .form-control{
+        border: 1px solid var(--primary-500);
+        margin: .2rem .4rem;
+  
+        input, textarea{
+          padding: 1rem;
+          width: 100%;
+        }
+
+        textarea{
+          margin-bottom: -4px;
+          resize: vertical;
+        }
+      }
+  
+      .btn{
+        min-width: 12rem;
+        font-size: .9rem;
+        margin: 1rem auto;
+      }
+    }
+  }
+}

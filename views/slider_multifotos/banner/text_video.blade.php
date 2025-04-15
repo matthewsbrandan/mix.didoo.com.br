@@ -29,7 +29,8 @@
         class="botao btn btn-primary btn-uppercase"
         href="{{ $banner->button->link }}"
         style="
-          border: none;
+          border: none !important;
+box-shadow: none !important;
           {{ $banner->button->background ? 'background: '.$banner->button->background.';' : '' }}
           {{ $banner->button->color ? 'color: '.$banner->button->color.';' : '' }}
         "

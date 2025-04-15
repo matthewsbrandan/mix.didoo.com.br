@@ -52,7 +52,8 @@
                     #download_catalog .btn-submit,
                     #download_catalog .btn-submit:hover{
                       background: #ffdddd44;
-                      border: none;
+                      border: none !important;
+box-shadow: none !important;
                     }
                   </style>
                 @endif

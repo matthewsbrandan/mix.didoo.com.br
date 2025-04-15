@@ -1,0 +1,69 @@
+#service {
+  background-size: cover;
+  background-position-x: center;
+  min-height: 30rem;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#service .content {
+  margin: auto;
+  width: 100%;
+  max-width: 950px;
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+#service .content h2 {
+  font-size: 2rem;
+  line-height: 2.6rem;
+  margin: 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+#service .content .subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0.4rem;
+}
+#service .content .container-services {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 3rem 0;
+}
+#service .content .container-services .service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 16rem;
+}
+#service .content .container-services .service img {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  height: 14rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 20px rgba(0, 0, 34, 0.1333333333);
+}
+#service .content .container-services .service strong {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+#service .content .container-services .service p {
+  margin: 0.5rem 0;
+  text-align: center;
+}
+#service .content .container-services .service .btn {
+  min-width: 12rem;
+  font-size: 1rem;
+}/*# sourceMappingURL=service.css.map */

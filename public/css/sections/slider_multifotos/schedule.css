@@ -1,0 +1,50 @@
+#schedule {
+  background-size: cover;
+  background-position-x: center;
+  position: relative;
+}
+#schedule .content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin: auto;
+  padding: 2rem;
+  max-width: 800px;
+}
+#schedule .content h2 {
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+#schedule .content > p {
+  margin-top: 0.4rem;
+}
+#schedule .content form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+@media (max-width: 600px) {
+  #schedule .content form .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+#schedule .content form .form-control {
+  border: 1px solid var(--primary-500);
+  margin: 0.2rem 0.4rem;
+}
+#schedule .content form .form-control input, #schedule .content form .form-control textarea {
+  padding: 1rem;
+  width: 100%;
+}
+#schedule .content form .form-control textarea {
+  margin-bottom: -4px;
+  resize: vertical;
+}
+#schedule .content form .btn {
+  min-width: 12rem;
+  font-size: 0.9rem;
+  margin: 1rem auto;
+}/*# sourceMappingURL=schedule.css.map */

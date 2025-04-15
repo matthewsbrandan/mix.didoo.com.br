@@ -36,6 +36,43 @@
   @isset($elements['banner'])
     <link href="{{ asset('css/sections/slider_multifotos/banner/'.$elements['banner']->model->model_type.'.css') }}" rel="stylesheet"/>
   @endisset
+  @isset($elements['new_section'])
+    <link href="{{ asset('css/sections/slider_multifotos/new_section.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['section_list'])
+    <link href="{{ asset('css/sections/slider_multifotos/section_list.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['service'])
+    <link href="{{ asset('css/sections/slider_multifotos/service.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['text_divider'])
+    <link href="{{ asset('css/sections/slider_multifotos/text_divider.css') }}" rel="stylesheet"/>
+  @endisset
+  @if(
+    isset($elements['cms_catalog']) && 
+    isset($elements['cms_catalog']->api_url) &&
+    isset($elements['cms_catalog']->origin)
+  )
+    <link href="{{ asset('css/sections/slider_multifotos/cms_catalog.css') }}" rel="stylesheet"/>
+  @endif
+  @isset($elements['cms_gallery'])
+    <link href="{{ asset('css/sections/slider_multifotos/cms_gallery.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['video'])
+    <link href="{{ asset('css/sections/slider_multifotos/video.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['schedule'])
+    <link href="{{ asset('css/sections/slider_multifotos/schedule.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['faq'])
+    <link href="{{ asset('css/sections/slider_multifotos/faq.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['video_depoiments'])
+    <link href="{{ asset('css/sections/slider_multifotos/video_depoiments.css') }}" rel="stylesheet"/>
+  @endisset
+  @isset($elements['google_reviews'])
+    <link href="{{ asset('css/sections/slider_multifotos/google_reviews.css') }}" rel="stylesheet"/>
+  @endisset
   {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
 
   <script src="https://kit.fontawesome.com/e2f5b82175.js" crossorigin="anonymous"></script>
@@ -107,6 +144,82 @@
         @include('slider_multifotos.banner.index',[
           'banner_variations' => $elements['banner'],
           'variation' => $elements['banner']->model->model_type
+        ])
+      @endisset
+      @isset($elements['new_section'])
+        @include('slider_multifotos.new_section',[
+          'new_section' => $elements['new_section'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+      @isset($elements['section_list'])
+        @include('slider_multifotos.section_list',[
+          'section_list' => $elements['section_list'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+      @isset($elements['service'])
+        @include('slider_multifotos.service',[
+          'service' => $elements['service'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+      @isset($elements['text_divider'])
+        @include('slider_multifotos.text_divider',[
+          'text_divider' => $elements['text_divider'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+      @if(
+        isset($elements['cms_catalog']) && 
+        isset($elements['cms_catalog']->api_url) &&
+        isset($elements['cms_catalog']->origin)
+      )
+        @include('slider_multifotos.cms_catalog',[
+          'cms_catalog' => $elements['cms_catalog'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endif
+
+      @isset($elements['video_depoiments'])
+        @include('slider_multifotos.video_depoiments',[
+          'video_depoiments' => $elements['video_depoiments'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+
+      @isset($elements['cms_gallery'])
+        @include('slider_multifotos.cms_gallery.index',[
+          'cms_gallery' => $elements['cms_gallery'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+
+      @isset($elements['video'])
+        @include('slider_multifotos.video',[
+          'video' => $elements['video'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+
+      @isset($elements['schedule'])
+        @include('slider_multifotos.schedule',[
+          'schedule' => $elements['schedule'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+
+      @isset($elements['google_reviews'])
+        @include('slider_multifotos.google_reviews.index',[
+          'google_reviews' => $elements['google_reviews'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
+      
+      @isset($elements['faq'])
+        @include('slider_multifotos.faq',[
+          'faq' => $elements['faq'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
         ])
       @endisset
       {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
@@ -377,6 +490,50 @@
       $('#banner .slick-next').html(`@include('utils.icons.chevron_right')`);
     </script>
   @endif
+  @if(
+    isset($elements['cms_catalog']) && 
+    isset($elements['cms_catalog']->api_url) &&
+    isset($elements['cms_catalog']->origin)
+  )
+    <script>
+      // INTIALIZATION
+      const cms_catalog = {
+        api_url: `{{ $elements['cms_catalog']->api_url }}`,
+        take: `{{ $elements['cms_catalog']->take }}`,
+        token: `{{ $elements['cms_catalog']->token }}`,
+        origin: `{{ $elements['cms_catalog']->origin }}`
+      };
+    </script>
+    <script src="{{ asset('js/cms_catalog.js') }}"></script>
+  @endif
+  @if(
+    isset($elements['cms_gallery']) &&
+    isset($elements['cms_gallery']->slug)
+  )
+    <script>
+      // INTIALIZATION
+      const cms_gallery = {
+        slug: `{{ $elements['cms_gallery']->slug }}`,
+        token: `{{ $cms_page_token }}`,
+        take: <?php echo $elements['cms_gallery']->take ?? 'null'; ?>,
+        url: `{{ route('api.gallery.show',['slug' => $elements['cms_gallery']->slug]) }}`
+      };
+    </script>
+    <script src="{{ asset('js/cms_gallery.js') }}"></script>
+  @endif
+  @isset($elements['schedule'])
+    <script>
+      // INITIALIZATION
+      const schedule = {
+        whatsapp: `<?php echo isset($elements['code']) && $elements['code']->whatsapp ? numberWhatsappFormat($elements['code']->whatsapp) : 'null'; ?>`,
+        page_id: `{{ $page_config->page_id }}`,
+        page_owner_id: `{{ $page_config->user_id }}`,
+        url: `{{ route('api.contact.send') }}`,
+        token: `{{ $cms_page_token }}`,
+      };
+    </script>
+    <script src="{{ asset('js/schedule.js') }}"></script>
+  @endisset
   {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
 
   @if(isset($elements['jivochat']) && $elements['jivochat']->widget)

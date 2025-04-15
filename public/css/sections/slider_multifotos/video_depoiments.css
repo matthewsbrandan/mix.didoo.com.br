@@ -1,0 +1,97 @@
+#video_depoiments {
+  background-size: cover;
+  background-position-x: center;
+  position: relative;
+}
+#video_depoiments .content {
+  position: relative;
+  z-index: 1;
+  padding: 4rem;
+}
+#video_depoiments .content h2 {
+  text-transform: uppercase;
+  font-size: 2rem;
+  line-height: 2.6rem;
+  margin: 0;
+  text-align: center;
+}
+#video_depoiments .content > p {
+  text-align: center;
+}
+#video_depoiments .content > .btn {
+  min-width: 12rem;
+  max-width: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 1rem;
+  margin: 1rem auto 0;
+}
+#video_depoiments .content .wrapper-depoiments {
+  position: relative;
+}
+#video_depoiments .content .wrapper-depoiments:not(.depoiment-filled) > button {
+  display: none;
+}
+#video_depoiments .content .wrapper-depoiments > button {
+  position: absolute;
+  margin: auto 1.2rem;
+  top: 0;
+  bottom: 0;
+  padding: 0 0 0.4rem;
+}
+#video_depoiments .content .wrapper-depoiments > button img {
+  width: 3rem;
+  height: 3rem;
+  background: #fff;
+  border-radius: 50%;
+}
+#video_depoiments .content .wrapper-depoiments > button.btn-left, #video_depoiments .content .wrapper-depoiments > button.btn-right {
+  width: 3rem;
+  height: 3rem;
+  padding-top: 0.4rem;
+}
+#video_depoiments .content .wrapper-depoiments > button.btn-left {
+  left: 0;
+}
+#video_depoiments .content .wrapper-depoiments > button.btn-right {
+  right: 0;
+}
+#video_depoiments .content .container-depoiments {
+  display: flex;
+  overflow-x: auto;
+  margin: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+#video_depoiments .content .container-depoiments::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+#video_depoiments .content .container-depoiments .container-depoiment-item {
+  background: rgba(0, 0, 34, 0.0666666667);
+  min-width: 15rem;
+  min-height: 15rem;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  margin: 0.6rem;
+}
+#video_depoiments .content .container-depoiments .container-depoiment-item:first-child {
+  margin-left: 0;
+}
+#video_depoiments .content .container-depoiments .container-depoiment-item .btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0 0 0 0.1rem;
+}
+#video_depoiments .content .container-depoiments .container-depoiment-item iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  border-radius: 1rem;
+}/*# sourceMappingURL=video_depoiments.css.map */

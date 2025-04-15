@@ -49,11 +49,14 @@
   </div>
   <div id="modal-zoom-gallery-image" onclick="closeZoomImage()" style="display: none;">
     <span class="close">&times;</span>
-    <img class="modal-content" id="modal-zoom-img">
+    <img class="modal-zoom-content" id="modal-zoom-img">
     <button
       type="button"
       class="btn btn-left botao"
       style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
         @isset($cms_gallery->button)
           {{ innerStyleIssetAttr('color', $cms_gallery->button, 'color', '#fff') }}
           {{ innerStyleIssetAttr('background', $cms_gallery->button, 'background', '#5e72e4') }}
@@ -65,6 +68,9 @@
       type="button"
       class="btn btn-right botao"
       style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
         @isset($cms_gallery->button)
           {{ innerStyle('color', $cms_gallery->button, 'color', '#fff') }}
           {{ innerStyle('background', $cms_gallery->button, 'background', '#5e72e4') }}

@@ -26,7 +26,7 @@ function loadGallery(){
         $('#container-gallery').parent().addClass('gallery-filled');
         images.forEach((image, i) => {
           if(mode === 'mosaic'){
-            if(i % (rows * 3) === 0) $('#container-gallery').append('<div class="row"></div>');
+            if(i % (rows * 3) === 0) $('#container-gallery').append('<div class="gallery-row"></div>');
             
             $('#container-gallery').children().last().append(
               renderImageFromGallery(image, i)
@@ -42,7 +42,7 @@ function loadGallery(){
                   rows === 3 && i === (Math.ceil(images.length / rows) * 2)
                 )
               )
-            )) $('#container-gallery').append('<div class="row"></div>');
+            )) $('#container-gallery').append('<div class="gallery-row"></div>');
             
             $('#container-gallery').children().last().append(
               renderImageFromGallery(image, i)

@@ -46,13 +46,23 @@
       <button
         type="button"
         class="btn btn-left botao"
-        style="{{ innerStyle('color', $google_reviews->button_navigate->color).' '.innerStyle('background', $google_reviews->button_navigate->background) }}"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          {{ innerStyle('color', $google_reviews->button_navigate->color).' '.innerStyle('background', $google_reviews->button_navigate->background) }}
+        "
         onclick="handleScrollNextOrPrevItem(false, 'container-reviews', (18 + (2 * .5)) * 16)"
       >@include('utils.icons.chevron_left')</button>
       <button
         type="button"
         class="btn btn-right botao"
-        style="{{ innerStyle('color', $google_reviews->button_navigate->color).' '.innerStyle('background', $google_reviews->button_navigate->background) }}"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          {{ innerStyle('color', $google_reviews->button_navigate->color).' '.innerStyle('background', $google_reviews->button_navigate->background) }}
+        "
         onclick="handleScrollNextOrPrevItem(true, 'container-reviews', (18 + (2 * .5)) * 16)"
       >@include('utils.icons.chevron_right')</button>
     </div>
@@ -63,6 +73,8 @@
         target="_blank"
         class="botao btn btn-primary btn-uppercase"
         style="
+          border: none !important;
+          box-shadow: none !important;
           display: inline-flex;
           {{ $google_reviews->button->background ? 'background: '.$google_reviews->button->background.';' : '' }}
           {{ $google_reviews->button->color ? 'color: '.$google_reviews->button->color.';' : '' }}

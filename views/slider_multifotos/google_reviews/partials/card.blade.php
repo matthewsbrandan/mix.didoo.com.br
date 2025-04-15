@@ -1,4 +1,4 @@
-<div class="card"> {{-- CARD  --}}
+<div class="card-review"> {{-- CARD  --}}
   <div class="header"> {{-- HEADER --}}
     <img src="{{ $review->avatar }}" class="avatar"/>
     <div>

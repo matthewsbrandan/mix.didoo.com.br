@@ -74,7 +74,7 @@
   display: flex;
   gap: 1rem;
 }
-#google_reviews .content .reviews .card {
+#google_reviews .content .reviews .card-review {
   display: flex;
   flex-direction: column;
   width: 18rem;
@@ -85,31 +85,31 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   text-align: left;
 }
-#google_reviews .content .reviews .card .header {
+#google_reviews .content .reviews .card-review .header {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   margin-bottom: 0.5rem;
 }
-#google_reviews .content .reviews .card .header .avatar {
+#google_reviews .content .reviews .card-review .header .avatar {
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
 }
-#google_reviews .content .reviews .card .header > div {
+#google_reviews .content .reviews .card-review .header > div {
   display: flex;
   flex-direction: column;
 }
-#google_reviews .content .reviews .card .header > div strong {
+#google_reviews .content .reviews .card-review .header > div strong {
   font-size: 0.9rem;
 }
-#google_reviews .content .reviews .card .header > div em {
+#google_reviews .content .reviews .card-review .header > div em {
   font-size: 0.75rem;
   line-height: 1.65;
 }
-#google_reviews .content .reviews .card .description {
+#google_reviews .content .reviews .card-review .description {
   font-size: 0.8rem;
   color: #333;
   margin-top: 0.5rem;

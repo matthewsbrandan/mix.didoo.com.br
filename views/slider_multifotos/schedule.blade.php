@@ -34,6 +34,8 @@
       </div>
       <button type="submit" class="botao btn btn-primary btn-uppercase"
         style="
+          border: none !important;
+          box-shadow: none !important;
           {{ $schedule->button->background ? 'background: '.$schedule->button->background.';' : '' }}
           {{ $schedule->button->color ? 'color: '.$schedule->button->color.';' : '' }}
         "

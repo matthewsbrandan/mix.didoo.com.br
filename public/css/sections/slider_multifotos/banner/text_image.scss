@@ -1,0 +1,100 @@
+#banner{
+  background-size: cover;
+  background-position-x: center;
+  height: auto;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .content{
+    width: 85%;
+    margin: 0 auto;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+    grid-template-areas: 
+      'hero hero'
+      'info info'
+    ;
+
+    > div:nth-child(1) {
+      grid-area: hero;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      img{
+        height: 100%;
+      }
+    }
+
+    > div:nth-child(2) {
+      grid-area: info;
+      width: 100%;
+      text-align: center;
+
+      hgroup{
+        h1{
+          font-size: 3.2rem;
+          line-height: 3.4rem;
+          text-transform: uppercase;
+          margin: 0;
+          word-break: break-word;
+        }
+        strong{
+          font-size: 1.1rem;
+          font-weight: normal;
+          margin-top: .6rem;
+          display: block;
+        }
+      }
+  
+      .description{
+        max-width: 28rem;
+        line-height: 1.5rem;
+        margin: .6rem auto 1.6rem;
+      }
+  
+      .btn{
+        font-size: 1rem;
+        max-width: 100%;
+        width: fit-content;
+        margin: 0 auto 2rem;
+      }
+
+    }
+  }
+
+  @media(min-width: 1000px){
+    height: 100vh;
+    
+    .content{
+      width: 70%;
+      grid-template-rows: 100vh;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 'info hero';
+  
+      > div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+
+        .description{
+          margin: .6rem 0 1.6rem;
+        }
+
+        .btn{
+          margin: 0 0 2rem;
+        }
+      }
+    }
+  }
+}

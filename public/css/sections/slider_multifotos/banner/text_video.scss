@@ -1,0 +1,65 @@
+#banner{
+  background-size: cover;
+  background-position-x: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .content{
+    width: 85%;
+    margin: 1rem auto;
+    min-height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+
+    > div {
+      width: 100%;
+      text-align: center;
+
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+
+      strong{
+        font-weight: 700;
+        font-size: 4.5rem;
+        margin-top: 4rem;
+        display: block;
+        line-height: .95;
+        word-break: break-word;
+      }
+
+      h1{
+        font-size: 4.5rem;
+        margin: 0;
+        word-break: break-word;
+      }
+  
+      .description{
+        font-size: 2.2rem;
+        margin: .4rem auto .4rem;
+      }
+  
+      iframe{
+        width: 34rem;
+        height: 20rem;
+
+        max-width: 100%;
+        max-height: 100%;
+        margin: 1rem auto;
+      }
+
+      .btn{
+        font-size: 1rem;
+        max-width: 100%;
+        width: fit-content;
+        margin: 0 auto 2rem;
+      }
+
+    }
+  }
+}

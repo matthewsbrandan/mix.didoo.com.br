@@ -15,8 +15,12 @@
   @isset($elements['download_catalog'])
     <link href="{{ asset('css/sections/download_catalog.css') }}" rel="stylesheet"/>
   @endisset
-  @isset($elements['testimonial'])
+  @if(isset($elements['testimonial']) || (
+    isset($elements['banner']) && $elements['banner']->model->model_type == 'carousel'
+  ))
     <link rel="stylesheet" type="text/css" href="{{ asset('js/slick-1.8.1/slick/slick.css') }}"/>
+  @endif
+  @isset($elements['testimonial'])
     <link href="{{ asset('css/sections/testimonial.css') }}" rel="stylesheet"/>
   @endisset
   <link href="{{ asset('css/sections/contact.css') }}" rel="stylesheet"/>
@@ -27,6 +31,13 @@
       <?php foreach($elements['section_dynamic']->section_dynamic as $section){ echo $section->css; } ?>
     </style>
   @endisset
+  
+  {{-- #region SLIDER-MULTIFOTOS ITEMS --}}
+  @isset($elements['banner'])
+    <link href="{{ asset('css/sections/slider_multifotos/banner/'.$elements['banner']->model->model_type.'.css') }}" rel="stylesheet"/>
+  @endisset
+  {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
+
   <script src="https://kit.fontawesome.com/e2f5b82175.js" crossorigin="anonymous"></script>
   @if(isset($elements['code']) && $elements['code']->head) {!! $elements['code']->head !!} @endif
 @endsection
@@ -90,6 +101,15 @@
           >{!! $section->html !!}</section>
         @endforeach
       @endisset
+
+      {{-- #region SLIDER-MULTIFOTOS ITEMS --}}
+      @isset($elements['banner'])
+        @include('slider_multifotos.banner.index',[
+          'banner_variations' => $elements['banner'],
+          'variation' => $elements['banner']->model->model_type
+        ])
+      @endisset
+      {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
     </section>
   </div>
   @isset($elements['who_we_are'])
@@ -132,8 +152,12 @@
   @isset($elements['carousel'])
     <script> const carousel = new bootstrap.Carousel('#carousel'); </script>
   @endisset
-  @isset($elements['testimonial'])
+  @if(isset($elements['testimonial']) ||  (
+    isset($elements['banner']) && $elements['banner']->model->model_type == 'carousel'
+  ))
     <script type="text/javascript" src="{{ asset('js/slick-1.8.1/slick/slick.min.js') }}"></script>
+  @endif
+  @isset($elements['testimonial'])
     <script>
       let slickDepoimentsIsInitilized = false;
       const initSlickDepoiments = () => {
@@ -333,6 +357,28 @@
     }
   </script>
   @include('layout.cookies')
+
+  {{-- #region SLIDER-MULTIFOTOS ITEMS --}}
+  @if(isset($elements['banner']) && $elements['banner']->model->model_type == 'carousel')
+    <script>
+      $('#banner .carousel').slick({
+        fade: true,
+        arrows: true,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2500,
+      });
+
+      $('#banner .slick-prev').html(`@include('utils.icons.chevron_left')`);
+      $('#banner .slick-next').html(`@include('utils.icons.chevron_right')`);
+    </script>
+  @endif
+  {{-- #endregion SLIDER-MULTIFOTOS ITEMS --}}
+
   @if(isset($elements['jivochat']) && $elements['jivochat']->widget)
     <script src="//code-sa1.jivosite.com/widget/{{ $elements['jivochat']->widget }}" async></script>
   @endif

@@ -1,0 +1,71 @@
+#banner{
+  background-size: cover;
+  background-position-x: center;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .content{
+    width: 85%;
+    margin: auto;
+    overflow: hidden;
+    z-index: 1;
+    position: relative;
+
+    > div {
+      width: 100%;
+      max-width: 45rem;
+      margin: 4rem auto 2rem;
+      
+      text-align: center;
+
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+
+      hgroup{
+        strong{
+          display: block;
+
+          font-size: 1.1rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 3px;
+
+          margin: 2rem 1.25rem 0;
+
+          font-family: 'Courier New', monospace !important;
+          word-break: break-word;
+        }
+
+        h1{
+          font-size: 3.75rem;
+          line-height: 1.1;
+          text-transform: uppercase;
+
+          font-weight: 700;
+          font-family: titillium-Web;
+          margin: 1.25rem 1.25rem 0;
+
+          @media(max-width: 600px){
+            font-size: 10vw;
+          }
+        }
+      }
+  
+      .description{
+        max-width: 22rem;
+        width: 343px;
+        margin: 1.25rem auto 1.6rem;
+        
+        line-height: 1.5rem;
+        font-style: italic;
+        word-wrap: break-word;
+      }
+    }
+  }
+}

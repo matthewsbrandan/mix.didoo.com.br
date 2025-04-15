@@ -152,9 +152,39 @@ class HomeController extends Controller{
     }
   }
   protected function sectionExceptions($elements){
-    if(isset($elements['products'])) recursiveArrayJsonParsed($elements['products']);
-    if(isset($elements['products'])) $this->handleProductCategories($elements['products']);
-    
+    if(isset($elements['products'])){
+      recursiveArrayJsonParsed($elements['products']);
+      $this->handleProductCategories($elements['products']);
+    }
+    if(isset($elements['service']) && is_array($elements['service']->services)){
+      foreach($elements['service']->services as &$service){
+        if(is_string($service->button) && 
+          $jsonParsed = json_decode($service->button)
+        ) $service->button = $jsonParsed;
+      }
+    }
+    if(isset($elements['google_reviews']) && is_array($elements['google_reviews']->reviews)){
+      foreach($elements['google_reviews']->reviews as &$reviews){
+        if(isset($reviews->author) && 
+          is_string($reviews->author) && 
+          $jsonParsed = json_decode($reviews->author)
+        ) $reviews->author = $jsonParsed;
+
+        if(isset($reviews->date) && 
+          is_string($reviews->date) && 
+          $jsonParsed = json_decode($reviews->date)
+        ) $reviews->date = $jsonParsed;
+        
+        if(isset($reviews->description) && 
+          is_string($reviews->description) && 
+          $jsonParsed = json_decode($reviews->description)
+        ) $reviews->description = $jsonParsed;
+      }
+    }
+    if(isset($elements['banner']) && isset($elements['banner']->model)){
+      recursiveArrayJsonParsed($elements['banner']->model);
+    }
+
     return $elements;
   }
   protected function handleExistingOrders($elements){

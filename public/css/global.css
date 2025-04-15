@@ -28,3 +28,6 @@ body{ margin:0; }
 a,button,[onclick]{
   cursor: pointer;
 }
+
+button{ background-color:transparent; border:none; }
+[hidden]{ display:none }

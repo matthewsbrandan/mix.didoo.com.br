@@ -11,6 +11,7 @@
       background-position-x: center;
       height: 100vh;
       width: 100vw;
+      min-width: 100vw !important;
     }
     .content > div{
       max-width: 800px;

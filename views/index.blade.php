@@ -106,6 +106,13 @@
           'default_order' => handleIncrementOrder($order, $existingOrders)
         ])
       @endisset
+
+      @isset($elements['internal_products'])
+        @include('sections.products',[
+          'products' => $elements['internal_products'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
   
       @if(
         isset($elements['cms_blog']) && 
@@ -331,7 +338,7 @@
     </script>
     <script src="{{ asset('js/cms_blog.js') }}"></script>
   @endif
-  @isset($elements['products'])
+  @if(isset($elements['products']) || isset($elements['internal_products']))
     @include('utils.modalMultiPhotos')
     @include('utils.modalSearchBox')
     <script>
@@ -366,7 +373,7 @@
         }
       }
     </script>
-  @endisset
+  @endif
   @if(
     isset($elements['download_catalog']) &&
     isset($elements['download_catalog']->pdf_url)

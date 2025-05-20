@@ -129,24 +129,27 @@
     @endforeach
   </div>
   <script>
-    const filterBtnThemeColors = () => ['btn-danger','btn-dark'];
-    function handleFilterAllCategories(){
-      let [class_active, class_disabled] = filterBtnThemeColors();
-      $(`.btn-filter-category`).addClass(class_active).removeClass(class_disabled);
-      $('.product-item').show('slow');
-    }
-    function handleFilterProductCategory(el){
-      let [class_active, class_disabled] = filterBtnThemeColors();
-      let category = el.html();
+    if(typeof filterBtnThemeColors === 'undefined'){
+      const filterBtnThemeColors = () => ['btn-danger','btn-dark'];
 
-      $(`.btn-filter-category`).removeClass(class_active).addClass(class_disabled);
-
-      $('.product-item').each(function(){
-        if($(this).attr('data-category') === category) $(this).show('slow');
-        else $(this).hide('slow');
-      });
-
-      el.addClass(class_active).removeClass(class_disabled);
-    }
+      function handleFilterAllCategories(){
+        let [class_active, class_disabled] = filterBtnThemeColors();
+        $(`.btn-filter-category`).addClass(class_active).removeClass(class_disabled);
+        $('.product-item').show('slow');
+      }
+      function handleFilterProductCategory(el){
+        let [class_active, class_disabled] = filterBtnThemeColors();
+        let category = el.html();
+  
+        $(`.btn-filter-category`).removeClass(class_active).addClass(class_disabled);
+  
+        $('.product-item').each(function(){
+          if($(this).attr('data-category') === category) $(this).show('slow');
+          else $(this).hide('slow');
+        });
+  
+        el.addClass(class_active).removeClass(class_disabled);
+      }
+    }    
   </script>
 </div>

@@ -440,7 +440,7 @@
         .attr('style', `
           ${ data.button.background ? `background: ${data.button.background};` : '' }
           ${ data.button.color ? `color: ${ data.button.color};` : '' }
-        `).html(data.button.text);
+        `).html(data.button.text ?? 'Quero saber mais');
 
       $('#modalMultiPhotos').show();
     }

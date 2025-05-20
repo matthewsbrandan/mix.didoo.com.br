@@ -103,14 +103,16 @@
       @isset($elements['products'])
         @include('sections.products',[
           'products' => $elements['products'],
-          'default_order' => handleIncrementOrder($order, $existingOrders)
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'internal' => false
         ])
       @endisset
 
       @isset($elements['internal_products'])
         @include('sections.products',[
           'products' => $elements['internal_products'],
-          'default_order' => handleIncrementOrder($order, $existingOrders)
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'internal' => true
         ])
       @endisset
   

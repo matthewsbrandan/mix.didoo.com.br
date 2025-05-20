@@ -88,6 +88,12 @@
 
         return $controller->product($frac_url[1] ?? null);
       }
+      if($frac_url[0] == 'produto-interno'){
+        include_once __DIR__."/app/controllers/HomeController.php";
+        $controller = new HomeController($cms, $cms_theme_slug);
+
+        return $controller->internalProduct($frac_url[1] ?? null);
+      }
     }
 
     return view('error-404');

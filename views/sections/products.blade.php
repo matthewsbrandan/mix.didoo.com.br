@@ -30,7 +30,7 @@
   </div>
   <div class="row pt-3 mb-5 mx-0" id="produtos">
     @foreach($products->items as $prod_item)
-      @php $product_url = route('product.show', ['slug' => $prod_item->slug]); @endphp
+      @php $product_url = $internal ? route('internal_product.show', ['slug' => $prod_item->slug]) : route('product.show', ['slug' => $prod_item->slug]); @endphp
       <div
         class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item {{
           isset($products->columns) && $products->columns != 1 ? (
@@ -52,7 +52,7 @@
           @endisset
         ">
           <div class="product-item-data position-relative">
-            <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'>
+            <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!}, {!! $internal ? 'true':'false' !!})'>
               <img
                 src="{{ $prod_item->image->src }}"
                 class="rounded w-100"
@@ -117,7 +117,7 @@
             <button
               type="button"
               class="btn btn-danger btn-block"
-              onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'
+              onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!},{!! $internal ? 'true':'false' !!})'
               style="
                 {{ innerStyleIssetAttr('background', $prod_item->button, 'background') }}
                 {{ innerStyleIssetAttr('color', $prod_item->button, 'color') }}

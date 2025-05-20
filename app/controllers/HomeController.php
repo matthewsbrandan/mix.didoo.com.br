@@ -143,7 +143,62 @@ class HomeController extends Controller{
         'page_config' => $page_config,
         'elements' => $parsedElements,
         'product' => $product,
-        'slug' => $slug
+        'slug' => $slug,
+        'internal' => false
+      ]);
+    }catch(Exception $e){
+      return view('error-500',[
+        'message' => 'Houve um erro ao carregar o produto/serviço'
+      ]);
+    }
+  }
+  public function internalProduct($slug = null){
+    if(!$slug) return view('error-404');
+    [$data, $err] = $this->cms->get("page/data-select/".$this->theme_slug."&code,internal_products,navbar,menu,footer");
+    if(!$data || !$data->result || $err) return view('error-404');
+
+    $page_config = $data->response->datas[0];
+    $elements = $data->response->elements;
+    
+    $parsedElements = [];
+    foreach($elements as $element){
+      $data = $element->datas ? $element->datas[0] : null;
+      if($data){
+        if($data->active){
+          $data = json_decode($data->data);
+          if($data) foreach($data as &$item){
+            if(is_string($item) && $jsonParsed = json_decode($item)) $item = $jsonParsed;
+          }
+        }
+        else $data = null;
+      }
+      $parsedElements[$element->class_name] = $data;
+    }
+    $parsedElements = $this->sectionExceptions($parsedElements);    
+    try{
+      $parsedElements['products'] = $parsedElements['internal_products'];
+      $products = $parsedElements['internal_products']->items;
+      $product = null;
+      if($slug){
+        foreach($products as $product_item){
+          if($product_item->slug === $slug){
+            $product = $product_item;
+            break;
+          }
+        }
+      }
+
+      if($product){
+        $page_config->title = ($product->title->text ?? 'Produto') . ' | '. $page_config->title;
+        $page_config->metadescription = $product->description ?? null;
+      }
+
+      return view('product.show',[
+        'page_config' => $page_config,
+        'elements' => $parsedElements,
+        'product' => $product,
+        'slug' => $slug,
+        'internal' => true
       ]);
     }catch(Exception $e){
       return view('error-500',[

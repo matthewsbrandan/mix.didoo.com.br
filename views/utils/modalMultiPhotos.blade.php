@@ -203,6 +203,7 @@
                   <button
                     class="btn btn-link mb-0 p-0 text-dark ms-2"
                     type="button"
+                    id="btn-modal-multi-photos-share"
                     onclick='handleShareProduct({!! json_encode($product) !!})'
                   >@include('utils.icons.share')
                   </button>
@@ -319,8 +320,7 @@
       }
     }
 
-
-    function handleShowMultiPhotos(data){
+    function handleShowMultiPhotos(data, internal){
       setMainPhotoMultiPhotos(data.image.src, (
         data.video_position === 'final' ? undefined : data.video
       ), true);
@@ -373,7 +373,8 @@
         )
       );
 
-      let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
+      let routeUrl = internal ? "{{ route('internal_product.show') }}": "{{ route('product.show') }}";
+      let link = data.slug ? `${routeUrl}${data.slug}` : '#';
       $('#modalMultiPhotos .section-2 h3.title a').html(data.title.text).attr(
         'href', link
       );
@@ -423,7 +424,7 @@
           data.select_buttons.includes('Pedir pelo whatsapp')
         ) $('#modalMultiPhotos .btn-whatsapp').attr(
           'onclick',
-          `handleSendProductToWhatsapp(${JSON.stringify(data)})`
+          `handleSendProductToWhatsapp(${JSON.stringify(data)},${internal ? 'true':'false'})`
         ).show();
         else $('#modalMultiPhotos .btn-whatsapp').hide();
       @endif
@@ -436,11 +437,15 @@
       }else $('#modalMultiPhotos .btn-external').hide();
       
 
-      $('#modalMultiPhotos .more-info').attr('href', link)
-        .attr('style', `
-          ${ data.button.background ? `background: ${data.button.background};` : '' }
-          ${ data.button.color ? `color: ${ data.button.color};` : '' }
-        `).html(data.button.text ?? 'Quero saber mais');
+      $('#modalMultiPhotos .more-info').attr('href', link).attr('style', `
+        ${ data.button.background ? `background: ${data.button.background};` : '' }
+        ${ data.button.color ? `color: ${ data.button.color};` : '' }
+      `).html(data.button.text ?? 'Quero saber mais');
+
+      $('#btn-modal-multi-photos-share').attr(
+        'onclick',
+        `handleShareProduct(${JSON.stringify(data)},${internal ? 'true':'false'})`
+      );
 
       $('#modalMultiPhotos').show();
     }
@@ -475,12 +480,14 @@
         $(`#container-multi-photos [data-index=${target_index}]`).click();
       }
     }
-    function handleSendProductToWhatsapp(product){
+    function handleSendProductToWhatsapp(product, internal){
       let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
       let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
       if(product.category) message+= `(${product.category})\n`;
       if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
-      message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+
+      let routeUrl = internal ? "{{ route('internal_product.show') }}": "{{ route('product.show') }}";
+      message+= `\n${routeUrl}${product.slug}`;
 
       let whatsapp = `{{
         isset($elements['code']) && isset($elements['code']->whatsapp) ? 
@@ -491,9 +498,10 @@
       }`;
       window.open(url, '_blank');
     }
-    function handleShareProduct(product){
+    function handleShareProduct(product, internal){
       let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
-      let url = `{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+      let routeUrl = internal ? "{{ route('internal_product.show') }}": "{{ route('product.show') }}";
+      let url = `${routeUrl}${product.slug}`;
 
       let text = `*${title + (product.code ? ` - ${product.code}` : '')}* \n`;
       if(product.category) text+= `(${product.category}) \n`;
@@ -506,8 +514,9 @@
   </script>
 @else
   <script>
-    function handleShowMultiPhotos(data){
-      let link = data.slug ? `{{ route('product.show') }}${data.slug}` : '#';
+    function handleShowMultiPhotos(data, internal){
+      let routeUrl = internal ? "{{ route('internal_product.show') }}": "{{ route('product.show') }}";
+      let link = data.slug ? `${routeUrl}${data.slug}` : '#';
       window.open(link, '_blank')
     }
   </script>

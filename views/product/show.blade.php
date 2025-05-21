@@ -265,7 +265,7 @@
                 <button
                   class="btn btn-link mb-0 p-0 text-dark ms-2"
                   type="button"
-                  onclick='handleShareProduct({!! json_encode($product) !!})'
+                  onclick='handleShareProduct({!! json_encode($product) !!},{!! $internal ? 'true':'false' !!})'
                 >
                   @include('utils.icons.share')
                 </button>
@@ -311,7 +311,7 @@
                 class="botao btn mb-2 w-100"
                 onclick='handleSendProductToWhatsapp({!!
                   json_encode($product)
-                !!})'
+                !!},{!! $internal ? 'true':'false' !!})'
                 style="
                   background: #34af23;
                   color: white;
@@ -384,7 +384,7 @@
             @foreach($elements['products']->items as $prod_item)
               @php
                 if($prod_item->slug === $slug) continue;
-                $product_url = route('product.show', ['slug' => $prod_item->slug]);
+                $product_url = $internal ? route('internal_product.show', ['slug' => $prod_item->slug]) : route('product.show', ['slug' => $prod_item->slug]);
               @endphp
               <div
                 class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item {{
@@ -540,12 +540,12 @@
         $(`#container-multi-photos [data-index=${target_index}]`).click();
       }
     }
-    function handleSendProductToWhatsapp(product){
+    function handleSendProductToWhatsapp(product,internal){
       let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
       let message = `*${title + (product.code ? ` - ${product.code}` : '')}*\n`;
       if(product.category) message+= `(${product.category})\n`;
       if(product.price && product.price.current) message+= `R$ ${product.price.current}\n`;
-      message+= `\n{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+      message+= `\n{{ $internal ? route('internal_product.show', ['slug' => '']) : route('product.show', ['slug' => '']) }}${product.slug}`;
 
       let whatsapp = `{{
         isset($elements['code']) && isset($elements['code']->whatsapp) ? 
@@ -559,9 +559,9 @@
     function handleToggleHomeAndWhoWeAre(){
       window.location.href = "{{ route('home') }}";
     }
-    function handleShareProduct(product){
+    function handleShareProduct(product,internal){
       let title = product.title && product.title.text ? product.title.text : '_Produto Sem Título_';
-      let url = `{{ route('product.show', ['slug' => '']) }}${product.slug}`;
+      let url = `{{ $internal ? route('internal_product.show', ['slug' => '']) : route('product.show', ['slug' => '']) }}${product.slug}`;
 
       let text = `*${title + (product.code ? ` - ${product.code}` : '')}* \n`;
       if(product.category) text+= `(${product.category}) \n`;

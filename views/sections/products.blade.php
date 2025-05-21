@@ -30,7 +30,7 @@
   </div>
   <div class="row pt-3 mb-5 mx-0" id="produtos">
     @foreach($products->items as $prod_item)
-      @php $product_url = route('product.show', ['slug' => $prod_item->slug]); @endphp
+      @php $product_url = $internal ? route('internal_product.show', ['slug' => $prod_item->slug]) : route('product.show', ['slug' => $prod_item->slug]); @endphp
       <div
         class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-3 product-item {{
           isset($products->columns) && $products->columns != 1 ? (
@@ -52,7 +52,7 @@
           @endisset
         ">
           <div class="product-item-data position-relative">
-            <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'>
+            <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!}, {!! $internal ? 'true':'false' !!})'>
               <img
                 src="{{ $prod_item->image->src }}"
                 class="rounded w-100"
@@ -117,7 +117,7 @@
             <button
               type="button"
               class="btn btn-danger btn-block"
-              onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!})'
+              onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!},{!! $internal ? 'true':'false' !!})'
               style="
                 {{ innerStyleIssetAttr('background', $prod_item->button, 'background') }}
                 {{ innerStyleIssetAttr('color', $prod_item->button, 'color') }}
@@ -129,24 +129,27 @@
     @endforeach
   </div>
   <script>
-    const filterBtnThemeColors = () => ['btn-danger','btn-dark'];
-    function handleFilterAllCategories(){
-      let [class_active, class_disabled] = filterBtnThemeColors();
-      $(`.btn-filter-category`).addClass(class_active).removeClass(class_disabled);
-      $('.product-item').show('slow');
-    }
-    function handleFilterProductCategory(el){
-      let [class_active, class_disabled] = filterBtnThemeColors();
-      let category = el.html();
+    if(typeof filterBtnThemeColors === 'undefined'){
+      const filterBtnThemeColors = () => ['btn-danger','btn-dark'];
 
-      $(`.btn-filter-category`).removeClass(class_active).addClass(class_disabled);
-
-      $('.product-item').each(function(){
-        if($(this).attr('data-category') === category) $(this).show('slow');
-        else $(this).hide('slow');
-      });
-
-      el.addClass(class_active).removeClass(class_disabled);
-    }
+      function handleFilterAllCategories(){
+        let [class_active, class_disabled] = filterBtnThemeColors();
+        $(`.btn-filter-category`).addClass(class_active).removeClass(class_disabled);
+        $('.product-item').show('slow');
+      }
+      function handleFilterProductCategory(el){
+        let [class_active, class_disabled] = filterBtnThemeColors();
+        let category = el.html();
+  
+        $(`.btn-filter-category`).removeClass(class_active).addClass(class_disabled);
+  
+        $('.product-item').each(function(){
+          if($(this).attr('data-category') === category) $(this).show('slow');
+          else $(this).hide('slow');
+        });
+  
+        el.addClass(class_active).removeClass(class_disabled);
+      }
+    }    
   </script>
 </div>

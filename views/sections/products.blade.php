@@ -9,7 +9,7 @@
     @endisset
   ">{{ $products->title->text ?? 'Produtos Personalizados' }}</h1>
   <div class="container-categories d-flex">
-    <div class="d-flex flex-wrap mx-auto" style="gap: .5rem;">
+    <div class="d-flex flex-wrap mx-auto justify-content-center" style="gap: .5rem;">
       @if(count($products->categories) > 0)
         <button
           type="button"
@@ -54,7 +54,7 @@
           <div class="product-item-data position-relative">
             <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!}, {!! $internal ? 'true':'false' !!})'>
               <img
-                src="{{ $prod_item->image->src }}"
+                src="{{ $prod_item->image->src ?? '' }}"
                 class="rounded w-100"
                 alt="{{ $prod_item->image->alt ?? $prod_item->title->text ?? 'Imagem do produto' }}"
               />

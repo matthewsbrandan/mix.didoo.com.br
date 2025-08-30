@@ -109,11 +109,21 @@
       @endisset
 
       @isset($elements['internal_products'])
-        @include('sections.products',[
+        @if(
+          isset($elements['internal_products']->horizontal_list_by_category) &&
+          $elements['internal_products']->horizontal_list_by_category === 'Sim'
+        ) @include('sections.products_alt',[
           'products' => $elements['internal_products'],
           'default_order' => handleIncrementOrder($order, $existingOrders),
           'internal' => true
         ])
+        @else @include('sections.products',[
+          'products' => $elements['internal_products'],
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'internal' => true
+        ])
+        @endif
+
       @endisset
   
       @if(

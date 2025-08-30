@@ -31,3 +31,17 @@ a,button,[onclick]{
 
 button{ background-color:transparent; border:none; }
 [hidden]{ display:none }
+
+.truncate-1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

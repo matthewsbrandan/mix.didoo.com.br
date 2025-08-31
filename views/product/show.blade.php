@@ -1,6 +1,8 @@
 @php
   if (!function_exists('formatWhatsappText')) {  
     function formatWhatsappText($text) {
+      $text = str_replace('&lt;br&gt;', '<br>', $text);
+      $text = str_replace('&lt;br /&gt;', '<br>', $text);
       $text = preg_replace('/\*(.*?)\*/', '<b>$1</b>', $text);  // Negrito
       $text = preg_replace('/_(.*?)_/', '<i>$1</i>', $text);   // Itálico
       $text = preg_replace('/~(.*?)~/', '<s>$1</s>', $text);   // Tachado
@@ -455,7 +457,7 @@
                         @endif
                       </div>
                     @endisset
-                    @isset($prod_item->validate)
+                    {{-- @isset($prod_item->validate)
                       <div
                         class="contador-regressivo rounded"
                         data-timer-id="1"
@@ -465,7 +467,7 @@
                         <p class="text-uppercase"> Promoção expira em: </p>
                         <div class="timer-products-1">131 dias 40m 7s</div>
                       </div>
-                    @endisset
+                    @endisset --}}
                   </div>
                 </div>
               </div>

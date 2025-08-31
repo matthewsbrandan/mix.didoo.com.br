@@ -1,3 +1,16 @@
+@php
+  if (!function_exists('formatWhatsappText')) {  
+    function formatWhatsappText($text) {
+      $text = str_replace('&lt;br&gt;', '<br>', $text);
+      $text = str_replace('&lt;br /&gt;', '<br>', $text);
+      $text = preg_replace('/\*(.*?)\*/', '<b>$1</b>', $text);  // Negrito
+      $text = preg_replace('/_(.*?)_/', '<i>$1</i>', $text);   // Itálico
+      $text = preg_replace('/~(.*?)~/', '<s>$1</s>', $text);   // Tachado
+      $text = preg_replace('/```(.*?)```/', '<code>$1</code>', $text); // Monoespaçado
+      return $text;
+    }
+  }
+@endphp
 <div id="products" style="
   {{ innerStyleIssetAttr('background', $products, 'background', 'transparent') }}
   {{ innerStyleIssetAttr('order', $products, 'order', $default_order) }}
@@ -58,7 +71,7 @@
                   </div>
                   @isset($prod_item->description)
                     <p class="truncate-1" style="font-size: .9rem; opacity: 0.9;">
-                      {{ $prod_item->description }}
+                      {{ strip_tags(formatWhatsappText($prod_item->description)) }}
                     </p>
                   @endisset
                 </div>          

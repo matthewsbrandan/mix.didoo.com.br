@@ -101,7 +101,7 @@
                 @endif
               </div>
             @endisset
-            @isset($prod_item->validate)
+            {{-- @isset($prod_item->validate)
               <div
                 class="contador-regressivo rounded"
                 data-timer-id="1"
@@ -111,7 +111,7 @@
                 <p class="text-uppercase"> Promoção expira em: </p>
                 <div class="timer-products-1">131 dias 40m 7s</div>
               </div>
-            @endisset
+            @endisset --}}
           </div>          
           <div class="product-link product-item-url text-center mt-auto w-100">
             <button

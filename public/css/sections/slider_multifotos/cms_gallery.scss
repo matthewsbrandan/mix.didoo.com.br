@@ -51,7 +51,7 @@
         &.btn-right{ right: 0; }
       }
 
-      #container-gallery img{
+      .container-gallery-style img{
         cursor: pointer;
         transition: transform 0.3s;
 
@@ -60,7 +60,7 @@
         }
       }
 
-      &.carousel-gallery #container-gallery{
+      &.carousel-gallery .container-gallery-style{
         width: fit-content;
         max-width: calc(100vw - 4rem);
         min-height: 15rem;
@@ -90,7 +90,7 @@
           margin: .4rem;
         }
       }
-      &.mosaic-gallery #container-gallery{
+      &.mosaic-gallery .container-gallery-style{
         display: flex;
         gap: 1rem;
         min-height: 15rem;
@@ -147,7 +147,7 @@
           }
         }
       }
-      &.netflix-gallery #container-gallery{
+      &.netflix-gallery .container-gallery-style{
         width: fit-content;
         max-width: calc(100vw - 4rem);
         min-height: 15rem;

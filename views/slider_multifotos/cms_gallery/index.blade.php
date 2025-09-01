@@ -20,7 +20,7 @@
       class="wrapper-gallery {{ (!isset($cms_gallery->mode) || $cms_gallery->mode === 'Carrossel de Imagens') ? 'carousel-gallery' : ($cms_gallery->mode === 'Padrão Mosaico' ?  'mosaic-gallery' : 'netflix-gallery') }}"
       data-rows="{{ $cms_gallery->rows ?? '1'}}"
     >
-      <div id="container-gallery">
+      <div class="container-gallery-style" id="{{ isset($variation) && $variation ? "container-gallery-$variation" : 'container-gallery' }}">
         <p class="text-loading texto">Carregando Galeria...</p>
       </div>
       <button
@@ -32,7 +32,7 @@
             {{ innerStyleIssetAttr('background', $cms_gallery->button, 'background', '#5e72e4') }}
           @endisset
         "
-        onclick="handleScrollNextOrPrevItem(false, 'container-gallery', (15 + (2 * .4)) * 16)"
+        onclick="handleScrollNextOrPrevItem(false, '{{ isset($variation) && $variation ? "container-gallery-$variation" : "container-gallery" }}', (15 + (2 * .4)) * 16)"
       >@include('utils.icons.chevron_left')</button>
       <button
         type="button"
@@ -43,7 +43,7 @@
             {{ innerStyle('background', $cms_gallery->button, 'background', '#5e72e4') }}
           @endisset
         "
-        onclick="handleScrollNextOrPrevItem(true, 'container-gallery', (15 + (2 * .4)) * 16)"
+        onclick="handleScrollNextOrPrevItem(true, '{{ isset($variation) && $variation ? "container-gallery-$variation" : "container-gallery" }}', (15 + (2 * .4)) * 16)"
       >@include('utils.icons.chevron_right')</button>
     </div>
   </div>
@@ -62,7 +62,7 @@
           {{ innerStyleIssetAttr('background', $cms_gallery->button, 'background', '#5e72e4') }}
         @endisset
       "
-      onclick="handleScrollNextOrPrevItem(false, 'container-gallery', (15 + (2 * .4)) * 16)"
+      onclick="handleScrollNextOrPrevItem(false, '{{ isset($variation) && $variation ? "container-gallery-$variation" : "container-gallery" }}', (15 + (2 * .4)) * 16)"
     >@include('utils.icons.chevron_left')</button>
     <button
       type="button"
@@ -76,7 +76,7 @@
           {{ innerStyle('background', $cms_gallery->button, 'background', '#5e72e4') }}
         @endisset
       "
-      onclick="handleScrollNextOrPrevItem(true, 'container-gallery', (15 + (2 * .4)) * 16)"
+      onclick="handleScrollNextOrPrevItem(true, '{{ isset($variation) && $variation ? "container-gallery-$variation" : "container-gallery" }}', (15 + (2 * .4)) * 16)"
     >@include('utils.icons.chevron_right')</button>
   </div>
   

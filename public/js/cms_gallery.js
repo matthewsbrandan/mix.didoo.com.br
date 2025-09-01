@@ -1,35 +1,52 @@
 const gallery_control = { len: 0 };
-function loadGallery(){
-  $('#container-gallery').parent().removeClass('gallery-filled');
-  let wrapper = $('#container-gallery').parent();
+const gallery_control_variation = { '2': { len: 0 }, '3': { len: 0 } };
+function loadGallery(variation = undefined){
+  let containerGalleryId = variation ? `#container-gallery-${variation}` : '#container-gallery';
+
+  let url = cms_gallery?.url;
+  let access_token = cms_gallery?.token;
+  let take = cms_gallery?.take;
+
+  if(variation){
+    if(!outhers_cms_galleries || !outhers_cms_galleries[variation]) return;
+    
+    url = outhers_cms_galleries[variation].url;
+    access_token = outhers_cms_galleries[variation].token;
+    take = outhers_cms_galleries[variation].take;
+  }
+  if(!url || !access_token) return;
+
+  $(containerGalleryId).parent().removeClass('gallery-filled');
+  let wrapper = $(containerGalleryId).parent();
 
   let mode = wrapper.hasClass('mosaic-gallery') ? 'mosaic' : wrapper.hasClass('netflix-gallery') ? 'netflix' : 'carousel';
   let rows = Number(wrapper[0].dataset.rows);
-
-  let url = cms_gallery.url;
+  
   $.ajax({
-    url, headers: {
-      "access-token": cms_gallery.token,
-      "take": cms_gallery.take
-    },
+    url, headers: { "access-token": access_token, "take": take },
     method: "GET"
   }).done(data => {
     if(data.result){
-      $('#container-gallery').html('');
+      $(containerGalleryId).html('');
 
       let images = data.response.images;
-      gallery_control.len = images.length;
-      if(images.length === 0) $('#container-gallery').html(`
+      
+      if(variation){
+        if(gallery_control_variation[variation]) gallery_control_variation[variation].len = images.length;
+      } 
+      else gallery_control.len = images.length;
+      
+      if(images.length === 0) $(containerGalleryId).html(`
         <p class="text-loading">Nenhuma imagem encontrada!</p>
       `);
       else{
-        $('#container-gallery').parent().addClass('gallery-filled');
+        $(containerGalleryId).parent().addClass('gallery-filled');
         images.forEach((image, i) => {
           if(mode === 'mosaic'){
-            if(i % (rows * 3) === 0) $('#container-gallery').append('<div class="gallery-row"></div>');
+            if(i % (rows * 3) === 0) $(containerGalleryId).append('<div class="gallery-row"></div>');
             
-            $('#container-gallery').children().last().append(
-              renderImageFromGallery(image, i)
+            $(containerGalleryId).children().last().append(
+              renderImageFromGallery(image, i, variation)
             );
           }else{
             if((
@@ -42,26 +59,26 @@ function loadGallery(){
                   rows === 3 && i === (Math.ceil(images.length / rows) * 2)
                 )
               )
-            )) $('#container-gallery').append('<div class="gallery-row"></div>');
+            )) $(containerGalleryId).append('<div class="gallery-row"></div>');
             
-            $('#container-gallery').children().last().append(
-              renderImageFromGallery(image, i)
+            $(containerGalleryId).children().last().append(
+              renderImageFromGallery(image, i, variation)
             );
           }
         });
 
-        handleImageOnerrorInScope('#container-gallery');
+        handleImageOnerrorInScope(containerGalleryId);
       } 
     }
   }).fail(err => {
-    $('#container-gallery').html(`
+    $(containerGalleryId).html(`
       <p class="text-loading">Houve um erro ao carregar a galeria!</p>
     `);
   });;
 }
-function renderImageFromGallery(image, index){
+function renderImageFromGallery(image, index, variation = undefined){
   return `
-    <img src="${image.name}" alt="${image.alt}" data-index="${index}" class="gallery-image" onclick="openZoomImage(this,${index})"/>
+    <img src="${image.name}" alt="${image.alt}" data-index="${index}" data-variation="${variation ?? ''}" class="gallery-image" onclick="openZoomImage(this,${index})"/>
   `;
 }
 
@@ -81,6 +98,8 @@ function openZoomImage(img, index){
   interactionZoomImage.modal.style.display = "flex";
   interactionZoomImage.modalImg.src = img.src;
   interactionZoomImage.modalImg.dataset.index = index;
+  interactionZoomImage.modalImg.dataset.variation = img.dataset.variation;
+
   interactionZoomImage.scale = 1;
   interactionZoomImage.offsetX = 0;
   interactionZoomImage.offsetY = 0;
@@ -101,26 +120,34 @@ function closeZoomImageOnEsc(event) {
 document.querySelector('#modal-zoom-gallery-image .btn-left').addEventListener("click", function(event) { 
   event.stopPropagation();
 
+  let variation = interactionZoomImage.modalImg.dataset.variation ?? undefined;
+  let containerGalleryId = variation ? `#container-gallery-${variation}` : '#container-gallery';
+  let controlLen = variation ? gallery_control_variation[variation]?.len ?? 0 : gallery_control.len;
+
   let index = interactionZoomImage.modalImg.dataset.index === '0' ? (
-    gallery_control.len - 1
+    controlLen - 1
   ) : Number(interactionZoomImage.modalImg.dataset.index) - 1;
   
-  const el = document.querySelector(`#container-gallery .gallery-image[data-index="${index}"]`)
+  const el = document.querySelector(`${containerGalleryId} .gallery-image[data-index="${index}"]`)
 
   if(el) el.click();
-  else console.log(`[element-not-found] #container-gallery .gallery-image[data-index="${index}"]`);
+  else console.log(`[element-not-found] ${containerGalleryId} .gallery-image[data-index="${index}"]`);
 });
 document.querySelector('#modal-zoom-gallery-image .btn-right').addEventListener("click", function(event) {
   event.stopPropagation();
 
+  let variation = interactionZoomImage.modalImg.dataset.variation ?? undefined;
+  let containerGalleryId = variation ? `#container-gallery-${variation}` : '#container-gallery';
+  let controlLen = variation ? gallery_control_variation[variation]?.len ?? 0 : gallery_control.len;
+
   let index = interactionZoomImage.modalImg.dataset.index === String(
-    gallery_control.len - 1
+    controlLen - 1
   ) ? 0 : Number(interactionZoomImage.modalImg.dataset.index) + 1;
 
-  const el = document.querySelector(`#container-gallery .gallery-image[data-index="${index}"]`)
+  const el = document.querySelector(`${containerGalleryId} .gallery-image[data-index="${index}"]`)
 
   if(el) el.click();
-  else console.log(`[element-not-found] #container-gallery .gallery-image[data-index="${index}"]`);
+  else console.log(`[element-not-found] ${containerGalleryId} .gallery-image[data-index="${index}"]`);
 });
 
 interactionZoomImage.modalImg.addEventListener("click", function(event) {
@@ -165,4 +192,10 @@ interactionZoomImage.modal.addEventListener("mouseleave", () => {
 });
 //#endregion HANDLE ZOOM
 
-$(function(){ loadGallery(); });
+$(function(){
+  if(cms_gallery) loadGallery();
+  if(outhers_cms_galleries){
+    if(outhers_cms_galleries['2']) loadGallery('2')
+    if(outhers_cms_galleries['3']) loadGallery('3')
+  }
+});

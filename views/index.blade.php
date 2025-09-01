@@ -55,9 +55,9 @@
   )
     <link href="{{ asset('css/sections/slider_multifotos/cms_catalog.css') }}" rel="stylesheet"/>
   @endif
-  @isset($elements['cms_gallery'])
+  @if(isset($elements['cms_gallery']) || isset($elements['cms_gallery_2']) || isset($elements['cms_gallery_3']))
     <link href="{{ asset('css/sections/slider_multifotos/cms_gallery.css') }}" rel="stylesheet"/>
-  @endisset
+  @endif
   @isset($elements['video'])
     <link href="{{ asset('css/sections/slider_multifotos/video.css') }}" rel="stylesheet"/>
   @endisset
@@ -210,9 +210,27 @@
       @isset($elements['cms_gallery'])
         @include('slider_multifotos.cms_gallery.index',[
           'cms_gallery' => $elements['cms_gallery'],
-          'default_order' => handleIncrementOrder($order, $existingOrders)
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'variation' => null
         ])
       @endisset
+      
+      @isset($elements['cms_gallery_2'])
+        @include('slider_multifotos.cms_gallery.index',[
+          'cms_gallery' => $elements['cms_gallery_2'],
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'variation' => 2
+        ])
+      @endisset
+      
+      @isset($elements['cms_gallery_3'])
+        @include('slider_multifotos.cms_gallery.index',[
+          'cms_gallery' => $elements['cms_gallery_3'],
+          'default_order' => handleIncrementOrder($order, $existingOrders),
+          'variation' => 3
+        ])
+      @endisset
+
 
       @isset($elements['video'])
         @include('slider_multifotos.video',[
@@ -526,17 +544,42 @@
     <script src="{{ asset('js/cms_catalog.js') }}"></script>
   @endif
   @if(
-    isset($elements['cms_gallery']) &&
-    isset($elements['cms_gallery']->slug)
+    (isset($elements['cms_gallery']) && isset($elements['cms_gallery']->slug))     ||
+    (isset($elements['cms_gallery_2']) && isset($elements['cms_gallery_2']->slug)) ||
+    (isset($elements['cms_gallery_3']) && isset($elements['cms_gallery_3']->slug))
   )
     <script>
       // INTIALIZATION
-      const cms_gallery = {
-        slug: `{{ $elements['cms_gallery']->slug }}`,
-        token: `{{ $cms_page_token }}`,
-        take: <?php echo $elements['cms_gallery']->take ?? 'null'; ?>,
-        url: `{{ route('api.gallery.show',['slug' => $elements['cms_gallery']->slug]) }}`
-      };
+      @if(isset($elements['cms_gallery']) && isset($elements['cms_gallery']->slug))
+        const cms_gallery = {
+          slug: `{{ $elements['cms_gallery']->slug }}`,
+          token: `{{ $cms_page_token }}`,
+          take: <?php echo $elements['cms_gallery']->take ?? 'null'; ?>,
+          url: `{{ route('api.gallery.show',['slug' => $elements['cms_gallery']->slug]) }}`
+        };
+      @else
+        const cms_gallery = undefined;
+      @endif
+
+      const outhers_cms_galleries = { '2': undefined, '3': undefined };
+
+      @if(isset($elements['cms_gallery_2']) && isset($elements['cms_gallery_2']->slug))
+        outhers_cms_galleries['2'] = {
+          slug: `{{ $elements['cms_gallery_2']->slug }}`,
+          token: `{{ $cms_page_token }}`,
+          take: <?php echo $elements['cms_gallery_2']->take ?? 'null'; ?>,
+          url: `{{ route('api.gallery.show',['slug' => $elements['cms_gallery_2']->slug]) }}`
+        };
+      @endif
+
+      @if(isset($elements['cms_gallery_3']) && isset($elements['cms_gallery_3']->slug))
+        outhers_cms_galleries['3'] = {
+          slug: `{{ $elements['cms_gallery_3']->slug }}`,
+          token: `{{ $cms_page_token }}`,
+          take: <?php echo $elements['cms_gallery_3']->take ?? 'null'; ?>,
+          url: `{{ route('api.gallery.show',['slug' => $elements['cms_gallery_3']->slug]) }}`
+        };
+      @endif
     </script>
     <script src="{{ asset('js/cms_gallery.js') }}"></script>
   @endif

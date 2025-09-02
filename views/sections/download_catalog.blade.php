@@ -3,9 +3,67 @@
   {{ innerStyleIssetAttr('background', $download_catalog, 'background') }}
   {{ innerStyleIssetAttr('color', $download_catalog, 'color') }}
 ">
-  <div class="newsletter py-4">
+  <div class="newsletter py-4">    
     <div class="container text-center" id="baixar-catalogo">
-      <img src="{{ $download_catalog->image }}" alt="capa catalogo"/>
+      <div>
+        @if (
+          (isset($download_catalog->pdf_url_2) && $download_catalog->pdf_url_2->src) ||
+          (isset($download_catalog->pdf_url_3) && $download_catalog->pdf_url_3->src) ||
+          (isset($download_catalog->pdf_url_4) && $download_catalog->pdf_url_4->src) ||
+          (isset($download_catalog->pdf_url_5) && $download_catalog->pdf_url_5->src)
+        )
+          <div style="
+            margin-bottom: 1rem;
+            background: #fff2;
+            padding: .5rem 1rem .8rem;
+          ">
+            <style>
+              #download_catalog .catalog_option{ padding: 0; }
+              #download_catalog .catalog_option.active{
+                border: 3px solid {{ isset($download_catalog->color) ? $download_catalog->color : '#000' }};
+              }
+            </style>
+            <strong style="font-weight: 600;display: block;margin-bottom: .4rem;text-align: left;font-size: .9rem;">
+              Selecione o Catálogo que deseja baixar:
+            </strong>
+          
+            <div style="display: flex; gap: .4rem; overflow-x: auto;">
+              <button type="button" class="catalog_option active" onClick="toggleCatalogToDownload('1')" data-variation="1">
+                <img
+                  src="{{ $download_catalog->image }}"
+                  alt="capa catalogo"
+                  style="width: 8rem; height: 6rem; object-fit: cover;"
+                />
+              </button>
+              @if(isset($download_catalog->pdf_url_2) && $download_catalog->pdf_url_2->src)
+                <button type="button" class="catalog_option" onClick="toggleCatalogToDownload('2')" data-variation="2">
+                  <img src="{{ $download_catalog->pdf_url_2->src }}" alt="catálogo 2" style="width: 8rem; height: 6rem; object-fit: cover;"/>
+                </button>
+              @endif
+              @if(isset($download_catalog->pdf_url_3) && $download_catalog->pdf_url_3->src)
+                <button type="button" class="catalog_option" onClick="toggleCatalogToDownload('3')" data-variation="3">
+                  <img src="{{ $download_catalog->pdf_url_3->src }}" alt="catálogo 3" style="width: 8rem; height: 6rem; object-fit: cover;"/>
+                </button>
+              @endif
+              @if(isset($download_catalog->pdf_url_4) && $download_catalog->pdf_url_4->src)
+                <button type="button" class="catalog_option" onClick="toggleCatalogToDownload('4')" data-variation="4">
+                  <img src="{{ $download_catalog->pdf_url_4->src }}" alt="catálogo 4" style="width: 8rem; height: 6rem; object-fit: cover;"/>
+                </button>
+              @endif
+              @if(isset($download_catalog->pdf_url_5) && $download_catalog->pdf_url_5->src)
+                <button type="button" class="catalog_option" onClick="toggleCatalogToDownload('5')" data-variation="5">
+                  <img src="{{ $download_catalog->pdf_url_5->src }}" alt="catálogo 5" style="width: 8rem; height: 6rem; object-fit: cover;"/>
+                </button>
+              @endif
+            </div>
+          </div>
+        @endif
+        <img src="{{ $download_catalog->image }}" alt="capa catalogo" id="catalog_wallpaper" style="
+          width: 100%;
+          object-fit: cover;
+        "/>
+      </div>
+
       <div class="d-flex flex-column justify-content-center text-start">
         <div class="mb-4 row d-flex justify-content-center">
           <div class="col-md-10">
@@ -53,7 +111,7 @@
                     #download_catalog .btn-submit:hover{
                       background: #ffdddd44;
                       border: none !important;
-box-shadow: none !important;
+                      box-shadow: none !important;
                     }
                   </style>
                 @endif

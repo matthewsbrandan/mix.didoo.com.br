@@ -418,8 +418,24 @@
         page_owner_id: `{{ $page_config->user_id }}`,
         url: `{{ route('api.contact.send') }}`,
         token: `{{ $cms_page_token }}`,
-        pdf_catalog_url: `{{ $elements['download_catalog']->pdf_url }}`
+        pdf_catalog_url: `{{ $elements['download_catalog']->pdf_url }}`,
+        pdf_image: `{{ $elements['download_catalog']->image }}`,
+        variations: {},
+        selected_variation: '1'
       };
+
+      @if(isset($elements['download_catalog']->pdf_url_2) && $elements['download_catalog']->pdf_url_2->src)
+        download_catalog.variations['2'] = { src: '{{ $elements['download_catalog']->pdf_url_2->src }}', url: '{{ $elements['download_catalog']->pdf_url_2->url }}' };
+      @endif
+      @if(isset($elements['download_catalog']->pdf_url_3) && $elements['download_catalog']->pdf_url_3->src)
+        download_catalog.variations['3'] = { src: '{{ $elements['download_catalog']->pdf_url_3->src }}', url: '{{ $elements['download_catalog']->pdf_url_3->url }}' };
+      @endif
+      @if(isset($elements['download_catalog']->pdf_url_4) && $elements['download_catalog']->pdf_url_4->src)
+        download_catalog.variations['4'] = { src: '{{ $elements['download_catalog']->pdf_url_4->src }}', url: '{{ $elements['download_catalog']->pdf_url_4->url }}' };
+      @endif
+      @if(isset($elements['download_catalog']->pdf_url_5) && $elements['download_catalog']->pdf_url_5->src)
+        download_catalog.variations['5'] = { src: '{{ $elements['download_catalog']->pdf_url_5->src }}', url: '{{ $elements['download_catalog']->pdf_url_5->url }}' };
+      @endif
     </script>
     <script src="{{ asset('js/download_catalog.js') }}"></script>
   @endif
@@ -538,7 +554,7 @@
         api_url: `{{ $elements['cms_catalog']->api_url }}`,
         take: `{{ $elements['cms_catalog']->take }}`,
         token: `{{ $elements['cms_catalog']->token }}`,
-        origin: `{{ $elements['cms_catalog']->origin }}`
+        origin: `{{ $elements['cms_catalog']->origin }}`,
       };
     </script>
     <script src="{{ asset('js/cms_catalog.js') }}"></script>

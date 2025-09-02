@@ -45,3 +45,14 @@ async function handleSendRequestCatalog(event){
     showMessage('Houve um erro ao solicitar o download do catálogo', 'Baixar Catálogo');
   });
 }
+function toggleCatalogToDownload(variation){
+  let src = variation === '1' ? download_catalog.pdf_image : download_catalog.variations[variation]?.src;
+  if(!src) return;
+
+  download_catalog.selected_variation = variation;
+
+  $(`#download_catalog .catalog_option`).removeClass('active');
+  $(`#download_catalog .catalog_option[data-variation=${variation}]`).addClass('active');
+
+  $(`#catalog_wallpaper`).attr('src', src);
+}

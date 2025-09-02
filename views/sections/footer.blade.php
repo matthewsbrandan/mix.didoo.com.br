@@ -176,5 +176,5 @@
     padding: .2rem;
     border-radius: .5rem;
     line-height: 1;
-  ">v1.0.0</span>
+  ">v1.1.0</span>
 </section>

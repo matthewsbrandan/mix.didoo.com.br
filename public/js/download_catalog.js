@@ -17,25 +17,35 @@ async function handleSendRequestCatalog(event){
     return;
   }
 
-  let message = `Solicitação de download do catálogo pelo usuário ${name}<br/><br/>`;
+  let pdf_catalog_url = download_catalog.selected_variation === '1' ? download_catalog.pdf_catalog_url : (
+    download_catalog.variations[download_catalog.selected_variation].url
+  );
+
+  if(!pdf_catalog_url){
+    showMessage('Não foi possível identificar o link do catálogo', 'Baixar Catálogo');
+    return;
+  }
+  
+  let message = `Solicitação de download do ${download_catalog.selected_variation}º catálogo pelo usuário ${name}<br/><br/>`;
   if(whatsapp) message+= `Whatsapp: ${whatsapp}<br/>`;
   if(email) message+= `Email: ${email}`;
 
   let data = {
     name, email, message, phone: whatsapp,
     page_id: download_catalog.page_id,
-    page_owner_id: download_catalog.page_owner_id
+    page_owner_id: download_catalog.page_owner_id,
+    variation: download_catalog.selected_variation
   };
 
   showMessage('Solicitando catálogo...', 'Baixar Catálogo');
   $.ajax({
     url: download_catalog.url, data,
-    headers: {"access-token": download_catalog.token},
+    headers: {"access-token": download_catalog.token },
     method: "POST"
   }).then(data => {
     $('#modalMessage').hide();
     if(data.result){
-      window.open(download_catalog.pdf_catalog_url);
+      window.open(pdf_catalog_url);
       $('#download_catalog-name').val('');
       $('#download_catalog-whatsapp').val('');
       $('#download_catalog-email').val('');

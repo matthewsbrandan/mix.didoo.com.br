@@ -14,7 +14,8 @@
         )
           <div style="
             margin-bottom: 1rem;
-            background: #fff2;
+            {{ innerStyleIssetAttr('background', $download_catalog->selection_box, 'background', '#fff2') }}
+            {{ innerStyleIssetAttr('color', $download_catalog->selection_box, 'color') }}
             padding: .5rem 1rem .8rem;
           ">
             <style>

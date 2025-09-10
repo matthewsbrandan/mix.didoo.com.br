@@ -26,8 +26,12 @@
       @foreach($products->categories as $category)
         <button
           type="button"
-          class="btn btn-danger btn-sm text-uppercase btn-filter-category"
-          style="font-weight: 500;align-self: flex-start; margin: 0 1.6rem; border-radius: 2rem; padding-left: 1rem; padding-right: 1rem;"
+          class="btn btn-sm text-uppercase btn-filter-category hover-brightness-90"
+          style="
+            font-weight: 500;align-self: flex-start; margin: 0 1.6rem; border-radius: 2rem; padding-left: 1rem; padding-right: 1rem;
+            {{ innerStyleIssetAttr('color', $products->category, 'color', '#fff') }}
+            {{ innerStyleIssetAttr('background', $products->category, 'background', '#dc3545') }}
+          "
         >{{ $category }}</button>
         <div class="d-flex pt-3 mb-5 mx-0" id="produtos" style="overflow-x: auto; gap: 2rem;">
           @foreach(array_filter($products->items, fn($prod_item) => $prod_item->category === $category) as $prod_item)
@@ -49,10 +53,23 @@
                 @endisset
               ">
                 <div class="product-item-data position-relative">
-                  <div class="product-item-image" onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!}, {!! $internal ? 'true':'false' !!})'>
+                  <div
+                    class="product-item-image"
+                    onclick='handleShowMultiPhotos({!! json_encode($prod_item) !!}, {!! $internal ? 'true':'false' !!})'
+                    style="position: relative; overflow: hidden; width: 15rem; height: 15rem; border-radius: 1.6rem;"
+                  >
+                    <div style="
+                      background-image: url('{{ $prod_item->image->src ?? '' }}');
+                      position: absolute;
+                      top: 0; left: 0; bottom: 0; right: 0;
+                      background-position: center;
+                      background-size: cover;
+                      filter: blur(8px);
+                      z-index: 0;
+                    "></div>
                     <img
                       src="{{ $prod_item->image->src ?? '' }}"
-                      style="border-radius: 1.6rem; width: 15rem; height: 15rem; object-fit: cover;"
+                      style="border-radius: 1.6rem; width: 15rem; height: 15rem; object-fit: contain; z-index: 10; position: relative;"
                       alt="{{ $prod_item->image->alt ?? $prod_item->title->text ?? 'Imagem do produto' }}"
                     />
                   </div>

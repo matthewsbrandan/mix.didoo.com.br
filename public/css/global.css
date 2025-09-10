@@ -45,3 +45,7 @@ button{ background-color:transparent; border:none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.hover-brightness-90:hover{
+  filter: brightness(.90);
+}

@@ -23,7 +23,7 @@ class CmsService{
       CURLOPT_CUSTOMREQUEST => "GET",
       CURLOPT_POSTFIELDS => "",
       CURLOPT_HTTPHEADER => [
-        "access_token: ".(
+        "access-token: ".(
           $is_page_token ? $this->page_token : $this->access_token
         )
       ],

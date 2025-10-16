@@ -48,6 +48,9 @@
   @isset($elements['text_divider'])
     <link href="{{ asset('css/sections/slider_multifotos/text_divider.css') }}" rel="stylesheet"/>
   @endisset
+  @isset($elements['courses'])
+    <link href="{{ asset('css/sections/courses.css') }}" rel="stylesheet"/>
+  @endisset
   @if(
     isset($elements['cms_catalog']) && 
     isset($elements['cms_catalog']->api_url) &&

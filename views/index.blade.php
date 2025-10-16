@@ -199,7 +199,12 @@
           'default_order' => handleIncrementOrder($order, $existingOrders)
         ])
       @endif
-
+      @isset($elements['courses'])
+        @include('sections.courses', [
+          'courses' => $elements['courses'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
       @isset($elements['video_depoiments'])
         @include('slider_multifotos.video_depoiments',[
           'video_depoiments' => $elements['video_depoiments'],

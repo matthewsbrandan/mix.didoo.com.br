@@ -1,0 +1,116 @@
+#courses {
+  position: relative;
+}
+#courses .header-courses {
+  position: relative;
+  background: #222233;
+  text-align: center;
+  padding: 4rem 1rem 9rem;
+  z-index: -1;
+}
+#courses .header-courses h1 {
+  color: #fff;
+}
+#courses .header-courses p {
+  color: #ddd;
+  max-width: 33rem;
+  margin: auto;
+}
+#courses .course-container {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  max-width: calc(100% - 4rem);
+}
+@media (min-width: 590px) {
+  #courses .course-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 950px) {
+  #courses .course-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  #courses .course-container {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 72rem;
+  }
+}
+#courses .course-container {
+  position: relative;
+  margin: -4rem auto 0;
+  z-index: 0;
+}
+#courses .course-container .card-course {
+  position: relative;
+  box-shadow: 0 0 1rem rgba(34, 34, 51, 0.4666666667);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+#courses .course-container .card-course img {
+  position: absolute;
+  inset: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+#courses .course-container .card-course .overlay {
+  background: rgba(34, 34, 51, 0.4666666667);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+#courses .course-container .card-course .content {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  position: relative;
+  padding: 1.25rem;
+}
+#courses .course-container .card-course .content .course-title {
+  display: block;
+  margin-top: 9rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.2rem;
+}
+#courses .course-container .card-course .content .course-value {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+#courses .course-container .card-course .content .course-description {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+#courses .course-container .card-course .content a {
+  text-align: center;
+  font-weight: bold;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+#courses .course-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0 3rem;
+}
+#courses .course-footer .general-button {
+  min-width: 15rem;
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+#courses a:hover {
+  filter: brightness(0.8);
+  transition: all 0.6s;
+}/*# sourceMappingURL=courses.css.map */

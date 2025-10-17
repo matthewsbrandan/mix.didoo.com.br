@@ -48,6 +48,9 @@
   @isset($elements['text_divider'])
     <link href="{{ asset('css/sections/slider_multifotos/text_divider.css') }}" rel="stylesheet"/>
   @endisset
+  @isset($elements['courses'])
+    <link href="{{ asset('css/sections/courses.css') }}" rel="stylesheet"/>
+  @endisset
   @if(
     isset($elements['cms_catalog']) && 
     isset($elements['cms_catalog']->api_url) &&
@@ -199,7 +202,12 @@
           'default_order' => handleIncrementOrder($order, $existingOrders)
         ])
       @endif
-
+      @isset($elements['courses'])
+        @include('sections.courses', [
+          'courses' => $elements['courses'],
+          'default_order' => handleIncrementOrder($order, $existingOrders)
+        ])
+      @endisset
       @isset($elements['video_depoiments'])
         @include('slider_multifotos.video_depoiments',[
           'video_depoiments' => $elements['video_depoiments'],
